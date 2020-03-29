@@ -1,0 +1,714 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>E-Daftar | SIH 2020</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+  <style>
+    html,
+    body,
+    header,
+    .jarallax {
+      height: 100%;
+    }
+
+    .map-container {
+      overflow: hidden;
+      padding-bottom: 56.25%;
+      position: relative;
+      height: 0;
+    }
+
+    .map-container iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Modal -->
+  <div class="modal fade" id="loginModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog form-dark" role="document">
+      <!--Content-->
+      <div class="modal-content card card-image green lighten-3" style="">
+        <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+          <!--Header-->
+          <div class="modal-header text-center pb-4">
+            <h3 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel"><strong>SIGN</strong> <a
+                class="green-text font-weight-bold"><strong> IN</strong></a></h3>
+            <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--Body-->
+          <div class="modal-body">
+            <!--Body-->
+            <div class="md-form mb-5">
+              <input type="email" id="Form-email5" class="form-control validate white-text">
+              <label data-error="wrong" data-success="right" for="Form-email5">Your email</label>
+            </div>
+
+            <div class="md-form pb-3">
+              <input type="password" id="Form-pass5" class="form-control validate white-text">
+              <label data-error="wrong" data-success="right" for="Form-pass5">Your password</label>
+              <div class="form-group mt-4">
+                <input class="form-check-input" type="checkbox" id="checkbox624">
+                <label for="checkbox624" class="white-text form-check-label">Remember Me</label>
+              </div>
+            </div>
+
+            <!--Grid row-->
+            <div class="row d-flex align-items-center mb-4">
+
+              <!--Grid column-->
+              <div class="text-center mb-3 col-md-12">
+                <button type="button" class="btn btn-success btn-block btn-rounded z-depth-1">Sign up</button>
+              </div>
+              <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+            <!--Grid row-->
+            <div class="row">
+
+              <!--Grid column-->
+              <div class="col-md-12">
+                <p class="font-small white-text d-flex justify-content-end">Don't have an account? <a href="#"
+                    class="green-text ml-1 font-weight-bold">
+                    Register</a></p>
+              </div>
+              <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+          </div>
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+  <!-- Modal -->
+
+  <div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="SignUpModal" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+      <!--Content-->
+      <div class="modal-content">
+
+        <!--Modal cascading tabs-->
+        <div class="modal-c-tabs">
+
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs md-tabs tabs-2 green darken-1" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#panel8" role="tab"><i
+                  class="fas fa-user-plus mr-1"></i>
+                User Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#panel9" role="tab"><i class="fas fa-user-plus mr-1"></i>
+                Authority Register</a>
+            </li>
+          </ul>
+
+          <!-- Tab panels -->
+          <div class="tab-content">
+
+            <!--Panel 8-->
+            <div class="tab-pane fade in show active" id="panel8" role="tabpanel">
+
+              <!--Body-->
+              <div class="modal-body">
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-envelope prefix"></i>
+                  <input type="email" id="modalLRInput12" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="modalLRInput12">Your email</label>
+                </div>
+
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-lock prefix"></i>
+                  <input type="password" id="modalLRInput13" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="modalLRInput13">Your password</label>
+                </div>
+
+                <div class="md-form form-sm mb-4">
+                  <i class="fas fa-lock prefix"></i>
+                  <input type="password" id="modalLRInput14" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="modalLRInput14">Repeat password</label>
+                </div>
+
+                <div class="text-center form-sm mt-2">
+                  <button class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+                </div>
+
+              </div>
+              <!--Footer-->
+              <div class="modal-footer">
+                <div class="options text-right">
+                  <p class="pt-1">Already have an account? <a class="blue-text">Log In</a></p>
+                </div>
+                <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                  data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!--/.Panel 8-->
+
+            <div class="tab-pane fade" id="panel9" role="tabpanel">
+
+              <!--Body-->
+              <div class="modal-body">
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-envelope prefix"></i>
+                  <input type="email" id="modalLRInput12" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="modalLRInput12">Your email</label>
+                </div>
+
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-lock prefix"></i>
+                  <input type="password" id="modalLRInput13" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="modalLRInput13">Your password</label>
+                </div>
+
+                <div class="md-form form-sm mb-4">
+                  <i class="fas fa-lock prefix"></i>
+                  <input type="password" id="modalLRInput14" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="modalLRInput14">Repeat password</label>
+                </div>
+
+                <div class="text-center form-sm mt-2">
+                  <button class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+                </div>
+
+              </div>
+              <!--Footer-->
+              <div class="modal-footer">
+                <div class="options text-right">
+                  <p class="pt-1">Already have an account? <a class="blue-text">Log In</a></p>
+                </div>
+                <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                  data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+
+  <!--Navigation & Intro-->
+  <header>
+
+    <style>
+      .nav-link {
+        scroll-behavior: smooth;
+      }
+    </style>
+    <!--Navbar -->
+    <nav class="mb-1 navbar navbar-expand-lg navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="#"><img src="{% static 'img/logo_transparent_white.png' %}" width="195px" height="38px"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+        aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#services">Our services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#team">Our Team</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light">
+              <i class="fab fa-github fa-2x "></i>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="btn btn-outline-white btn-rounded my-3 my-sm-0 ml-3" data-toggle="modal"
+              data-target="#loginModel">Login</a>
+      </div>
+      </li>
+      </ul>
+      </div>
+    </nav>
+    <!--/.Navbar -->
+
+
+    <section class="view intro">
+
+      <div class="container-fluid">
+
+        <div class="row d-flex justify-content-center align-items-center h-100 mx-md-5">
+
+          <div class="col-lg-4 col-xl-5 col-flex mt-lg-0 pt-lg-4 mt-5 pt-5">
+
+            <h1 class="heading font-weight-bold display-3 mb-4"><img src="{% static 'img/logo_transparent.png' %}" width="600px"
+                height="120px"></h1>
+            <h5 class="subheading mb-xl-4 pb-xl-0 mb-md-3 pb-md-3 mb-4">
+              <strong>Welcome to E-Daftar - a paperless office management
+                portal for all type of beurocracies.
+                <br class="d-none d-xl-block">
+                This is a step towards helping the earth by reducing the use of paper, without compromising on
+                the formalities of the beurocracies.
+              </strong></h5>
+            <div class="mr-auto">
+              <button type="button" font-size="30px" class="btn green btn-rounded ml-0" data-toggle="modal"
+                data-target="#SignUpModal">SIGN UP</button>
+            </div>
+
+
+          </div>
+
+          <div class="col-lg-8 col-xl-7 pt-lg-4">
+
+            <div class="view">
+              <img src="https://mdbootstrap.com/img/illustrations/graphics(2).png" class="img-fluid" alt="smaple image">
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </header>
+  <!--/Navigation & Intro-->
+
+  <!--Main layout-->
+  <main>
+
+    <!-- First container -->
+    <div class="container">
+
+      <!-- Section About -->
+      <section id="about" class="section pt-3 pb-5 mb-5">
+
+        <!--Secion heading-->
+        <h2 class="green-text text-center text-uppercase font-weight-bold mt-4 mb-5 py-5 wow fadeIn"
+          data-wow-delay="0.2s">About
+          us</h2>
+
+        <!-- First row -->
+        <div class="row wow fadeIn" data-wow-delay="0.2s">
+
+          <!-- Place for photo -->
+          <div class="col-lg-4 mb-2">
+            <div class="view"> <img src="https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2829%29.jpg"
+                class="img-fluid z-depth-1" alt="">
+              <div class="mask  rgba-green-strong smooth-scroll flex-center">
+                <a class="btn  btn-outline-white btn-lgs wow fadeInUp" data-wow-delay="0.2s" href="#services"
+                  data-offset="100"> <span>GET MORE INFORMATION</span> </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Text content -->
+          <div class="col-lg-7 offset-lg-1">
+            <h4 class="font-weight-bold mb-3">Going paperless with E-Daftar</h4>
+            <p align="justify"><span>The idea is to take a step forward to sustainablity by going paperless. We build a
+                paperless management system,<b><b> E-Daftar</b></b>, that is adaptable to every type of organization.
+                Our flexible paperless management system gives organizations an option for a variable workflow. The
+                prototype supports conversion of scanned documents to e-Document with auto-validation checks.
+                The portal is available on Web as well as on the Mobile App for easiness. Updates and notifications are
+                directly synced to the user’s phone number and mobile app.
+                We encourages all organizations to adapt a paperless system with E-Daftar.</span>
+            </p>
+          </div>
+
+        </div>
+        <!-- /.First row -->
+
+      </section>
+      <!-- /.Section About -->
+
+    </div>
+    <!-- /.First container -->
+
+    <div class="container">
+
+      <!--Section: About-->
+      <section id="services" class="section my-5 pb-4">
+
+        <!--Secion heading-->
+        <h2 class="green-text text-center text-uppercase font-weight-bold mt-4 mb-5 pt-5 pb-4 wow fadeIn"
+          data-wow-delay="0.2s">Our services</h2>
+
+        <div class="row features-small wow fadeIn" data-wow-delay="0.4s">
+
+          <!--First column-->
+          <div class="col-md-4">
+
+            <!--First row-->
+            <div class="row mb-4">
+              <div class="col-2">
+                <i class="fas fa-university fa-2x mb-1 green-text" aria-hidden="true"></i>
+              </div>
+              <div class="col-10 mb-2">
+                <h5 class="feature-title font-weight-bold mb-2">| Government offices</h5>
+                <p class="grey-text">The government offices uses tonnes of papers in the paperwork and all the
+                  formalities, this can be changed with E DAFTAR.</p>
+              </div>
+            </div>
+            <!--/First row-->
+            <br>
+            <!--Second row-->
+            <div class="row">
+              <div class="col-2">
+                <i class="fas fa-gavel fa-2x mb-1 green-text" aria-hidden="true"></i>
+              </div>
+              <div class="col-10 mb-2">
+                <h5 class="feature-title font-weight-bold mb-2">| Courts</h5>
+                <p class="grey-text">It will be an advancement in the way of the current paperwork of court occurs and
+                  can get other advantages alongside with E DAFTAR.</p>
+              </div>
+            </div>
+            <!--/Second row-->
+
+          </div>
+          <!--/First column-->
+
+          <!--Second column-->
+          <div class="col-md-4">
+
+            <!--First row-->
+            <div class="row mb-4">
+              <div class="col-2">
+                <i class="fas fa-chart-line fa-2x mb-1 green-text" aria-hidden="true"></i>
+              </div>
+              <div class="col-10 mb-2">
+                <h5 class="feature-title font-weight-bold mb-2">| Corporate offices</h5>
+                <p class="grey-text">Coraporates has a lot of beurocracies and paperwork needs to go through strict
+                  workflow, all this can be maintained well with E DAFTAR.</p>
+              </div>
+            </div>
+            <!--/First row-->
+            <br>
+            <!--Second row-->
+            <div class="row">
+              <div class="col-2">
+                <i class="far fa-money-bill-alt fa-2x mb-1 green-text" aria-hidden="true"></i>
+              </div>
+              <div class="col-10 mb-2">
+                <h5 class="feature-title font-weight-bold mb-2">| Banks</h5>
+                <p class="grey-text">Banking involves many types of forms with different requirements with E DAFTAR this
+                  can be monitored and the process will be easied as well.</p>
+              </div>
+            </div>
+            <!--/Second row-->
+
+          </div>
+          <!--/Second column-->
+
+          <!--Third column-->
+          <div class="col-md-4">
+
+            <!--First row-->
+            <div class="row mb-4">
+              <div class="col-2">
+                <i class="fas fa-graduation-cap fa-2x mb-1 green-text" aria-hidden="true"></i>
+              </div>
+              <div class="col-10 mb-2">
+                <h5 class="feature-title font-weight-bold mb-2">| Schools and Colleges</h5>
+                <p class="grey-text">Educational institues have many circulars, forms and documents to be maintained,
+                  which will be easied by <br>E DAFTAR to invest more time in what matters more.</p>
+              </div>
+            </div>
+            <!--/First row-->
+
+            <!--Second row-->
+            <div class="row">
+              <div class="col-2">
+                <i class="fas fa-hospital-alt fa-2x mb-1 green-text" aria-hidden="true"></i>
+              </div>
+              <div class="col-10 mb-2">
+                <h5 class="feature-title font-weight-bold mb-2">| Hospitals</h5>
+                <p class="grey-text">Forms, medical reports, prescriptions are big part of hospital management, all this
+                  and other documents can be easily managed with E DAFTAR.</p>
+              </div>
+            </div>
+            <!--/Second row-->
+
+          </div>
+          <!--/Third column-->
+
+        </div>
+        <!--/.First row-->
+
+      </section>
+      <!-- /.Section About -->
+
+    </div>
+    <!-- /.First container -->
+
+
+    <!-- First container -->
+
+
+    <!-- Second container -->
+    <div class="container">
+
+      <!-- Third section -->
+      <section id="team" class="section team-section mb-5">
+
+        <!-- Section title -->
+        <h2 class="green-text text-center text-uppercase font-weight-bold my-5 pt-5 wow fadeIn" data-wow-delay="0.2s">
+          Our Team</h2>
+
+        <!-- Section description -->
+        <p style="font-size:160%;" class="text-center w-responsive mx-auto my-5 wow fadeIn">HexaGeeks</p>
+
+        <!-- First row -->
+        <div class="row text-center">
+
+          <!--First column-->
+          <div class="col-lg-3 col-md-6 mb-5">
+            <div class="avatar">
+              <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(5).jpg" class="z-depth-1">
+            </div>
+            <h4 class="font-weight-bold my-4">Manjot Singh Siddhu</h4>
+            <p class="grey-text">Team Leader</p>
+          </div>
+          <!--/First column-->
+
+          <!--Second column-->
+          <div class="col-lg-3 col-md-6 mb-5">
+            <div class="avatar">
+              <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(12).jpg" class="z-depth-1">
+            </div>
+            <h4 class="font-weight-bold my-4">Shrey Limbani</h4>
+            <p class="grey-text">Team member</p>
+          </div>
+          <!--/Second column-->
+
+          <!--Third column-->
+          <div class="col-lg-3 col-md-6 mb-5">
+            <div class="avatar">
+              <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" class="z-depth-1">
+            </div>
+            <h4 class="font-weight-bold my-4">Siddharth Patel</h4>
+            <p class="grey-text">Team member</p>
+          </div>
+          <!--/Third column-->
+
+          <!--Third column-->
+          <div class="col-lg-3 col-md-6 mb-5">
+            <div class="avatar">
+              <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-11.jpg" class="z-depth-1">
+            </div>
+            <h4 class="font-weight-bold my-4">Aniket Ranjan</h4>
+            <p class="grey-text">Team member</p>
+          </div>
+          <!--/Third column-->
+
+          <!--Third column-->
+          <div class="col-lg-3 col-md-6 mb-5">
+            <div class="avatar">
+              <img src="{% static 'img/rick.png' %}" class="z-depth-1">
+            </div>
+            <h4 class="font-weight-bold my-4">Aryan Soni</h4>
+            <p class="grey-text">Team member</p>
+          </div>
+          <!--/Third column-->
+
+          <!--Third column-->
+          <div class="col-lg-3 col-md-6 mb-5">
+            <div class="avatar">
+              <img src="{% static 'img/morty.png' %}" class="z-depth-1">
+            </div>
+            <h4 class="font-weight-bold my-4">Kirthana</h4>
+            <p class="grey-text">Team member</p>
+          </div>
+          <!--/Third column-->
+
+          <div class="col-lg-3 col-md-6 mb-5">
+            <div class="avatar">
+              <img src="{% static 'img/morty.png' %}" class="z-depth-1">
+            </div>
+            <h4 class="font-weight-bold my-4">Bijeesh T V</h4>
+            <p class="grey-text">Mentor</p>
+          </div>
+
+          <div class="col-lg-3 col-md-6 mb-5">
+            <div class="avatar">
+              <img src="{% static 'img/morty.png' %}" class="z-depth-1">
+            </div>
+            <h4 class="font-weight-bold my-4">-</h4>
+            <p class="grey-text">-</p>
+          </div>
+
+        </div>
+
+      </section>
+      <!-- /.Third section -->
+
+
+  </main>
+  <!--/Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer footer-tiles text-center text-md-left grey darken-4 mt-0 pt-2">
+
+    <!--Footer Links-->
+    <div class="container mb-2">
+
+      <!--First row-->
+      <div class="row mt-5">
+
+        <!--First column-->
+        <div class="col-xl-4 col-lg-4 pb-1 wow fadeIn" data-wow-delay="0.3s">
+          <!--About-->
+          <h5 class="title mb-4"><strong>ABOUT OUR SERVICES</strong></h5>
+
+          <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+            atque corrupti.</p>
+
+          <p class="mb-1-half"> Blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas
+            molestias excepturi sint.</p>
+          <!--/About -->
+
+          <div class="footer-socials">
+
+            <!--Facebook-->
+            <a type="button" class="btn-floating btn-primary"><i class="fab fa-facebook-f"></i></a>
+            <!--Dribbble-->
+            <a type="button" class="btn-floating btn-primary"><i class="fab fa-dribbble"></i></a>
+            <!--Twitter-->
+            <a type="button" class="btn-floating btn-primary"><i class="fab fa-twitter"></i></a>
+            <!--Google +-->
+            <a type="button" class="btn-floating btn-primary"><i class="fab fa-google-plus-g"></i></a>
+            <!--Linkedin-->
+
+          </div>
+        </div>
+        <!--/First column-->
+
+        <hr class="w-100 clearfix d-lg-none">
+
+        <!--Second column-->
+        <div class="col-xl-4 col-lg-4 col-md-6 pt-1 pb-1 wow fadeIn" data-wow-delay="0.3s">
+          <!--Search-->
+          <h5 class="text-uppercase mb-4"><strong>Search something</strong></h5>
+
+          <ul class="footer-search list-unstyled">
+            <li>
+              <form class="search-form" role="search">
+                <div class="md-form waves-light waves-effect waves-light">
+                  <input type="text" class="form-control" placeholder="Search">
+                </div>
+              </form>
+            </li>
+          </ul>
+
+          <!--Info-->
+          <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+          <p><i class="fas fa-envelope mr-3"></i> info@example.com</p>
+          <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+
+        </div>
+        <!--/Second column-->
+        <!--Second column-->
+        <div class="col-xl-4 col-lg-4 col-md-6 pt-1 pb-1 wow fadeIn" data-wow-delay="0.3s">
+
+          <ul class="footer-search list-unstyled">
+            <li>
+              <img width="400px" height="300px" src="{% static 'img/team_black.png' %}" class="">
+            </li>
+          </ul>
+
+        </div>
+        <!--/Second column-->
+
+      </div>
+      <!--/First row-->
+
+    </div>
+    <!--/Footer Links-->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3 text-center">
+      <div class="container-fluid">
+        © 2020 Copyright: <a href="" target="_blank"> Team HexaGeeks • CHRIST (Deemed To Be University) </a>
+      </div>
+    </div>
+    <!--/Copyright-->
+
+  </footer>
+  <!--/Footer-->
+
+  <!-- Scrollspy -->
+  <div class="dotted-scrollspy clearfix d-none d-sm-block">
+    <ul class="nav smooth-scroll flex-column">
+      <li class="nav-item"><a class="nav-link" href="#home"><span></span></a></li>
+      <li class="nav-item"><a class="nav-link" href="#about"><span></span></a></li>
+      <li class="nav-item"><a class="nav-link" href="#services"><span></span></a></li>
+      <li class="nav-item"><a class="nav-link" href="#lawyers"><span></span></a></li>
+      <li class="nav-item"><a class="nav-link" href="#contact"><span></span></a></li>
+    </ul>
+  </div>
+
+  <!-- SCRIPTS -->
+
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+
+  <!-- Google Maps -->
+  <script src="https://maps.google.com/maps/api/js"></script>
+
+  <script>
+    // initialize scrollspy
+    $('body').scrollspy({
+      target: '.dotted-scrollspy'
+    });
+
+    /* WOW.js init */
+    new WOW().init();
+
+  </script>
+
+</body>
+
+</html>
