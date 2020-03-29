@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'daftar-webapp.herokuapp.com']
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'daftar.storage.ForgivingManifestStaticFilesStorage'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
