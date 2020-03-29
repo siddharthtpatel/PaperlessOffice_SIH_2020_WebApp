@@ -25,7 +25,7 @@ SECRET_KEY = 'z^h*&ryyog_aozg@iqvmdvoxz9tz4lqp_vj*22ju8a0qwo=*yr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['daftar-webapp.herokuapp.com']
 
 
 # Application definition
