@@ -1,0 +1,1 @@
+web: gunicorn daftar.wsgi --log-file -
