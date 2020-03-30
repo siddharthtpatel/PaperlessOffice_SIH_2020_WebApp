@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+# DAFTAR SERVER
+DAFTAR_HOST = 'http://daftar-server.herokuapp.com'
+#DAFTAR_HOST = 'http://127.0.0.1:5000'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
