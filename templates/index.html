@@ -271,6 +271,24 @@
 
       <div class="container-fluid">
 
+        {% if login_error %}
+        <!-- Login Error Message -->
+        <div class="alert alert-danger alert-dismissible fade show mt-5" role="alert" style="position:absolute">
+          Invalid Credentials or Server Error. Please try again later.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% elif signup_error %}
+        <!-- Signup Error Message -->
+        <div class="alert alert-danger alert-dismissible fade show mt-5" role="alert" style="position:absolute">
+          Failed to register your account. Please try again later
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endif %}
+
         <div class="row d-flex justify-content-center align-items-center h-100 mx-md-5">
 
           <div class="col-lg-4 col-xl-5 col-flex mt-lg-0 pt-lg-4 mt-5 pt-5">

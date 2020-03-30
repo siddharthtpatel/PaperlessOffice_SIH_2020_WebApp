@@ -10,16 +10,14 @@ def index(request):
 
 
 def login(request):
-    print(request.body)
-    token = '';
-
     if request.method == 'POST':
-        loginForm = LoginForm(request.POST)
+        login_form = LoginForm(request.POST)
 
-        if loginForm.is_valid():
-            token = loginForm.login()
+        if login_form.is_valid():
+            token = login_form.login()
 
             if token:
+                request.session['token'] = token;
                 return redirect('/dashboard')
             else:
-                return HttpResponse('Error')
+                return render(request, 'index.html', {'login_error': True})
