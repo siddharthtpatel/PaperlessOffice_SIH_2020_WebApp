@@ -67,7 +67,7 @@
             <form name="login" action = "{% url 'login' %}" method = "POST" >{% csrf_token %}
             <!--Body-->
             <div class="md-form mb-5">
-              <input type="text" id="email" name="email" class="form-control validate white-text" required>
+              <input type="email" id="email" name="email" class="form-control validate white-text" required>
               <label data-error="Wrong" data-success="Right" for="email">Your email</label>
             </div>
 
@@ -115,7 +115,7 @@
   <!-- Modal -->
 
   <div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="SignUpModal" aria-hidden="true">
-    <div class="modal-dialog cascading-modal" role="document">
+    <div class="modal-dialog cascading-modal" role="document" style="margin-top:3%">
       <!--Content-->
       <div class="modal-content">
 
@@ -143,28 +143,54 @@
 
               <!--Body-->
               <div class="modal-body">
+                <form name="user-signup" action = "{% url 'signup' %}" method = "POST" >{% csrf_token %}
+                <input type="hidden" name="role" value="user" />
+                <div class="form-row">
+                  <div class="col">
+                    <!-- First name -->
+                    <div class="md-form">
+                      <i class="fa fa-user prefix"></i>
+                      <input type="text" name="first_name" id="first_name" class="form-control">
+                      <label for="first_name">First name</label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <!-- Last name -->
+                    <div class="md-form">
+                      <input type="text" name="last_name" id="last_name" class="form-control">
+                      <label for="last_name">Last name</label>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="md-form form-sm mb-5">
                   <i class="fas fa-envelope prefix"></i>
-                  <input type="email" id="modalLRInput12" class="form-control form-control-sm validate">
-                  <label data-error="wrong" data-success="right" for="modalLRInput12">Your email</label>
+                  <input type="email" name="email" id="signup_email" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="signup_email">Your email</label>
                 </div>
 
                 <div class="md-form form-sm mb-5">
                   <i class="fas fa-lock prefix"></i>
-                  <input type="password" id="modalLRInput13" class="form-control form-control-sm validate">
-                  <label data-error="wrong" data-success="right" for="modalLRInput13">Your password</label>
+                  <input type="password" name="password" id="signup_password" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="signup_password">Your password</label>
                 </div>
 
                 <div class="md-form form-sm mb-4">
                   <i class="fas fa-lock prefix"></i>
-                  <input type="password" id="modalLRInput14" class="form-control form-control-sm validate">
-                  <label data-error="wrong" data-success="right" for="modalLRInput14">Repeat password</label>
+                  <input type="password" name="password2" id="signup_password2" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="signup_password2">Repeat password</label>
+                </div>
+
+                <div class="md-form form-sm mb-4">
+                  <i class="fa fa-calendar prefix"></i>
+                  <input type="text" name="dob" id="signup_dob" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="signup_dob">Date of Birth</label>
                 </div>
 
                 <div class="text-center form-sm mt-2">
-                  <button class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+                  <button type="submit" class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
                 </div>
-
+                </form>
               </div>
               <!--Footer-->
               <div class="modal-footer">
@@ -181,28 +207,55 @@
 
               <!--Body-->
               <div class="modal-body">
+                <form name="authority-signup" action = "{% url 'signup' %}" method = "POST" >{% csrf_token %}
+                <input type="hidden" name="role" value="authority" />
+
+                <div class="form-row">
+                  <div class="col">
+                    <!-- First name -->
+                    <div class="md-form">
+                      <i class="fa fa-user prefix"></i>
+                      <input type="text" name="first_name" id="first_name_auth" class="form-control">
+                      <label for="first_name_auth">First name</label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <!-- Last name -->
+                    <div class="md-form">
+                      <input type="text" name="last_name" id="last_name_auth" class="form-control">
+                      <label for="last_name_auth">Last name</label>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="md-form form-sm mb-5">
                   <i class="fas fa-envelope prefix"></i>
-                  <input type="email" id="modalLRInput12" class="form-control form-control-sm validate">
-                  <label data-error="wrong" data-success="right" for="modalLRInput12">Your email</label>
+                  <input type="email" name="email" id="signup_email_auth" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="signup_email_auth">Your email</label>
                 </div>
 
                 <div class="md-form form-sm mb-5">
                   <i class="fas fa-lock prefix"></i>
-                  <input type="password" id="modalLRInput13" class="form-control form-control-sm validate">
-                  <label data-error="wrong" data-success="right" for="modalLRInput13">Your password</label>
+                  <input type="password" name="password" id="signup_password_auth" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="signup_password_auth">Your password</label>
                 </div>
 
                 <div class="md-form form-sm mb-4">
                   <i class="fas fa-lock prefix"></i>
-                  <input type="password" id="modalLRInput14" class="form-control form-control-sm validate">
-                  <label data-error="wrong" data-success="right" for="modalLRInput14">Repeat password</label>
+                  <input type="password" name="password2" id="signup_password2_auth" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="signup_password2_auth">Repeat password</label>
+                </div>
+
+                <div class="md-form form-sm mb-4">
+                  <i class="fa fa-calendar prefix"></i>
+                  <input type="text" name="dob" id="signup_dob_auth" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="signup_dob_auth">Date of Birth</label>
                 </div>
 
                 <div class="text-center form-sm mt-2">
-                  <button class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+                  <button type="submit" class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
                 </div>
-
+                </form>
               </div>
               <!--Footer-->
               <div class="modal-footer">
@@ -259,7 +312,6 @@
           <li class="nav-item dropdown">
             <a class="btn btn-outline-white btn-rounded my-3 my-sm-0 ml-3" data-toggle="modal"
               data-target="#loginModel">Login</a>
-      </div>
       </li>
       </ul>
       </div>
@@ -283,6 +335,13 @@
         <!-- Signup Error Message -->
         <div class="alert alert-danger alert-dismissible fade show mt-5" role="alert" style="position:absolute">
           Failed to register your account. Please try again later
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% elif signup_success %}
+        <div class="alert alert-success alert-dismissible fade show mt-5" role="alert" style="position:absolute">
+          Successfully Signed Up. Now you can login!
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

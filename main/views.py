@@ -1,8 +1,6 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.template import loader
 
-from main.models import LoginForm
+from main.models import LoginForm, SignupForm
 
 
 def index(request):
@@ -21,3 +19,14 @@ def login(request):
                 return redirect('/dashboard')
             else:
                 return render(request, 'index.html', {'login_error': True})
+
+
+def signup(request):
+    if request.method == 'POST':
+        signup_form = SignupForm(request.POST)
+
+        if signup_form.is_valid():
+            if signup_form.signup():
+                return render(request, 'index.html', {'signup_success': True})
+            else:
+                return render(request, 'index.html', {'signup_error': True})
