@@ -277,20 +277,15 @@
   <!--Navigation & Intro-->
   <header>
 
-    <style>
-      .nav-link {
-        scroll-behavior: smooth;
-      }
-    </style>
     <!--Navbar -->
-    <nav class="mb-1 navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <nav class="mb-1 sticky-top navbar navbar-expand-lg navbar navbar-dark bg-dark">
       <a class="navbar-brand" href="#"><img src="{% static 'img/logo_transparent_white.png' %}" width="195px" height="38px"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
         aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto smooth-scroll">
           <li class="nav-item active">
           </li>
           <li class="nav-item">
@@ -348,13 +343,13 @@
         </div>
         {% endif %}
 
-        <div class="row d-flex justify-content-center align-items-center h-100 mx-md-5">
+        <div class="row d-flex justify-content-center align-items-center h-100 mx-md-5" id="home">
 
           <div class="col-lg-4 col-xl-5 col-flex mt-lg-0 pt-lg-4 mt-5 pt-5">
 
             <h1 class="heading font-weight-bold display-3 mb-4"><img src="{% static 'img/logo_transparent.png' %}" width="600px"
                 height="120px"></h1>
-            <h5 class="subheading mb-xl-4 pb-xl-0 mb-md-3 pb-md-3 mb-4">
+            <h5 class="subheading mb-xl-4 pb-xl-0 mb-md-3 pb-md-3 mb-4 ">
               <strong>Welcome to E-Daftar - a paperless office management
                 portal for all type of beurocracies.
                 <br class="d-none d-xl-block">
@@ -575,7 +570,7 @@
           <!--First column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(5).jpg" class="z-depth-1">
+              <img src="{% static 'team_members/manjot.png' %}" class="z-depth-1" height="270" width="230">
             </div>
             <h4 class="font-weight-bold my-4">Manjot Singh Siddhu</h4>
             <p class="grey-text">Team Leader</p>
@@ -585,30 +580,30 @@
           <!--Second column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(12).jpg" class="z-depth-1">
+              <img src="{% static 'team_members/shrey.jpeg' %}" class="z-depth-1" height="270" width="230">
             </div>
             <h4 class="font-weight-bold my-4">Shrey Limbani</h4>
-            <p class="grey-text">Team member</p>
+            <p class="grey-text">Team Member</p>
           </div>
           <!--/Second column-->
 
           <!--Third column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" class="z-depth-1">
+              <img src="{% static 'team_members/sid.jpeg' %}" class="z-depth-1" height="270" width="230">
             </div>
             <h4 class="font-weight-bold my-4">Siddharth Patel</h4>
-            <p class="grey-text">Team member</p>
+            <p class="grey-text">Team Member</p>
           </div>
           <!--/Third column-->
 
           <!--Third column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-11.jpg" class="z-depth-1">
+              <img src="{% static 'team_members/aniket.jpeg' %}" class="z-depth-1" height="270" width="230">
             </div>
             <h4 class="font-weight-bold my-4">Aniket Ranjan</h4>
-            <p class="grey-text">Team member</p>
+            <p class="grey-text">Team Member</p>
           </div>
           <!--/Third column-->
 
@@ -618,18 +613,19 @@
               <img src="{% static 'img/rick.png' %}" class="z-depth-1">
             </div>
             <h4 class="font-weight-bold my-4">Aryan Soni</h4>
-            <p class="grey-text">Team member</p>
+            <p class="grey-text">Team Member</p>
           </div>
           <!--/Third column-->
 
           <!--Third column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="{% static 'img/morty.png' %}" class="z-depth-1">
+              <img src="{% static 'team_members/kiru.jpeg' %}" class="z-depth-1" height="270" width="230">
             </div>
             <h4 class="font-weight-bold my-4">Kirthana</h4>
-            <p class="grey-text">Team member</p>
+            <p class="grey-text">Team Member</p>
           </div>
+
           <!--/Third column-->
 
           <div class="col-lg-3 col-md-6 mb-5">
@@ -754,8 +750,8 @@
       <li class="nav-item"><a class="nav-link" href="#home"><span></span></a></li>
       <li class="nav-item"><a class="nav-link" href="#about"><span></span></a></li>
       <li class="nav-item"><a class="nav-link" href="#services"><span></span></a></li>
-      <li class="nav-item"><a class="nav-link" href="#lawyers"><span></span></a></li>
-      <li class="nav-item"><a class="nav-link" href="#contact"><span></span></a></li>
+      <li class="nav-item"><a class="nav-link" href="#team"><span></span></a></li>
+
     </ul>
   </div>
 
