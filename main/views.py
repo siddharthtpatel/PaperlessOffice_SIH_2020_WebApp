@@ -15,7 +15,7 @@ def login(request):
             token = login_form.login()
 
             if token:
-                request.session['token'] = token;
+                request.session['token'] = token
                 return redirect('/dashboard')
             else:
                 return render(request, 'index.html', {'login_error': True})
