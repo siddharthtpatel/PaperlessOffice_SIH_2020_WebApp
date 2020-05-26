@@ -11,6 +11,7 @@ def index(request):
     else:
         return render(request, 'index.html', {})
 
+
 # TODO: Make this function global to all templates
 def verify_token(request):
     if 'token' in request.session:
@@ -47,5 +48,5 @@ def signup(request):
         if signup_form.is_valid():
             if signup_form.signup():
                 return render(request, 'index.html', {'signup_success': True})
-            else:
-                return render(request, 'index.html', {'signup_error': True})
+        else:
+            return render(request, 'index.html', {'signup_error': True})
