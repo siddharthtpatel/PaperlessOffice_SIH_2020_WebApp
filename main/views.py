@@ -19,6 +19,7 @@ def verify_token(request):
         hed = {'Authorization': 'Bearer ' + token}
 
         r = requests.get(daftar.settings.DAFTAR_HOST + "/user", headers=hed)
+        print(r)
         if r.status_code == requests.codes.ok:
             return True
         else:
@@ -36,6 +37,7 @@ def login(request):
 
             if token:
                 request.session['token'] = token
+
                 return redirect('/dashboard')
             else:
                 return render(request, 'index.html', {'login_error': True})
@@ -48,5 +50,7 @@ def signup(request):
         if signup_form.is_valid():
             if signup_form.signup():
                 return render(request, 'index.html', {'signup_success': True})
+            else:
+                return render(request, 'index.html', {'signup_error': True})
         else:
             return render(request, 'index.html', {'signup_error': True})
