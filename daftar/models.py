@@ -1,16 +1,17 @@
-import requests
-from django import forms
-
-import daftar
 
 
 class User(object):
     class __User:
         def __init__(self):
-            self.data = None
+            self.id = None
+            self.first_name = None
+            self.last_name = None
+            self.dob = None
+            self.isUser = None
+            self.token = None
 
         def __str__(self):
-            return self + self.data
+            return self + self.id
     instance = None
 
     def __new__(cls): # __new__ always a classmethod

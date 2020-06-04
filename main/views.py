@@ -1,4 +1,3 @@
-import requests
 from django.shortcuts import render, redirect
 
 from daftar.views import verify_token
@@ -21,7 +20,6 @@ def login(request):
 
             if token:
                 request.session['token'] = token
-
                 return redirect('/dashboard')
             else:
                 return render(request, 'index.html', {'login_error': True})
