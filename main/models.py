@@ -17,9 +17,6 @@ class LoginForm(forms.Form):
 
         r = requests.post(daftar.settings.DAFTAR_HOST + "/auth/login", json=data)
         if r.status_code == requests.codes.ok:
-            hed = {'Authorization': 'Bearer ' + r.json()['token']}
-            user = User()
-            user.data = requests.get(daftar.settings.DAFTAR_HOST + "/user", headers=hed).json()
             return r.json()['token']
         else:
             return None
