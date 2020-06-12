@@ -5,6 +5,6 @@ from daftar.views import verify_token
 
 def index(request):
     if verify_token(request):
-        return render(request, 'dashboard.html', {'first_name': User().first_name})
+        return render(request, 'dashboard.html', {'title': 'Daftar | Dashboard', 'first_name': User().first_name})
     else:
         return render(request, 'index.html', {})
