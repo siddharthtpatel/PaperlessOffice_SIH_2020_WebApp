@@ -24,3 +24,15 @@ class User(object):
 
     def __setattr__(self, name):
         return setattr(self.instance, name)
+
+
+class StorageDocument(object):
+
+    def __init__(self, json):
+        self.id = json['_id']['$oid']
+        self.fileName = json['fileName']
+        self.fileDesc = json['fileDescription']
+        self.file = json['file']
+        self.fileExt = json['fileExtension']
+        self.visibility = json['visibility']
+        self.timestamp = json['timestamp']

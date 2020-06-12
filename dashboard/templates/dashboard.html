@@ -17,15 +17,16 @@
               <!-- Card content -->
               <div class="card-body card-columns">
 
+                {% for doc in docs %}
                 <!-- Card -->
                 <div class="card-wrapper mb-3">
-                  <div id="card-1" class="card card-rotating">
+                  <div id="card-{{ doc.id }}" class="card card-rotating">
 
                     <div class="face front">
                       <div class="view overlay">
                         <img src="https://mdbootstrap.com/img/Photos/Others/forest-sm.jpg" class="img-fluid " alt="smaple image">
-                        <a class="rotate-btn" data-card="card-1"><div class="mask flex-center rgba-blue-light">
-                            <h4 class="white-text">File Name</h4>
+                        <a class="rotate-btn" data-card="card-{{ doc.id }}"><div class="mask flex-center rgba-blue-light">
+                            <h4 class="white-text">{{ doc.fileName }}</h4>
                         </div></a>
                       </div>
                     </div>
@@ -33,12 +34,12 @@
                     <div class="face back">
                       <div class="card-body custom-dark">
                         <!-- Content -->
-                        <h6 class="font-weight-bold mb-0">File Name
-                          <a class="rotate-btn float-right" data-card="card-1"><i class="fas fa-undo"></i></a>
+                        <h6 class="font-weight-bold mb-0">{{ doc.fileName }}
+                          <a class="rotate-btn float-right" data-card="card-{{ doc.id }}"><i class="fas fa-undo"></i></a>
                         </h6>
                         <hr>
                         <p>
-                          File Description ....
+                          {{ doc.fileDesc }}
                         </p>
                       </div>
 
@@ -51,76 +52,7 @@
                   </div>
                 </div>
                 <!-- Card -->
-
-                <!-- Card -->
-                <div class="card-wrapper mb-3">
-                  <div id="card-2" class="card card-rotating">
-
-                    <div class="face front">
-                      <div class="view overlay">
-                        <img src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" class="img-fluid " alt="smaple image">
-                        <a class="rotate-btn" data-card="card-2"><div class="mask flex-center rgba-blue-light">
-                            <h4 class="white-text">File Name</h4>
-                        </div></a>
-                      </div>
-                    </div>
-
-                    <div class="face back">
-                      <div class="card-body custom-dark">
-                        <!-- Content -->
-                        <h6 class="font-weight-bold mb-0">File Name
-                          <a class="rotate-btn float-right" data-card="card-2"><i class="fas fa-undo"></i></a>
-                        </h6>
-                        <hr>
-                        <p>
-                          File Description ....
-                        </p>
-                      </div>
-
-                      <div class="card-footer custom-dark">
-                        <a class="link-text text-center mt-2">
-                          <h6>View <i class="fas fa-angle-double-right"></i></h6>
-                        </a>
-                      </div>
-                    </div>
-                </div>
-                </div>
-                <!-- Card -->
-
-                <!-- Card -->
-                <div class="card-wrapper mb-3">
-                  <div id="card-3" class="card card-rotating">
-
-                    <div class="face front">
-                      <div class="view overlay">
-                        <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg" class="img-fluid " alt="smaple image">
-                        <a class="rotate-btn" data-card="card-3"><div class="mask flex-center rgba-blue-light">
-                            <h4 class="white-text">File Name</h4>
-                        </div></a>
-                      </div>
-                    </div>
-
-                    <div class="face back">
-                      <div class="card-body custom-dark">
-                        <!-- Content -->
-                        <h6 class="font-weight-bold mb-0">File Name
-                          <a class="rotate-btn float-right" data-card="card-3"><i class="fas fa-undo"></i></a>
-                        </h6>
-                        <hr>
-                        <p>
-                          File Description ....
-                        </p>
-                      </div>
-
-                      <div class="card-footer custom-dark">
-                        <a class="link-text text-center mt-2">
-                          <h6>View <i class="fas fa-angle-double-right"></i></h6>
-                        </a>
-                      </div>
-                    </div>
-                </div>
-                </div>
-                <!-- Card -->
+                {% endfor %}
               </div>
             </div>
           </div>
