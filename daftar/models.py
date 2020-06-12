@@ -1,3 +1,9 @@
+import tempfile
+
+import requests
+
+from django.db import models
+from django.core import files
 
 
 class User(object):
@@ -26,9 +32,11 @@ class User(object):
         return setattr(self.instance, name)
 
 
-class StorageDocument(object):
+class StorageDocument(models.Model):
+    # ImageField not sure :/
+    img = models.ImageField(upload_to='images/', blank=True, null=True)
 
-    def __init__(self, json):
+    def __init__(self, json, url):
         self.id = json['_id']['$oid']
         self.fileName = json['fileName']
         self.fileDesc = json['fileDescription']
@@ -36,3 +44,26 @@ class StorageDocument(object):
         self.fileExt = json['fileExtension']
         self.visibility = json['visibility']
         self.timestamp = json['timestamp']
+
+        if self.fileExt == 'jpg' or self.fileExt == 'png' or self.fileExt == 'jpeg':
+            print('JPG/PNG/JPEG image detected')
+            # TODO: Fix this
+            #self.load_img(url)
+
+    # This is not working :/
+    def load_img(self, url):
+        hed = {'Authorization': 'Bearer ' + User().token}
+        request = requests.get(url, stream=True, headers=hed)
+
+        if request.status_code != requests.codes.ok:
+            return
+
+        lf = tempfile.NamedTemporaryFile()
+
+        for block in request.iter_content(1024 * 8):
+            if not block:
+                break
+
+            lf.write(block)
+
+        self.img.save(self.file, files.File(lf))

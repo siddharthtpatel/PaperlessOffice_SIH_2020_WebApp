@@ -32,6 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'daftar-webapp.herokuapp.com']
 
+MEDIA_ROOT = os.path.join(PROJECT_DIR, "/media/")
+MEDIA_URL = '/media/'
 
 # Application definition
 
