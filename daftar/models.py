@@ -1,4 +1,5 @@
 import tempfile
+import datetime
 
 import requests
 
@@ -43,7 +44,7 @@ class StorageDocument(models.Model):
         self.file = json['file']
         self.fileExt = json['fileExtension']
         self.visibility = json['visibility']
-        self.timestamp = json['timestamp']
+        self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date'])/1000)
 
         if self.fileExt == 'jpg' or self.fileExt == 'png' or self.fileExt == 'jpeg':
             print('JPG/PNG/JPEG image detected')
@@ -67,3 +68,23 @@ class StorageDocument(models.Model):
             lf.write(block)
 
         self.img.save(self.file, files.File(lf))
+
+
+class Application(object):
+
+    def __init__(self, json):
+        self.id = json['_id']['$oid']
+        self.name = json['name']
+        self.description = json['description']
+        self.creatorName = json['creatorName']
+        self.status = int(json['status'])
+        self.stage = int(json['stage'])
+        self.stages = int(json['stages'])
+        self.assignedName = json['assignedName']
+        self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
+        self.progress = int(self.stage/self.stages*100)
+
+        if User().token == json['creatorId']:
+            self.isCreator = True
+        else:
+            self.isCreator = False

@@ -3,162 +3,118 @@
 <main>
     <div class="container">
 
-      <!-- Section: Applications -->
-      <section class="pb-7">
-        <div class="row">
-          <div class="col-7">
+        <!-- Section: Applications -->
+        <section class="pb-7">
+            <div class="row">
+                <div class="col-7">
 
-            <!-- Card -->
-            <div class="card">
-              <div class="card-header green white-text">
-                <h5 class="font-weight-500 my-1"> Storage</h5>
-              </div>
-
-              <!-- Card content -->
-              <div class="card-body card-columns">
-
-                {% for doc in docs %}
-                <!-- Card -->
-                <div class="card-wrapper mb-3">
-                  <div id="card-{{ doc.id }}" class="card card-rotating">
-
-                    <div class="face front">
-                      <div class="view overlay">
-                        <img src="https://mdbootstrap.com/img/Photos/Others/forest-sm.jpg" class="img-fluid " alt="smaple image">
-                        <a class="rotate-btn" data-card="card-{{ doc.id }}"><div class="mask flex-center rgba-blue-light">
-                            <h4 class="white-text">{{ doc.fileName }}</h4>
-                        </div></a>
-                      </div>
-                    </div>
-
-                    <div class="face back">
-                      <div class="card-body custom-dark">
-                        <!-- Content -->
-                        <h6 class="font-weight-bold mb-0">{{ doc.fileName }}
-                          <a class="rotate-btn float-right" data-card="card-{{ doc.id }}"><i class="fas fa-undo"></i></a>
-                        </h6>
-                        <hr>
-                        <p>
-                          {{ doc.fileDesc }}
-                        </p>
-                      </div>
-
-                      <div class="card-footer custom-dark">
-                        <a class="link-text text-center mt-2">
-                          <h6>View <i class="fas fa-angle-double-right"></i></h6>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card -->
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <div class="card-header green white-text">
-                <h5 class="font-weight-500 my-1"> Applications</h5>
-              </div>
-
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-8 mt-2">
-                      <div class="mx-2">
-                        <h5 class="black-text">Yellow Application Form</h5>
-                      </div>
-                      <div class="mx-2 mt-3">
-                        <p class="grey-text">Submitted by Manjot Singh on 11/3/2020</p>
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <div class="text-center"><button
-                          class="btn btn-outline-default btn-rounded waves-effect">View</button>
-                        <div class="mt-2">
-                          <div class="progress md-progress float-right" style="width: 100px; height:15px;">
-                            <div class="progress-bar progress-bar-striped green progress-bar-animated"
-                              role="progressbar" style="width:85%;height: 15px" aria-valuenow="85" aria-valuemin="0"
-                              aria-valuemax="100">
-                              4/5
-                            </div>
-                          </div>
+                    <!-- Card -->
+                    <div class="card">
+                        <div class="card-header green white-text">
+                            <h5 class="font-weight-500 my-1"> Storage</h5>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-8 mt-2">
-                        <div class="mx-2">
-                          <h5 class="black-text">Yellow Application Form</h5>
-                        </div>
-                        <div class="mx-2 mt-3">
-                          <p class="grey-text">Submitted by Manjot Singh on 11/3/2020</p>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="text-center"><button
-                            class="btn btn-outline-default btn-rounded waves-effect">View</button>
-                          <div class="mt-2">
-                            <div class="progress md-progress float-right" style="width: 100; height:15px;">
-                              <div class="progress-bar progress-bar-striped green progress-bar-animated"
-                                role="progressbar" style="width:85%;height: 15px" aria-valuenow="85" aria-valuemin="0"
-                                aria-valuemax="100">
-                                4/5
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        <!-- Card content -->
+                        <div class="card-body card-columns">
 
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-8 mt-2">
-                          <div class="mx-2">
-                            <h5 class="black-text">Yellow Application Form</h5>
-                          </div>
-                          <div class="mx-2 mt-3">
-                            <p class="grey-text">Submitted by Manjot Singh on 11/3/2020</p>
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <div class="text-center"><button
-                              class="btn btn-outline-default btn-rounded waves-effect">View</button>
-                            <div class="mt-2">
-                              <div class="progress md-progress float-right" style="width: 100px; height:15px;">
-                                <div class="progress-bar progress-bar-striped green progress-bar-animated"
-                                  role="progressbar" style="width:85%;height: 15px" aria-valuenow="85" aria-valuemin="0"
-                                  aria-valuemax="100">
-                                  4/5
+                            {% for doc in docs %}
+                            <!-- Card -->
+                            <div class="card-wrapper mb-3">
+                                <div id="card-{{ doc.id }}" class="card card-rotating">
+
+                                    <div class="face front">
+                                        <div class="view overlay">
+                                            <img src="https://mdbootstrap.com/img/Photos/Others/forest-sm.jpg"
+                                                 class="img-fluid " alt="smaple image">
+                                            <a class="rotate-btn" data-card="card-{{ doc.id }}">
+                                                <div class="mask flex-center rgba-blue-light">
+                                                    <h4 class="white-text">{{ doc.fileName }}</h4>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="face back">
+                                        <div class="card-body custom-dark">
+                                            <!-- Content -->
+                                            <h6 class="font-weight-bold mb-0">{{ doc.fileName }}
+                                                <a class="rotate-btn float-right" data-card="card-{{ doc.id }}"><i
+                                                        class="fas fa-undo"></i></a>
+                                            </h6>
+                                            <hr>
+                                            <p>
+                                                {{ doc.fileDesc }}
+                                            </p>
+                                        </div>
+
+                                        <div class="card-footer custom-dark">
+                                            <a class="link-text text-center mt-2">
+                                                <h6>View <i class="fas fa-angle-double-right"></i></h6>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
                             </div>
-                          </div>
+                            <!-- Card -->
+                            {% endfor %}
                         </div>
-                      </div>
                     </div>
-
-                  </div>
-
                 </div>
-                <!-- Panel -->
-              </div>
+
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header green white-text">
+                            <h5 class="font-weight-500 my-1"> Applications</h5>
+                        </div>
+
+                        {% for doc in applications %}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8 mt-2">
+                                        <div class="mx-2">
+                                            <h5 class="black-text">{{ doc.name }}</h5>
+                                        </div>
+                                        <div class="mx-2 mt-3">
+                                            {% if doc.isCreator %}
+                                                <p class="grey-text">Waiting for {{doc.assignedName }} to sign.</p>
+                                            {% else %}
+                                                <p class="grey-text">Submitted by {{ doc.creatorName }} on {{ doc.timestamp }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-center">
+                                            <button
+                                                    class="btn btn-outline-default btn-rounded waves-effect">View
+                                            </button>
+                                            <div class="mt-2">
+                                                <div class="progress md-progress float-right"
+                                                     style="height:15px;">
+                                                    <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                                                         role="progressbar" style="width: {{ doc.progress }}%;height: 15px"
+                                                         aria-valuenow="{{ doc.stage }}" aria-valuemin="0"
+                                                         aria-valuemax="{{ doc.stages }}">
+                                                        {{ doc.stage }}/{{ doc.stages }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <!-- Panel -->
+                </div>
             </div>
-          </div>
+    </div>
 
 
-
-          <!-- Row -->
-      </section>
+    <!-- Row -->
+    </section>
     </div>
     <!-- container -->
 
@@ -166,125 +122,138 @@
 
     <div class="container-fixed">
 
-      <!-- Section: New Applications -->
-      <section class="pb-7">
+        <!-- Section: New Applications -->
+        <section class="pb-7">
 
-        <div class="card card-cascade narrower">
-          <div class="view view-cascade card-header green black-text">
-            <ul class="nav md-tabs nav-justified green mb-0" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                  aria-controls="pending" aria-selected="true">Pending Applications</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="signed"
-                  aria-selected="false">Signed Applications</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                  aria-controls="rejected" aria-selected="true">Rejected Applications</a>
-              </li>
-            </ul>
-          </div>
-          <div class="tab-content" id="myTabContent">
-
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-10 mt-2">
-                      <div class="mx-2">
-                        <h4 class="black-text">Leave Application Form</h4>
-                      </div>
-                      <div class="mx-2 mt-3">
-                        <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class=""><button class="btn btn-outline-default btn-rounded waves-effect">View</button>
-                        <div class="mt-2">
-                          <div class="progress md-progress float-right" style="width: 200px; height:20px;">
-                            <div class="progress-bar progress-bar-striped green progress-bar-animated"
-                              role="progressbar" style="width: 55%;height: 20px" aria-valuenow="55" aria-valuemin="0"
-                              aria-valuemax="100">
-                              3/5
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            <div class="card card-cascade narrower">
+                <div class="view view-cascade card-header green black-text">
+                    <ul class="nav md-tabs nav-justified green mb-0" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                               aria-controls="pending" aria-selected="true">Pending Applications</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                               aria-controls="signed"
+                               aria-selected="false">Signed Applications</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                               aria-controls="rejected" aria-selected="true">Rejected Applications</a>
+                        </li>
+                    </ul>
                 </div>
-              </div>
-            </div>
+                <div class="tab-content" id="myTabContent">
 
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-10 mt-2">
-                      <div class="mx-2">
-                        <h4 class="black-text">Hostel Application Form</h4>
-                      </div>
-                      <div class="mx-2 mt-3">
-                        <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class=""><button class="btn btn-outline-default btn-rounded waves-effect">View</button>
-                        <div class="mt-2">
-                          <div class="progress md-progress float-right" style="width: 200px; height:20px;">
-                            <div class="progress-bar progress-bar-striped green progress-bar-animated"
-                              role="progressbar" style="width: 55%;height: 20px" aria-valuenow="55" aria-valuemin="0"
-                              aria-valuemax="100">
-                              3/5
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10 mt-2">
+                                        <div class="mx-2">
+                                            <h4 class="black-text">Leave Application Form</h4>
+                                        </div>
+                                        <div class="mx-2 mt-3">
+                                            <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="">
+                                            <button class="btn btn-outline-default btn-rounded waves-effect">View
+                                            </button>
+                                            <div class="mt-2">
+                                                <div class="progress md-progress float-right"
+                                                     style="width: 200px; height:20px;">
+                                                    <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                                                         role="progressbar" style="width: 55%;height: 20px"
+                                                         aria-valuenow="55" aria-valuemin="0"
+                                                         aria-valuemax="100">
+                                                        3/5
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-10 mt-2">
-                      <div class="mx-2">
-                        <h4 class="black-text">Yellow Application Form</h4>
-                      </div>
-                      <div class="mx-2 mt-3">
-                        <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class=""><button class="btn btn-outline-default btn-rounded waves-effect">View</button>
-                        <div class="mt-2">
-                          <div class="progress md-progress float-right" style="width: 200px; height:20px;">
-                            <div class="progress-bar progress-bar-striped green progress-bar-animated"
-                              role="progressbar" style="width:85%;height: 20px" aria-valuenow="85" aria-valuemin="0"
-                              aria-valuemax="100">
-                              4/5
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10 mt-2">
+                                        <div class="mx-2">
+                                            <h4 class="black-text">Hostel Application Form</h4>
+                                        </div>
+                                        <div class="mx-2 mt-3">
+                                            <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="">
+                                            <button class="btn btn-outline-default btn-rounded waves-effect">View
+                                            </button>
+                                            <div class="mt-2">
+                                                <div class="progress md-progress float-right"
+                                                     style="width: 200px; height:20px;">
+                                                    <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                                                         role="progressbar" style="width: 55%;height: 20px"
+                                                         aria-valuenow="55" aria-valuemin="0"
+                                                         aria-valuemax="100">
+                                                        3/5
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                </div>
 
-              </div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10 mt-2">
+                                        <div class="mx-2">
+                                            <h4 class="black-text">Yellow Application Form</h4>
+                                        </div>
+                                        <div class="mx-2 mt-3">
+                                            <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="">
+                                            <button class="btn btn-outline-default btn-rounded waves-effect">View
+                                            </button>
+                                            <div class="mt-2">
+                                                <div class="progress md-progress float-right"
+                                                     style="width: 200px; height:20px;">
+                                                    <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                                                         role="progressbar" style="width:85%;height: 20px"
+                                                         aria-valuenow="85" aria-valuemin="0"
+                                                         aria-valuemax="100">
+                                                        4/5
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <!-- Panel -->
-      </section>
-      <!-- Section: data tables -->
+            <!-- Panel -->
+        </section>
+        <!-- Section: data tables -->
 
     </div>
 
-  </main>
+</main>
 {% endblock %}
