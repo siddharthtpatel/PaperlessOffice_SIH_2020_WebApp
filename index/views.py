@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from daftar.views import verify_token
-from main.models import LoginForm, SignupForm
+from index.models import LoginForm, SignupForm
 
 
 def index(request):
