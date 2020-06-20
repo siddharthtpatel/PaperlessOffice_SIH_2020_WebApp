@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from daftar.functions import get_storage_documents, get_applications
 from daftar.models import User
@@ -23,4 +23,4 @@ def index(request):
                                                   'first_name': User().first_name,
                                                   'docs': docs, 'applications': applications})
     else:
-        return render(request, 'index.html', {})
+        return redirect('/')
