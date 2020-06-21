@@ -20,6 +20,7 @@ def index(request):
             print('Error Loading Applications')
 
         return render(request, 'dashboard.html', {'title': 'Daftar | Dashboard',
+                                                  'isUser': User().isUser,
                                                   'first_name': User().first_name,
                                                   'docs': docs, 'applications': applications})
     else:
