@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+
 <main>
     <div class="container">
 
@@ -28,10 +30,13 @@
                             <div class="card-wrapper mb-3">
                                 <div id="card-{{ doc.id }}" class="card card-rotating">
 
-                                    <div class="face front">
-                                        <div class="view overlay">
-                                            <img src="https://mdbootstrap.com/img/Photos/Others/forest-sm.jpg"
-                                                 class="img-fluid " alt="smaple image">
+                                    <div class="face front h-100">
+                                        <div class="view overlay h-100">
+                                            {% if not doc.file_url %}
+                                            <img src="{% static 'img/file_404.png' %}" class="img-fluid img-thumbnail h-100" alt="{{ doc.fileName }}">
+                                            {% else %}
+                                            <img src="{{ doc.file_url }}" class="img-fluid img-thumbnail" style="object-fit: fill;" alt="{{ doc.fileName }}">
+                                            {% endif %}
                                             <a class="rotate-btn" data-card="card-{{ doc.id }}">
                                                 <div class="mask flex-center rgba-blue-light">
                                                     <h4 class="white-text">{{ doc.fileName }}</h4>

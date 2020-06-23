@@ -13,10 +13,13 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # DAFTAR SERVER
+from pathlib import Path
+
 DAFTAR_HOST = 'http://daftar-server.herokuapp.com'
 #DAFTAR_HOST = 'http://127.0.0.1:5000'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+PWD = os.path.dirname(os.path.realpath(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -32,8 +35,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'daftar-webapp.herokuapp.com']
 
-MEDIA_ROOT = os.path.join(PROJECT_DIR, "/media/")
+Path(BASE_DIR + "/media").mkdir(parents=True, exist_ok=True)
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = '/media/'
+
+ASSETS_URL = os.path.join(BASE_DIR, "assets")
 
 # Application definition
 

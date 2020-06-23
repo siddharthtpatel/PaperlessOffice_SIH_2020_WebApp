@@ -1,10 +1,16 @@
+import os
 import tempfile
 import datetime
 
 import requests
+from django.core.files.base import ContentFile
 
 from django.db import models
 from django.core import files
+from django.core.files.storage import FileSystemStorage, default_storage
+
+import daftar
+from daftar import settings
 
 
 class User(object):
@@ -34,10 +40,11 @@ class User(object):
 
 
 class StorageDocument(models.Model):
-    # ImageField not sure :/
-    img = models.ImageField(upload_to='images/', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='media',
+    )
 
-    def __init__(self, json, url):
+    def __init__(self, json):
         self.id = json['_id']['$oid']
         self.fileName = json['fileName']
         self.fileDesc = json['fileDescription']
@@ -48,26 +55,22 @@ class StorageDocument(models.Model):
 
         if self.fileExt == 'jpg' or self.fileExt == 'png' or self.fileExt == 'jpeg':
             print('JPG/PNG/JPEG image detected')
-            # TODO: Fix this
-            #self.load_img(url)
+            self.load_img()
 
-    # This is not working :/
-    def load_img(self, url):
+    def load_img(self):
+        url = daftar.settings.DAFTAR_HOST + "/storage/" + self.id + "?download"
         hed = {'Authorization': 'Bearer ' + User().token}
         request = requests.get(url, stream=True, headers=hed)
 
         if request.status_code != requests.codes.ok:
             return
 
-        lf = tempfile.NamedTemporaryFile()
+        print(self.fileName)
+        print(daftar.settings.MEDIA_ROOT)
 
-        for block in request.iter_content(1024 * 8):
-            if not block:
-                break
-
-            lf.write(block)
-
-        self.img.save(self.file, files.File(lf))
+        file_name = default_storage.save(self.file, ContentFile(request.content))
+        self.file_url = default_storage.url(file_name)
+        print(self.file_url)
 
 
 class Application(object):

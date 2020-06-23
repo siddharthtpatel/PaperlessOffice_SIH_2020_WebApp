@@ -17,7 +17,7 @@ def get_storage_documents(limit = None):
 
     docs = []
     for doc in response.json():
-        docs.append(StorageDocument(doc, url))
+        docs.append(StorageDocument(doc))
 
     return docs
 

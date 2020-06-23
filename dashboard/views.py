@@ -18,6 +18,7 @@ def index(request):
         if applications is False:
             # TODO: Error handling
             print('Error Loading Applications')
+            return
 
         return render(request, 'dashboard.html', {'title': 'Daftar | Dashboard',
                                                   'isUser': User().isUser,
