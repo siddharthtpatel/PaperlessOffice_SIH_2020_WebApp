@@ -26,3 +26,41 @@ def index(request):
                                                   'docs': docs, 'applications': applications})
     else:
         return redirect('/')
+
+
+def application(request):
+    if verify_token(request):
+        applications = get_applications()
+
+        if applications is False:
+            # TODO: Error handling
+            print('Error Loading Documents')
+            return
+        for application in applications:
+            print(application.file)
+
+        return render(request, 'application.html', {'title': 'Daftar | Applications',
+                                                    'isUser': User().isUser,
+                                                    'first_name': User().first_name,
+                                                    'applications': applications})
+    else:
+        return redirect('/')
+
+
+def storage(request):
+    if verify_token(request):
+        docs = get_storage_documents()
+
+        if docs is False:
+            # TODO: Error handling
+            print('Error Loading Documents')
+            return
+        for doc in docs:
+            print(doc.file)
+
+        return render(request, 'storage.html', {'title': 'Daftar | Storage',
+                                                'isUser': User().isUser,
+                                                'first_name': User().first_name,
+                                                'docs': docs})
+    else:
+        return redirect('/')

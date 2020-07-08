@@ -1,0 +1,237 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+  <!-- Main layout -->
+  <main>
+    <div class="container"></div>
+        <style>
+        .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+            background-color: #29a329;
+          } 
+        </style>
+        <ul class="nav nav-pills nav-justified" >
+          <li class="nav-item">
+              <a href="#AllApplication" class="nav-link active" data-toggle="tab"><h5 class="font-weight-500 my-1" style="color:black;">All Application</h5></a>
+          </li>
+          <li class="nav-item">
+              <a href="#PendingApplication" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1"  style="color:black;">Pending Application</h5></a>
+          </li>
+          <li class="nav-item">
+              <a href="#ApprovedApplication" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1"  style="color:black;">Approved Application</h5></a>
+          </li>
+          <li class="nav-item">
+            <a href="#RejectedApplication" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1"  style="color:black;">Rejected Application</h5></a>
+        </li>
+      </ul>
+      <hr>
+      <div class="tab-content">
+          <div class="tab-pane fade show active" id="AllApplication">
+            <!-- Section: Applications -->
+              <section class="pb-12">
+                {% if applications|length < 1 %}
+                <div class="mt-3 container text-center">
+                    <h4>You don't have any Applications!</h4>
+                    <p>Please apply for applications.</p>
+                </div>
+                {% else %}
+                {% for application in applications %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8 mt-2">
+                                <div class="mx-2">
+                                    <h5 class="black-text">{{ application.name }}</h5>
+                                </div>
+                                <div class="mx-2 mt-3">
+                                    {% if application.isCreator %}
+                                        <p class="grey-text">Waiting for {{application.assignedName }} to sign.</p>
+                                    {% else %}
+                                        <p class="grey-text">Submitted by {{ application.creatorName }} on {{ application.timestamp }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-center">
+                                    <button
+                                            class="btn btn-outline-default btn-rounded waves-effect">View
+                                    </button>
+                                    <div class="mt-2">
+                                        <div class="progress md-progress float-right"
+                                             style="height:15px;">
+                                            <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                                                 role="progressbar" style="width: {{ application.progress }}%;height: 15px"
+                                                 aria-valuenow="{{ application.stage }}" aria-valuemin="0"
+                                                 aria-valuemax="{{ application.stages }}">
+                                                {{ application.stage }}/{{ application.stages }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+              </section>
+            <!-- Section: data tables -->
+          </div>
+          <div class="tab-pane fade" id="PendingApplication">
+              <!-- Section: Applications -->
+              <section class="pb-12">
+                <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-10 mt-2">
+                          <div class="mx-2">
+                            <h4 class="black-text">Hostel Application Form</h4>
+                          </div>
+                          <div class="mx-2 mt-3">
+                            <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class=""><button class="btn btn-outline-default btn-rounded waves-effect">View</button>
+                            <div class="mt-2">
+                              <div class="progress md-progress float-right" style="width: 200px; height:20px;">
+                                <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                                  role="progressbar" style="width: 55%;height: 20px" aria-valuenow="55" aria-valuemin="0"
+                                  aria-valuemax="100">
+                                  3/5
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-10 mt-2">
+                          <div class="mx-2">
+                            <h4 class="black-text">Hostel Application Form</h4>
+                          </div>
+                          <div class="mx-2 mt-3">
+                            <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class=""><button class="btn btn-outline-default btn-rounded waves-effect">View</button>
+                            <div class="mt-2">
+                              <div class="progress md-progress float-right" style="width: 200px; height:20px;">
+                                <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                                  role="progressbar" style="width: 55%;height: 20px" aria-valuenow="55" aria-valuemin="0"
+                                  aria-valuemax="100">
+                                  3/5
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>  
+              </section>  
+            <!-- Section: data tables -->
+          </div>
+          <div class="tab-pane fade" id="ApprovedApplication">
+             <!-- Section: Applications -->
+              <section class="pb-12">
+                <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-10 mt-2">
+                          <div class="mx-2">
+                            <h4 class="black-text">Yellow Application Form</h4>
+                          </div>
+                          <div class="mx-2 mt-3">
+                            <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class=""><button class="btn btn-outline-default btn-rounded waves-effect">View</button>
+                            <div class="mt-2">
+                              <div class="progress md-progress float-right" style="width: 200px; height:20px;">
+                                <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                                  role="progressbar" style="width:85%;height: 20px" aria-valuenow="85" aria-valuemin="0"
+                                  aria-valuemax="100">
+                                  4/5
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </section>  
+              <!-- Section: data tables -->
+          </div>
+          <div class="tab-pane fade" id="RejectedApplication">
+            <!-- Section: Applications -->
+             <section class="pb-12">
+               <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-10 mt-2">
+                      <div class="mx-2">
+                        <h4 class="black-text">Yellow Application Form</h4>
+                      </div>
+                      <div class="mx-2 mt-3">
+                        <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class=""><button class="btn btn-outline-default btn-rounded waves-effect">View</button>
+                        <div class="mt-2">
+                          <div class="progress md-progress float-right" style="width: 200px; height:20px;">
+                            <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                              role="progressbar" style="width:85%;height: 20px" aria-valuenow="85" aria-valuemin="0"
+                              aria-valuemax="100">
+                              4/5
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                   </div>
+                  </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-10 mt-2">
+                          <div class="mx-2">
+                            <h4 class="black-text">Yellow Application Form</h4>
+                          </div>
+                          <div class="mx-2 mt-3">
+                            <p class="grey-text">Submitted by Siddharth Patel on 21/3/2020</p>
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class=""><button class="btn btn-outline-default btn-rounded waves-effect">View</button>
+                            <div class="mt-2">
+                              <div class="progress md-progress float-right" style="width: 200px; height:20px;">
+                                <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                                  role="progressbar" style="width:85%;height: 20px" aria-valuenow="85" aria-valuemin="0"
+                                  aria-valuemax="100">
+                                  4/5
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                       </div>
+                    </div>
+              </div> 
+             </section>  
+             <!-- Section: data tables -->
+         </div>
+      </div>
+    </div>
+
+  </main>
+  <!-- Main layout -->
+{% endblock %}

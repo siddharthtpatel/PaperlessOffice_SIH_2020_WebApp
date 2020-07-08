@@ -62,7 +62,7 @@
         <li>
           <ul class="collapsible collapsible-accordion">
             <li>
-              <a href="/dashboard" class="collapsible-header waves-effect active"><i
+              <a href="{% url 'index' %}" class="collapsible-header waves-effect active"><i
                   class="fas fa-home"></i>Home</a>
             </li>
             <li>
@@ -72,13 +72,13 @@
               <div class="collapsible-body">
                 <ul>
                   <li>
-                    <a href="#" class="waves-effect">Your Documents</a>
+                    <a href="{% url 'storage' %}" class="waves-effect">Your Documents</a>
                   </li>
                   <li>
-                    <a href="#" class="waves-effect">Shared Documents</a>
+                    <a href="{% url 'storage' %}" class="waves-effect">Shared Documents</a>
                   </li>
                   <li>
-                    <a href="#" class="waves-effect">Public Documents</a>
+                    <a href="{% url 'storage' %}" class="waves-effect">Public Documents</a>
                   </li>
                 </ul>
               </div>
@@ -90,16 +90,16 @@
               <div class="collapsible-body">
                 <ul>
                   <li>
-                    <a href="#" class="waves-effect">Pending Applications</a>
+                    <a href="{% url 'application' %}" class="waves-effect">Pending Applications</a>
                   </li>
                   <li>
-                    <a href="#" class="waves-effect">Approved Applications</a>
+                    <a href="{% url 'application' %}" class="waves-effect">Approved Applications</a>
                   </li>
                   <li>
-                    <a href="#" class="waves-effect">Rejected Applications</a>
+                    <a href="{% url 'application' %}" class="waves-effect">Rejected Applications</a>
                   </li>
                   <li>
-                    <a href="#" class="waves-effect">All Applications</a>
+                    <a href="{% url 'application' %}" class="waves-effect">All Applications</a>
                   </li>
                 </ul>
               </div>
@@ -197,9 +197,9 @@
   <footer class="page-footer pt-0 mt-5 rgba-stylish-light">
 
     <!-- Copyright -->
-    <div class="footer-copyright py-3 text-center">
+    <div class="footer-copyright py-3 text-center sticky-bottom">
       <div class="container-fluid">
-        © 2019 Copyright: <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> Hexageeks</a>
+        © 2019 Copyright: <a href="{% url 'index' %}" target="_blank"> Hexageeks</a>
       </div>
     </div>
 
