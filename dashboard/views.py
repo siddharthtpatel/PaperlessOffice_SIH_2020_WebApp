@@ -31,7 +31,6 @@ def index(request):
 def application(request):
     if verify_token(request):
         applications = get_applications()
-
         if applications is False:
             # TODO: Error handling
             print('Error Loading Documents')
