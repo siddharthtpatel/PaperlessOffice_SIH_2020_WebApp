@@ -113,6 +113,62 @@
     </div>
   </div>
   <!-- Modal -->
+   <!-- Grievance Model -->
+  <div class="modal fade" id="grieveModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog form-dark" role="document">
+      <!--Content-->
+      <div class="modal-content card card-image green lighten-3" style="">
+        <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+          <!--Header-->
+          <div class="modal-header text-center pb-4">
+            <h3 class="modal-title w-100 white-text font-weight-bold" ><strong>Grievance</strong> <a
+                class="green-text font-weight-bold"><strong> Form</strong></a></h3>
+            <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--Body-->
+          <form class="text-center" style="color: white;" action="#!">
+
+            <!-- Name -->
+            <div class="md-form mt-3">
+                <input type="text" id="materialContactFormName" class="form-control validate white-text">
+                <label for="materialContactFormName">Name</label>
+            </div>
+
+            <!-- E-mail -->
+            <div class="md-form">
+                <input type="email" id="materialContactFormEmail" class="form-control validate white-text">
+                <label for="materialContactFormEmail">E-mail</label>
+            </div>
+
+            <!-- Subject -->
+            <label>Subject</label>
+             <select class="browser-default custom-select mb-4">
+              <option value="" disabled>Grievance Type</option>
+              <option value="1" selected>Feedback</option>
+              <option value="2">Report a bug</option>
+              <option value="3">Misbehaviour</option>
+              <option value="4">Others</option>
+             </select>
+
+            <!--Message-->
+            <div class="md-form">
+                <textarea id="materialContactFormMessage" class="form-control md-textarea" rows="3"></textarea>
+                <label for="materialContactFormMessage">Message</label>
+            </div>
+            <!-- Send button -->
+              <div class="text-center mb-3 col-md-12">
+                  <button type="submit" class="btn btn-success btn-block btn-rounded z-depth-1">Submit</button>
+              </div>
+        </form>
+          </div>
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+  <!-- Model -->
 
   <div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="SignUpModal" aria-hidden="true">
     <div class="modal-dialog cascading-modal" role="document" style="margin-top:3%">
@@ -307,7 +363,11 @@
           <li class="nav-item dropdown">
             <a class="btn btn-outline-white btn-rounded my-3 my-sm-0 ml-3" data-toggle="modal"
               data-target="#loginModel">Login</a>
-      </li>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="btn btn-outline-white btn-rounded my-3 my-sm-0 ml-3" data-toggle="modal"
+              data-target="#grieveModel">Grievance Cell</a>
+          </li>
       </ul>
       </div>
     </nav>
