@@ -1,10 +1,12 @@
+import json
+
 import requests
 
 import daftar
-from daftar.models import User, StorageDocument, Application
+from daftar.models import User, StorageDocument, Application, Authority
 
 
-def get_storage_documents(limit = None):
+def get_storage_documents(limit=None):
     url = daftar.settings.DAFTAR_HOST + "/storage"
     if limit is not None:
         url += '?limit=' + str(limit)
@@ -42,3 +44,22 @@ def get_applications(filter=None, limit=None):
         docs.append(Application(doc))
 
     return docs
+
+
+def get_authorities(filter=None, limit=None):
+    url = daftar.settings.DAFTAR_HOST + "/users"
+
+    if filter is not None:
+        url += '?filter=' + str(filter) + '&'
+
+    if limit is not None:
+        url += '?limit=' + str(limit)
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.get(url, headers=hed)
+
+    auth_list = []
+    for auth in response.json():
+        auth_list.append(Authority(auth))
+
+    return auth_list

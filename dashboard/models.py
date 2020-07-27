@@ -1,3 +1,4 @@
-from django.db import models
+import requests
+from django import forms
 
-# Create your models here.
+import daftar
