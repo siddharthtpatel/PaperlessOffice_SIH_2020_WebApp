@@ -35,8 +35,6 @@ def application(request):
             # TODO: Error handling
             print('Error Loading Documents')
             return
-        for application in applications:
-            print(application.file)
 
         return render(request, 'application.html', {'title': 'Daftar | Applications',
                                                     'isUser': User().isUser,
@@ -54,8 +52,6 @@ def storage(request):
             # TODO: Error handling
             print('Error Loading Documents')
             return
-        for doc in docs:
-            print(doc.file)
 
         return render(request, 'storage.html', {'title': 'Daftar | Storage',
                                                 'isUser': User().isUser,

@@ -36,7 +36,7 @@
                     <p>Please apply for Application.</p>
                 </div>
                 {% else %}
-                {% for application in applications %}
+
                    <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -49,17 +49,18 @@
                           </tr>
                         </thead>
                           <tbody>
-                            <tr>
+                          {% for application in applications %}
+                          <tr>
                           <td>{{ application.name }}</td>
                           <td>{{ application.createrName }}</td>
                           <td>{{ application.progress }}</td>
                           <td>{{ application.timestamp }}</td>
                           <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
                                 </tr>
+                          {% endfor %}
                         </tbody>
                       </table>
                    </div>
-                {% endfor %}
                 {% endif %}
               </section>
             <!-- Section: data tables -->
@@ -73,7 +74,7 @@
                     <p>Please apply for application.</p>
                 </div>
                 {% else %}
-                {% for application in applications %}
+
                    <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -86,6 +87,7 @@
                           </tr>
                         </thead>
                           <tbody>
+                          {% for application in applications %}
                             <tr>
                           <td>{{ application.name }}</td>
                           <td>{{ application.createrName }}</td>
@@ -93,10 +95,10 @@
                           <td>{{ application.timestamp }}</td>
                           <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
                                 </tr>
+                          {% endfor %}
                         </tbody>
                       </table>
                    </div>
-                {% endfor %}
                 {% endif %}
               </section>  
             <!-- Section: data tables -->
@@ -110,7 +112,7 @@
                     <p>Please apply for application.</p>
                 </div>
                 {% else %}
-                {% for application in applications %}
+
                    <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -123,6 +125,7 @@
                           </tr>
                         </thead>
                           <tbody>
+                          {% for application in applications %}
                             <tr>
                           <td>{{ application.name }}</td>
                           <td>{{ application.createrName }}</td>
@@ -130,10 +133,10 @@
                           <td>{{ application.timestamp }}</td>
                           <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
                                 </tr>
+                          {% endfor %}
                         </tbody>
                       </table>
                    </div>
-                {% endfor %}
                 {% endif %}
               </section>  
               <!-- Section: data tables -->
@@ -147,7 +150,7 @@
                     <p>Please apply for application.</p>
                 </div>
                 {% else %}
-                {% for application in applications %}
+
                    <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -160,6 +163,7 @@
                           </tr>
                         </thead>
                           <tbody>
+                          {% for application in applications %}
                             <tr>
                           <td>{{ application.name }}</td>
                           <td>{{ application.createrName }}</td>
@@ -167,10 +171,10 @@
                           <td>{{ application.timestamp }}</td>
                           <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
                                 </tr>
+                          {% endfor %}
                         </tbody>
                       </table>
                    </div>
-                {% endfor %}
                 {% endif %}
              </section>  
              <!-- Section: data tables -->
