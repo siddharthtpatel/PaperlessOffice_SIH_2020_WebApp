@@ -128,33 +128,33 @@
             </button>
           </div>
           <!--Body-->
-          <form class="text-center" style="color: white;" action="#!">
+          <form class="text-center" style="color: white;" action="mailto:grievance@gmail.com" method="post" enctype="text/plain">
 
             <!-- Name -->
             <div class="md-form mt-3">
-                <input type="text" id="materialContactFormName" class="form-control validate white-text">
+                <input type="text" id="materialContactFormName" class="form-control validate white-text" name="name">
                 <label for="materialContactFormName">Name</label>
             </div>
 
             <!-- E-mail -->
             <div class="md-form">
-                <input type="email" id="materialContactFormEmail" class="form-control validate white-text">
+                <input type="email" id="materialContactFormEmail" class="form-control validate white-text" name="mail">
                 <label for="materialContactFormEmail">E-mail</label>
             </div>
 
             <!-- Subject -->
             <label>Subject</label>
-             <select class="browser-default custom-select mb-4 ">
-              <option value="" disabled>Grievance Type</option>
-              <option value="1" >Feedback</option>
-              <option value="2">Report a bug</option>
-              <option value="3">Misbehaviour</option>
-              <option value="4">Others</option>
+             <select class="browser-default custom-select mb-4 " name="subject" id="subject">
+              <option value="Grievance Form" >Grievance Type</option>
+              <option value="Feedback" >Feedback</option>
+              <option value="Report a Bug">Report a bug</option>
+              <option value="Misbehavior">Misbehaviour</option>
+              <option value="Others">Others</option>
              </select>
 
             <!--Message-->
             <div class="md-form">
-                <textarea id="materialContactFormMessage" class="form-control md-textarea validate white-text" rows="3"></textarea>
+                <textarea id="materialContactFormMessage" class="form-control md-textarea validate white-text" rows="3"  name="comment"></textarea>
                 <label for="materialContactFormMessage">Message</label>
             </div>
             <!-- Send button -->
