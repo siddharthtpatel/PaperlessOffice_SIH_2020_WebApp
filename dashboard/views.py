@@ -36,8 +36,11 @@ def index(request):
 
 def application(request):
     if verify_token(request):
-        applications = get_applications()
-        if applications is False:
+        all_applications = get_applications()
+        pending_applications = get_applications(filter='pending')
+        approved_applications = get_applications(filter='signed')
+        rejected_applications = get_applications(filter='rejected')
+        if all_applications is False:
             # TODO: Error handling
             print('Error Loading Documents')
             return
@@ -45,7 +48,10 @@ def application(request):
         return render(request, 'application.html', {'title': 'Daftar | Applications',
                                                     'isUser': User().isUser,
                                                     'first_name': User().first_name,
-                                                    'applications': applications})
+                                                    'all_applications': all_applications,
+                                                    'pending_applications': pending_applications,
+                                                    'approved_applications': approved_applications,
+                                                    'rejected_applications': rejected_applications})
     else:
         return redirect('/')
 

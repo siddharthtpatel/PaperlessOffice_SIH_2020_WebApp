@@ -46,7 +46,7 @@
           <div class="tab-pane fade show active" id="AllApplication">
             <!-- Section: Applications -->
               <section class="pb-12">
-                {% if applications|length < 1 %}
+                {% if all_applications|length < 1 %}
                 <div class="mt-3 container text-center">
                     <h4>You don't have any Applications!</h4>
                     <p>Please apply for Application.</p>
@@ -65,7 +65,7 @@
                           </tr>
                         </thead>
                           <tbody>
-                          {% for application in applications %}
+                          {% for application in all_applications %}
                           <tr>
                           <td>{{ application.name }}</td>
                           <td>{{ application.creatorName }}</td>
@@ -84,7 +84,7 @@
           <div class="tab-pane fade" id="PendingApplication">
               <!-- Section: Applications -->
               <section class="pb-12">
-               {% if applications|length < 1 %}
+               {% if pending_applications|length < 1 %}
                 <div class="mt-3 container text-center">
                     <h4>You don't have any Pending Application!</h4>
                     <p>Please apply for application.</p>
@@ -103,7 +103,7 @@
                           </tr>
                         </thead>
                           <tbody>
-                          {% for application in applications %}
+                          {% for application in pending_applications %}
                             <tr>
                           <td>{{ application.name }}</td>
                           <td>{{ application.creatorName }}</td>
@@ -122,9 +122,9 @@
           <div class="tab-pane fade" id="ApprovedApplication">
              <!-- Section: Applications -->
               <section class="pb-12">
-                {% if applications|length < 1 %}
+                {% if approved_applications|length < 1 %}
                 <div class="mt-3 container text-center">
-                    <h4>You don't have any Application!</h4>
+                    <h4>You don't have any Approved Application!</h4>
                     <p>Please apply for application.</p>
                 </div>
                 {% else %}
@@ -141,7 +141,7 @@
                           </tr>
                         </thead>
                           <tbody>
-                          {% for application in applications %}
+                          {% for application in approved_applications %}
                             <tr>
                           <td>{{ application.name }}</td>
                           <td>{{ application.creatorName }}</td>
@@ -160,7 +160,7 @@
           <div class="tab-pane fade" id="RejectedApplication">
             <!-- Section: Applications -->
              <section class="pb-12">
-               {% if applications|length < 1 %}
+               {% if rejected_applications|length < 1 %}
                 <div class="mt-3 container text-center">
                     <h4>You don't have any Application!</h4>
                     <p>Please apply for application.</p>
@@ -179,7 +179,7 @@
                           </tr>
                         </thead>
                           <tbody>
-                          {% for application in applications %}
+                          {% for application in rejected_applications %}
                             <tr>
                           <td>{{ application.name }}</td>
                           <td>{{ application.creatorName }}</td>
