@@ -1,6 +1,22 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
+<!-- MDBootstrap Datatables  -->
+<link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
+<style>
+  table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+      bottom: .5em;
+    }
+</style>
   <!-- Main layout -->
   <main>
     <div class="container"></div>
@@ -37,15 +53,15 @@
                 </div>
                 {% else %}
 
-                   <div class="table-responsive">
-                    <table class="table">
+                   <div class="">
+                    <table id="allApplicationsDT" class="table table-striped table-bordered table-sm" cellspacing="0">
                         <thead>
-                          <tr>
+                          <tr class="table-success">
                             <th scope="col">Name</th>
                             <th scope="col">Submitted By</th>
                             <th scope="col">Current Stage</th>
                             <th scope="col">Date</th>
-                              <th scope="col"></th>
+                            <th scope="col">Actions</th>
                           </tr>
                         </thead>
                           <tbody>
@@ -75,15 +91,15 @@
                 </div>
                 {% else %}
 
-                   <div class="table-responsive">
-                    <table class="table">
+                   <div class="">
+                    <table id="pendingApplicationsDT" class="table table-striped table-bordered table-sm" cellspacing="0">
                         <thead>
-                          <tr>
+                          <tr class="table-success">
                             <th scope="col">Name</th>
                             <th scope="col">Submitted By</th>
                             <th scope="col">Current Stage</th>
                             <th scope="col">Date</th>
-                              <th scope="col"></th>
+                              <th scope="col">Actions</th>
                           </tr>
                         </thead>
                           <tbody>
@@ -113,15 +129,15 @@
                 </div>
                 {% else %}
 
-                   <div class="table-responsive">
-                    <table class="table">
+                   <div class="">
+                    <table id="approvedApplicationsDT" class="table table-striped table-bordered table-sm" cellspacing="0">
                         <thead>
-                          <tr>
+                          <tr class="table-success">
                             <th scope="col">Name</th>
                             <th scope="col">Submitted By</th>
                             <th scope="col">Current Stage</th>
                             <th scope="col">Date</th>
-                              <th scope="col"></th>
+                              <th scope="col">Actions</th>
                           </tr>
                         </thead>
                           <tbody>
@@ -151,15 +167,15 @@
                 </div>
                 {% else %}
 
-                   <div class="table-responsive">
-                    <table class="table">
+                   <div class="">
+                    <table id="rejectedApplicationsDT" class="table table-striped table-bordered table-sm" cellspacing="0">
                         <thead>
-                          <tr>
+                          <tr class="table-success">
                             <th scope="col">Name</th>
                             <th scope="col">Submitted By</th>
                             <th scope="col">Current Stage</th>
                             <th scope="col">Date</th>
-                              <th scope="col"></th>
+                            <th scope="col">Actions</th>
                           </tr>
                         </thead>
                           <tbody>
@@ -184,4 +200,17 @@
 
   </main>
   <!-- Main layout -->
+{% endblock %}
+{% block scripts %}
+<!-- MDBootstrap Datatables  -->
+<script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    $('#allApplicationsDT').DataTable();
+    $('#pendingApplicationsDT').DataTable();
+    $('#approvedApplicationsDT').DataTable();
+    $('#rejectedApplicationsDT').DataTable();
+    $('.dataTables_length').addClass('bs-select');
+  });
+</script>
 {% endblock %}
