@@ -1,7 +1,7 @@
 import os
 import tempfile
 import datetime
-
+import json as js
 import requests
 from django.core.files.base import ContentFile
 
@@ -57,6 +57,15 @@ class StorageDocument(models.Model):
             print('JPG/PNG/JPEG image detected')
             self.load_img()
 
+        url = daftar.settings.DAFTAR_HOST + "/users"
+        hed = {'Authorization': 'Bearer ' + User().token}
+        request = requests.get(url, stream=True, headers=hed)
+        users = js.loads(request.text)
+        for user in users:
+            if json['creator'] == user['_id']['$oid']:
+                self.creatorName = user['first_name']+" "+user['last_name']
+
+
     def load_img(self):
         url = daftar.settings.DAFTAR_HOST + "/storage/" + self.id + "?download"
         hed = {'Authorization': 'Bearer ' + User().token}
@@ -98,3 +107,19 @@ class Authority(object):
     def __init__(self, json):
         self.id = json['_id']['$oid']
         self.name = json['first_name'] + ' ' + json['last_name']
+
+
+class Workflow(object):
+
+    def __init__(self, json):
+        self.id = json['_id']['$oid']
+        self.name = json['name']
+        self.creatorId = json['creatorId']
+        self.totalStages = int(json['totalStages'])
+        self.stages = json['stages']
+        self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
+
+        if User().token == json['creatorId']:
+            self.isCreator = True
+        else:
+            self.isCreator = False

@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 import daftar
-from daftar.functions import get_storage_documents, get_applications, get_authorities
+from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows
 from daftar.models import User
 from daftar.views import verify_token
 
@@ -76,16 +76,16 @@ def new_workflow(request):
         print('Error Loading Documents')
         return
 
-    return render(request, 'workflow.html', {'title': 'Daftar | Workflow',
-                                             'isUser': User().isUser,
-                                             'first_name': User().first_name,
-                                             'authorities': auth_list})
+    return render(request, 'new_workflow.html', {'title': 'Daftar | Workflow',
+                                                 'isUser': User().isUser,
+                                                 'first_name': User().first_name,
+                                                 'authorities': auth_list})
 
 
 def add_workflow(request):
     if request.method == 'POST':
         stages = []
-        for i in range(1, int(request.POST.get('totalStages'))+1):
+        for i in range(1, int(request.POST.get('totalStages')) + 1):
             id_name = request.POST.get(str(i)).split('_')
             stage = {'authId': id_name[0], 'authName': id_name[1]}
             stages.append(stage)
@@ -105,3 +105,18 @@ def add_workflow(request):
         else:
             return HttpResponseRedirect(reverse('index'))
 
+
+def workflow(request):
+    if verify_token(request):
+        workflows = get_workflows()
+        if workflows is False:
+            # TODO: Error handling
+            print('Error Loading Documents')
+
+
+        return render(request, 'workflow.html', {'title': 'Daftar | Workflows',
+                                                 'isUser': User().isUser,
+                                                 'first_name': User().first_name,
+                                                 'workflows': workflows})
+    else:
+        return redirect('/')

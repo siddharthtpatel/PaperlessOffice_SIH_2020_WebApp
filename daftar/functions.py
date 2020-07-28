@@ -3,7 +3,7 @@ import json
 import requests
 
 import daftar
-from daftar.models import User, StorageDocument, Application, Authority
+from daftar.models import User, StorageDocument, Application, Authority, Workflow
 
 
 def get_storage_documents(limit=None):
@@ -63,3 +63,25 @@ def get_authorities(filter=None, limit=None):
         auth_list.append(Authority(auth))
 
     return auth_list
+
+
+def get_workflows(filter=None, limit=None):
+    url = daftar.settings.DAFTAR_HOST + "/workflow"
+
+    if filter is not None:
+        url += '?filter=' + str(filter) + '&'
+
+    if limit is not None:
+        url += '?limit=' + str(limit)
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.get(url, headers=hed)
+
+    if response.status_code != 200:
+        return False
+
+    workflows = []
+    for workflow in response.json():
+        workflows.append(Workflow(workflow))
+
+    return workflows
