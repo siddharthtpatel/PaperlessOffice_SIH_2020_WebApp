@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+  <!-- Main layout -->
+  <main>
+    <div class="container">
+      <!-- Section: Applications -->
+      <section class="pb-12">
+        {% if workflows|length < 1 %}
+        <div class="mt-3 container text-center">
+            <h4>You don't have any workflow!</h4>
+            <p>Please create a new workflow.</p>
+        </div>
+        {% else %}
+
+           <div class="table-responsive">
+            <table class="table">
+                <thead class="thead green">
+                  <tr>
+                    <th scope="col"><h6><b>Name</b></h6></th>
+                    <th scope="col"><h6><b>Total Stages</b></h6></th>
+                    <th scope="col"><h6><b>Created On</b></h6></th>
+                    <th scope="col"><h6><b>Stages</b></h6></th>
+                      <th scope="col"></th>
+                  </tr>
+                </thead>
+                  <tbody>
+                  {% for workflow in workflows %}
+                  <tr>
+                  <td>{{ workflow.name }}</td>
+                  <td>{{ workflow.totalStages }}</td>
+                  <td>{{ workflow.timestamp }}</td>
+                  <td>
+                      {% for stage in workflow.stages %}
+                        <p>{{ stage.name}} - {{ stage.authName }}</p>
+                      {% endfor %}
+                  </td>
+                  <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">Edit</button></td>
+                        </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+           </div>
+        {% endif %}
+      </section>
+      <!-- Section: data tables -->
+    </div>
+
+  </main>
+  <!-- Main layout -->
+{% endblock %}

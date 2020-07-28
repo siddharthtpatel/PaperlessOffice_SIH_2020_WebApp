@@ -14,6 +14,7 @@
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
   <!-- Your custom styles (optional) -->
+
   <style>
     .visible-img {
       display: inline-block !important;
@@ -104,6 +105,7 @@
                 </ul>
               </div>
             </li>
+            {% if not isUser %}
             <li>
               <a class="collapsible-header waves-effect arrow-r">
                 <i class="fas fa-network-wired"></i>Workflows<i class="fas fa-angle-down rotate-icon"></i>
@@ -111,14 +113,15 @@
               <div class="collapsible-body">
                 <ul>
                   <li>
-                    <a href="#" class="waves-effect">Create new workflow</a>
+                    <a href="{% url 'new_workflow' %}" class="waves-effect">Create new workflow</a>
                   </li>
                   <li>
-                    <a href="#" class="waves-effect">Workflows</a>
+                    <a href="{% url 'workflow' %}" class="waves-effect">Workflows</a>
                   </li>
                 </ul>
               </div>
             </li>
+            {% endif %}
             <!-- Side navigation links -->
 
           </ul></li></ul>
@@ -199,13 +202,13 @@
     <!-- Copyright -->
     <div class="footer-copyright py-3 text-center sticky-bottom">
       <div class="container-fluid">
-        © 2019 Copyright: <a href="{% url 'index' %}" target="_blank"> Hexageeks</a>
+        © 2020 Copyright: <a href="{% url 'index' %}" target="_blank"> Hexageeks</a>
       </div>
     </div>
 
   </footer>
   <!-- Footer -->
-
+ 
   <!-- SCRIPTS -->
   <!-- JQuery -->
   <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -218,6 +221,14 @@
 
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+
+  <!-- HandleBar URL -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+
+  <!-- Custom Scripts -->
+  {% block scripts %}
+
+  {% endblock %}
 
   <!-- Initializations -->
   <script>

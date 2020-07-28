@@ -1,0 +1,109 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+  <script id="add_authority" type="text/template">
+    <div class="row m-3 p-3">
+        <div class="col-1">
+          {% verbatim %}<h4>{{ authority_count }}</h4>
+        </div>
+        <div class="col-7" style="text-align:left">
+          <select class="browser-default custom-select" name="{{ authority_count }}">{% endverbatim %}
+            <option disabled selected>Select Authority</option>
+            {% for auth in authorities %}
+              <option value="{{ auth.id }}_{{ auth.name }}">{{ auth.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col" style="text-align:right">
+          <a class="btn-floating btn-sm btn-success" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+        </div>
+    </div>
+  </script>
+
+  <!-- Main layout -->
+  <main>
+    <form name="new_workflow" id="new_workflow" action="{% url 'add_workflow' %}" method="POST">{% csrf_token %}
+      <div class="container">
+        <div id="WorkflowNameheader" class="md-form row">
+          <div class="col-10">
+          <input type="text" id="workflowname" class="form-control" name="name"><br>
+          <label for="workflowname" id="form2" style="color: white;">WORKFLOW NAME</label>
+          </div>
+          <div class="col-1">
+            <input type="number" name="totalStages" class="form-control" id="totalStages" hidden value="1">
+          </div>
+        </div>
+        <style>
+            #WorkflowNameheader {
+              border-radius: 25px;
+              background:	 #29a329;
+              padding: 20px;
+              width: auto;
+              height: 100px;
+            }
+            #form2 {
+              margin-left: 20px;
+              margin-top: 5px;
+              font-size: 25px;
+            }
+            #workflowname {
+              margin-top: 2px;
+              font-size: 30px;
+              color: white;
+            }
+        </style>
+        <div class="card border-success" style="max-width: 100%;">
+          <div class="card-body text-success" id="authority_list">
+            <div class="row m-3 p-3">
+              <div class="col-1">
+                <h4>1</h4>
+              </div>
+              <div class="col-7" style="text-align:left">
+                <select class="browser-default custom-select" id="1" name="1">
+                  <option disabled selected>Select Authority</option>
+                  {% for auth in authorities %}
+                    <option value="{{ auth.id }}_{{ auth.name }}">{{ auth.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent border-success">
+            <div class="row">
+              <div class="col-6" style="text-align:left">
+                <button type="button" font-size="40px" class="btn green btn-rounded ml-0" id="add_authority_button">ADD NEW STAGE</button>
+              </div>
+              <div class="col-6" style="text-align:right">
+                <button type="submit" font-size="40px" class="btn green btn-rounded ml-0" id="create_workflow">Create Workflow</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    var authority_count = 1;
+    const authority_template = Handlebars.compile(document.querySelector('#add_authority').innerHTML);
+    document.querySelector('#add_authority_button').onclick = () => {
+      authority_count++;
+      document.querySelector('#totalStages').value = authority_count;
+      const new_authority = authority_template({'authority_count': authority_count});
+      document.querySelector('#authority_list').insertAdjacentHTML('beforeEnd', new_authority);
+    }
+
+    function DeleteRow(o){
+      var p=o.parentNode.parentNode;
+         p.parentNode.removeChild(p);
+      authority_count = document.querySelector('#authority_list').childElementCount;
+      document.querySelector('#totalStages').value = authority_count;
+    }
+  </script>
+  <!-- Main layout -->
+<script>
+
+</script>
+{% endblock %}
