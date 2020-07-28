@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+
+<link href="{% static 'css/addons/newDocument.css' %}" rel="stylesheet">
+<main>
+    <div class="container">
+          <div class="panel panel-default">
+              <div class="panel-heading"><h4><strong>Upload Files</strong></h4></div>
+            <div class="panel-body">
+
+              <!-- Standar Form -->
+              <p>Select files to be uploaded</p>
+              <div class="md-form">
+              <input type="text" id="form1" class="form-control">
+              <label for="form1">File Name</label>
+              </div>
+<!--              <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">-->
+<!--                <div class="form-inline">-->
+<!--                  <div class="form-group">-->
+
+<!--                    <input type="file" name="files[]" id="js-upload-files" multiple>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </form>-->
+            <div class="input-group mb-2" style="width:50%">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+              </div>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile01"
+                  aria-describedby="inputGroupFileAddon01" >
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+              </div>
+            </div>
+
+              <!-- Drop Zone -->
+              <p>Or drag and drop files below</p>
+              <div class="upload-drop-zone" id="drop-zone">
+                Just drag and drop files here
+              </div>
+                <div class="row">
+                    <div class="col-12" style="text-align:right;">
+                        <button type="submit" class="btn btn-success btn-rounded "id="js-upload-submit" >Upload files</button>
+                    </div>
+                </div>
+          </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
++ function($) {
+    'use strict';
+
+    // UPLOAD CLASS DEFINITION
+    // ======================
+
+    var dropZone = document.getElementById('drop-zone');
+    var uploadForm = document.getElementById('js-upload-form');
+
+    var startUpload = function(files) {
+
+        console.log(files)
+    }
+
+    uploadForm.addEventListener('submit', function(e) {
+        var uploadFiles = document.getElementById('js-upload-files').files;
+        e.preventDefault()
+
+        startUpload(uploadFiles)
+    })
+
+    dropZone.ondrop = function(e) {
+        e.preventDefault();
+        this.className = 'upload-drop-zone';
+
+        startUpload(e.dataTransfer.files)
+    }
+
+    dropZone.ondragover = function() {
+        this.className = 'upload-drop-zone drop';
+        return false;
+    }
+
+    dropZone.ondragleave = function() {
+        this.className = 'upload-drop-zone';
+        return false;
+    }
+
+}(jQuery);
+</script>
+{% endblock %}
+
+
+

@@ -126,3 +126,13 @@ def workflow(request):
                                                  'workflows': workflows})
     else:
         return redirect('/')
+
+
+def new_document(request):
+    if verify_token(request):
+        # TODO
+
+        return render(request, 'new_document.html', {'title': 'Daftar | New Document'})
+    else:
+        return redirect('/')
+
