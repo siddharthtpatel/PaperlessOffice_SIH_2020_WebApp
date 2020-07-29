@@ -49,7 +49,7 @@
 <body>
 
   <!-- Login Modal -->
-  <div class="modal fade" id="loginModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="loginModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" method="POST">
     <div class="modal-dialog form-dark" role="document">
       <!--Content-->
       <div class="modal-content card card-image green lighten-3" style="">
@@ -395,7 +395,7 @@
         </div>
         {% elif signup_success %}
         <div class="alert alert-success alert-dismissible fade show mt-5" role="alert" style="position:absolute">
-          Successfully Signed Up. Now you can login!
+          Successfully Signed Up, please verify your email and login!
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
