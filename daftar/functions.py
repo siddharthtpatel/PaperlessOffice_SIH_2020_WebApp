@@ -3,7 +3,7 @@ import json
 import requests
 
 import daftar
-from daftar.models import User, StorageDocument, Application, Authority, Workflow
+from daftar.models import User, StorageDocument, Application, Authority, Workflow, Form
 
 
 def get_storage_documents(limit=None):
@@ -89,17 +89,17 @@ def get_workflows(filter=None, limit=None):
 
 def add_forms(form):
     fields = []
-    for i in range(1, int(form.get('totalFields'))+1):
+    for i in range(1, int(form.get('totalFields')) + 1):
         question = {'type': form.get(f'{i}_type'),
                     'question': form.get(f'{i}_question')}
         options = {}
         if question['type'] in ['radio', 'checkbox']:
-            for j in range(1, int(form.get(f"{i}_total_options"))+1):
+            for j in range(1, int(form.get(f"{i}_total_options")) + 1):
                 options[f'{j}'] = form.get(f"{i}_{j}_option")
             question['options'] = options
         fields.append(question)
 
-    data = {'creator': User().first_name+" "+User().last_name,
+    data = {'creator': User().first_name + " " + User().last_name,
             'title': form.get('formName'),
             'description': form.get('formDesc'),
             'fields': fields}
@@ -139,7 +139,7 @@ def add_workflows(form):
         return False
 
 
-'''def get_forms(filter=None, limit=None):
+def get_forms(filter=None, limit=None):
     url = daftar.settings.DAFTAR_HOST + "/form"
 
     if filter is not None:
@@ -156,7 +156,6 @@ def add_workflows(form):
 
     forms = []
     for form in response.json():
-        forms.append(Workflow(form))
+        forms.append(Form(form))
 
     return forms
-'''

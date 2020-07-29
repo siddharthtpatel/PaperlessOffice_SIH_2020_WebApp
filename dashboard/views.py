@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 import daftar
-from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows, add_forms, add_workflows#, get_forms
+from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows, add_forms, \
+    add_workflows, get_forms
 from daftar.models import User
 from daftar.views import verify_token
 
@@ -115,11 +116,12 @@ def workflow(request):
     else:
         return redirect('/')
 
+
 def new_form(request):
     if verify_token(request):
         return render(request, 'new_form.html', {'title': 'Daftar | New Form',
-                                             'isUser': User().isUser,
-                                             'first_name': User().first_name})
+                                                 'isUser': User().isUser,
+                                                 'first_name': User().first_name})
     else:
         return redirect('/')
 
@@ -136,19 +138,21 @@ def add_form(request):
         return redirect('/')
 
 
-'''def form(request):
+def form(request):
     if verify_token(request):
         forms = get_forms()
         if forms is False:
             # TODO: Error handling
             print('Error Loading Documents')
 
-        return render(request, 'workflow.html', {'title': 'Daftar | Workflows',
-                                                 'isUser': User().isUser,
-                                                 'first_name': User().first_name,
-                                                 'forms': forms})
+        return render(request, 'form.html', {'title': 'Daftar | Forms',
+                                             'isUser': User().isUser,
+                                             'first_name': User().first_name,
+                                             'forms': forms})
     else:
-        return redirect('/')'''
+        return redirect('/')
+
+
 def new_document(request):
     if verify_token(request):
         # TODO

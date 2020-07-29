@@ -25,9 +25,10 @@ class User(object):
 
         def __str__(self):
             return self + self.id
+
     instance = None
 
-    def __new__(cls): # __new__ always a classmethod
+    def __new__(cls):  # __new__ always a classmethod
         if not User.instance:
             User.instance = User.__User()
         return User.instance
@@ -51,7 +52,7 @@ class StorageDocument(models.Model):
         self.file = json['file']
         self.fileExt = json['fileExtension']
         self.visibility = json['visibility']
-        self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date'])/1000)
+        self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
 
         if self.fileExt == 'jpg' or self.fileExt == 'png' or self.fileExt == 'jpeg':
             print('JPG/PNG/JPEG image detected')
@@ -63,8 +64,7 @@ class StorageDocument(models.Model):
         users = js.loads(request.text)
         for user in users:
             if json['creator'] == user['_id']['$oid']:
-                self.creatorName = user['first_name']+" "+user['last_name']
-
+                self.creatorName = user['first_name'] + " " + user['last_name']
 
     def load_img(self):
         url = daftar.settings.DAFTAR_HOST + "/storage/" + self.id + "?download"
@@ -94,7 +94,7 @@ class Application(object):
         self.stages = int(json['stages'])
         self.assignedName = json['assignedName']
         self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
-        self.progress = int(self.stage/self.stages*100)
+        self.progress = int(self.stage / self.stages * 100)
 
         if User().token == json['creatorId']:
             self.isCreator = True
@@ -120,6 +120,21 @@ class Workflow(object):
         self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
 
         if User().token == json['creatorId']:
+            self.isCreator = True
+        else:
+            self.isCreator = False
+
+
+class Form(object):
+
+    def __init__(self, json):
+        self.id = json['_id']['$oid']
+        self.title = json['title']
+        self.description = json['description']
+        self.creatorId = json['creator']
+        self.fields = json['fields']
+
+        if User().token == json['creator']:
             self.isCreator = True
         else:
             self.isCreator = False
