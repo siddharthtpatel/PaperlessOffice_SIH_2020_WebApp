@@ -5,55 +5,56 @@
 <link href="{% static 'css/addons/newDocument.css' %}" rel="stylesheet">
 <main>
     <div class="container">
-          <div class="panel panel-default">
-              <div class="panel-heading"><h4><strong>Upload Files</strong></h4></div>
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4><strong>Upload Files</strong></h4></div>
             <div class="panel-body">
+                <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
 
-              <!-- Standar Form -->
-              <p>Select files to be uploaded</p>
-              <div class="md-form">
-              <input type="text" id="form1" class="form-control">
-              <label for="form1">File Name</label>
-              </div>
-<!--              <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">-->
-<!--                <div class="form-inline">-->
-<!--                  <div class="form-group">-->
-
-<!--                    <input type="file" name="files[]" id="js-upload-files" multiple>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </form>-->
-            <div class="input-group mb-2" style="width:50%">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-              </div>
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile01"
-                  aria-describedby="inputGroupFileAddon01" >
-                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-              </div>
-            </div>
-
-              <!-- Drop Zone -->
-              <p>Or drag and drop files below</p>
-              <div class="upload-drop-zone" id="drop-zone">
-                Just drag and drop files here
-              </div>
-                <div class="row">
-                    <div class="col-12" style="text-align:right;">
-                        <button type="submit" class="btn btn-success btn-rounded "id="js-upload-submit" >Upload files</button>
+                    <!-- Standar Form -->
+                    <p>Select files to be uploaded</p>
+                    <div class="md-form">
+                        <input type="text" id="form1" class="form-control" required>
+                        <label for="form1">File Name</label>
                     </div>
-                </div>
-          </div>
+                    <!--              -->
+                    <!--                <div class="form-inline">-->
+                    <!--                  <div class="form-group">-->
+
+                    <!--                    <input type="file" name="files[]" id="js-upload-files" multiple>-->
+                    <!--                  </div>-->
+                    <!--                </div>-->
+                    <!--              </form>-->
+                    <div class="input-group" style="width:50%">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01"
+                                   aria-describedby="inputGroupFileAddon01" required>
+                            <label class="custom-file-label" for="inputGroupFile01" id="ms-label">Choose file</label>
+                        </div>
+                    </div>
+
+                    <!-- Drop Zone -->
+                    <p>Or drag and drop files below</p>
+                    <div class="upload-drop-zone" id="drop-zone">
+                        Just drag and drop files here
+                    </div>
+                    <div class="row">
+                        <div class="col-12" style="text-align:right;">
+                            <button type="submit" class="btn btn-success btn-rounded " id="js-upload-submit">Upload
+                                files
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </main>
 {% endblock %}
 {% block scripts %}
 <script>
-+ function($) {
-    'use strict';
-
     // UPLOAD CLASS DEFINITION
     // ======================
 
@@ -61,9 +62,15 @@
     var uploadForm = document.getElementById('js-upload-form');
 
     var startUpload = function(files) {
-
         console.log(files)
+        document.getElementById('inputGroupFile01').files = files;
+        $('#ms-label').html(files[0].name);
     }
+
+    $('#inputGroupFile01').on('change',function(){
+        var fileName = $(this).val();
+        $(this).next('.custom-file-label').html(fileName);
+    })
 
     uploadForm.addEventListener('submit', function(e) {
         var uploadFiles = document.getElementById('js-upload-files').files;
@@ -89,7 +96,7 @@
         return false;
     }
 
-}(jQuery);
+
 </script>
 {% endblock %}
 

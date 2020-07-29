@@ -159,7 +159,7 @@
               <i class="fas fa-plus"></i><span class="clearfix d-none d-sm-inline-block"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="#">New Document</a>
+              <a class="dropdown-item" href="{% url 'new_document' %}">New Document</a>
               <a class="dropdown-item" href="#">New Application</a>
             </div>
           </li>
@@ -225,9 +225,6 @@
   <!-- HandleBar URL -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 
-<!--  NewDocument-->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <!-- Custom Scripts -->
   {% block scripts %}
 
