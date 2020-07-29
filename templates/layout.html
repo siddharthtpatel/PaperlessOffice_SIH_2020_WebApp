@@ -29,6 +29,9 @@
     }
 
   </style>
+  {% block css %}
+
+  {% endblock %}
 </head>
 
 <body class="fixed-sn white-skin">
@@ -117,6 +120,21 @@
                   </li>
                   <li>
                     <a href="{% url 'workflow' %}" class="waves-effect">Workflows</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <a class="collapsible-header waves-effect arrow-r">
+                <i class="fas fa-file-alt"></i>Forms<i class="fas fa-angle-down rotate-icon"></i>
+              </a>
+              <div class="collapsible-body">
+                <ul>
+                  <li>
+                    <a href="{% url 'new_form' %}" class="waves-effect">Create new form</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'workflow' %}" class="waves-effect">Forms</a>
                   </li>
                 </ul>
               </div>
