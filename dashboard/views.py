@@ -115,7 +115,6 @@ def workflow(request):
     else:
         return redirect('/')
 
-
 def new_form(request):
     if verify_token(request):
         return render(request, 'new_form.html', {'title': 'Daftar | New Form',
@@ -150,3 +149,10 @@ def add_form(request):
                                                  'forms': forms})
     else:
         return redirect('/')'''
+def new_document(request):
+    if verify_token(request):
+        # TODO
+
+        return render(request, 'new_document.html', {'title': 'Daftar | New Document'})
+    else:
+        return redirect('/')

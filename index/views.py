@@ -4,7 +4,10 @@ from daftar.views import verify_token
 from index.models import LoginForm, SignupForm
 
 
-def index(request):
+def index(request, verify_pin=None):
+    if verify_pin is not None:
+        request.session['pin'] = verify_pin
+
     if verify_token(request):
         return redirect('/dashboard')
     else:
@@ -16,9 +19,14 @@ def login(request):
         login_form = LoginForm(request.POST)
 
         if login_form.is_valid():
-            token = login_form.login()
+            if 'pin' in request.session:
+                token = login_form.login(request.session['pin'])
+                del request.session['pin']
+                request.session.modified = True
+            else:
+                token = login_form.login()
 
-            if token:
+            if token is not None:
                 request.session['token'] = token
                 return redirect('/dashboard')
             else:

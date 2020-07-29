@@ -10,5 +10,6 @@ urlpatterns = [
     path('new-workflow', views.new_workflow, name="new_workflow"),
     path('add_workflow', views.add_workflow, name="add_workflow"),
     path('new-form', views.new_form, name="new_form"),
-    path('add_form', views.add_form, name="add_form")
+    path('add_form', views.add_form, name="add_form"),
+    path('new_document', views.new_document, name="new_document")
 ]
