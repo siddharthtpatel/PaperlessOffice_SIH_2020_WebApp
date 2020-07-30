@@ -7,6 +7,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>{{ title }}</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicons/apple-icon-57x57.png' %}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicons/apple-icon-60x60.png' %}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicons/apple-icon-72x72.png' %}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicons/apple-icon-76x76.png' %}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicons/apple-icon-114x114.png' %}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicons/apple-icon-150x150.png' %}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicons/apple-icon-144x144.png' %}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicons/apple-icon-152x152.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicons/apple-icon-180x180.png' %}">
+  <link rel="icon" type="image/png" sizes="192x192"  href="{% static 'favicons/apple-icon-192x192.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/apple-icon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicons/apple-icon-96x96.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/apple-icon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicons/manifest.json' %}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="{% static 'favicons/ms-icon-144x144.png' %}">
+  <meta name="theme-color" content="#ffffff">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!-- Bootstrap core CSS -->
@@ -29,6 +47,9 @@
     }
 
   </style>
+  {% block css %}
+
+  {% endblock %}
 </head>
 
 <body class="fixed-sn white-skin">
@@ -72,6 +93,9 @@
               </a>
               <div class="collapsible-body">
                 <ul>
+                  <li>
+                    <a href="{% url 'new_document' %}" class="waves-effect">Create New Document</a>
+                  </li>
                   <li>
                     <a href="{% url 'storage' %}" class="waves-effect">Your Documents</a>
                   </li>
@@ -121,6 +145,21 @@
                 </ul>
               </div>
             </li>
+            <li>
+              <a class="collapsible-header waves-effect arrow-r">
+                <i class="fas fa-file-alt"></i>Forms<i class="fas fa-angle-down rotate-icon"></i>
+              </a>
+              <div class="collapsible-body">
+                <ul>
+                  <li>
+                    <a href="{% url 'new_form' %}" class="waves-effect">Create new form</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'form' %}" class="waves-effect">Forms</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
             {% endif %}
             <!-- Side navigation links -->
 
@@ -159,7 +198,7 @@
               <i class="fas fa-plus"></i><span class="clearfix d-none d-sm-inline-block"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="#">New Document</a>
+              <a class="dropdown-item" href="{% url 'new_document' %}">New Document</a>
               <a class="dropdown-item" href="#">New Application</a>
             </div>
           </li>
@@ -225,9 +264,6 @@
   <!-- HandleBar URL -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 
-<!--  NewDocument-->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <!-- Custom Scripts -->
   {% block scripts %}
 

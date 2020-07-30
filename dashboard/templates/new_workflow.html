@@ -22,12 +22,15 @@
 
   <!-- Main layout -->
   <main>
+    <h2>Create new Workflow</h2>
+    <p>Workflows define the process under which an application will follow towards getting it signed.</p>
+
     <form name="new_workflow" id="new_workflow" action="{% url 'add_workflow' %}" method="POST">{% csrf_token %}
       <div class="container">
         <div id="WorkflowNameheader" class="md-form row">
           <div class="col-10">
           <input type="text" id="workflowname" class="form-control" name="name"><br>
-          <label for="workflowname" id="form2" style="color: white;">WORKFLOW NAME</label>
+          <label for="workflowname" id="form2" style="color: white;">Please Enter Workflow Name</label>
           </div>
           <div class="col-1">
             <input type="number" name="totalStages" class="form-control" id="totalStages" hidden value="1">
@@ -44,7 +47,6 @@
             #form2 {
               margin-left: 20px;
               margin-top: 5px;
-              font-size: 25px;
             }
             #workflowname {
               margin-top: 2px;

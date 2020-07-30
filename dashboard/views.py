@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 import daftar
-from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows
+from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows, add_forms, \
+    add_workflows, get_forms
 from daftar.models import User
 from daftar.views import verify_token
 
@@ -89,27 +90,16 @@ def new_workflow(request):
 
 
 def add_workflow(request):
-    if request.method == 'POST':
-        stages = []
-        for i in range(1, int(request.POST.get('totalStages')) + 1):
-            id_name = request.POST.get(str(i)).split('_')
-            stage = {'authId': id_name[0], 'authName': id_name[1]}
-            stages.append(stage)
+    if verify_token(request):
+        if request.method == 'POST':
+            response = add_workflows(request.POST)
 
-        data = {
-            "name": request.POST.get('name'),
-            "creatorId": User().id,
-            "totalStages": request.POST.get('totalStages'),
-            "stages": stages
-        }
-
-        hed = {'Authorization': 'Bearer ' + User().token}
-        r = requests.post(daftar.settings.DAFTAR_HOST + "/workflow", json=data, headers=hed)
-
-        if r.status_code == requests.codes.ok:
-            return HttpResponseRedirect(reverse('new_workflow'))
-        else:
-            return HttpResponseRedirect(reverse('index'))
+            if response:
+                return HttpResponseRedirect(reverse('new_workflow'))
+            else:
+                return HttpResponseRedirect(reverse('index'))
+    else:
+        return redirect('/')
 
 
 def workflow(request):
@@ -119,11 +109,46 @@ def workflow(request):
             # TODO: Error handling
             print('Error Loading Documents')
 
-
         return render(request, 'workflow.html', {'title': 'Daftar | Workflows',
                                                  'isUser': User().isUser,
                                                  'first_name': User().first_name,
                                                  'workflows': workflows})
+    else:
+        return redirect('/')
+
+
+def new_form(request):
+    if verify_token(request):
+        return render(request, 'new_form.html', {'title': 'Daftar | New Form',
+                                                 'isUser': User().isUser,
+                                                 'first_name': User().first_name})
+    else:
+        return redirect('/')
+
+
+def add_form(request):
+    if verify_token(request):
+        if request.method == 'POST':
+            response = add_forms(request.POST)
+            if response:
+                return HttpResponseRedirect(reverse('workflow'))
+            else:
+                return HttpResponseRedirect(reverse('add_form'))
+    else:
+        return redirect('/')
+
+
+def form(request):
+    if verify_token(request):
+        forms = get_forms()
+        if forms is False:
+            # TODO: Error handling
+            print('Error Loading Documents')
+
+        return render(request, 'form.html', {'title': 'Daftar | Forms',
+                                             'isUser': User().isUser,
+                                             'first_name': User().first_name,
+                                             'forms': forms})
     else:
         return redirect('/')
 
