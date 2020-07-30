@@ -48,11 +48,10 @@
                   <tr>
                   <td>{{ application_template.name }}</td>
                   {% if application_template.isCreator %}
-                    <td>{{ application_template.creatorName }}</td>
+                      <td>{{ application_template.creatorName }}</td>
                   {% else %}
                       <td>You</td>
                   {% endif %}
-                  <td>{{ application_template.creatorName }}</td>
                   <td>{{ application_template.workflowName }}</td>
                   <td>{{ application_template.formName }}</td>
                       {% if application_template.isCreator %}
