@@ -1,0 +1,402 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<style>
+	#formDesc::placeholder { 
+	    color: #d9d9d9;
+	}
+    #formDetails {
+	  border-radius: 25px;
+	  background:	 #29a329;
+	  padding: 10px; 
+	  width: auto;
+	}
+    .formInputLabel {
+	  margin-left: 20px;
+	  margin-top: 2px;
+	  font-size: 25px;
+	  color: white;
+	}
+	.formInput {
+	  font-size: 15px;
+	  color: white;
+	}
+	.btn{
+	    color: black;
+	}
+	.form-control{
+	     padding: .0rem .0rem;
+	}
+	.md-form .form-control {
+	  padding: .0rem 0 .0rem;
+	}
+    #formDetails{
+        box-shadow: 0px 2px 5px #666;
+    }
+    #rcorner {
+        border-radius: 0px 15px 0px 15px;
+        background: green;
+        margin-top: 30%;
+        padding: 15px; 
+        width: 20px;
+        height: 20px; 
+    }
+</style>
+<main>
+    <div class="container">
+        <div id="application_templates">
+            <div id="formDetails" class="md-form row">
+                <div class="col-8 ml-8" style=" color:white ;font-size: 50px; font-family: 'Times New Roman', Times, serif;">
+                E-Application
+            </div>
+            </div> 
+            <!-- Types of Applications -->
+            {% for application in applications %}
+            <div class="card m-2" style="max-width: 100%; background-color: white;">
+                <div class="card-body text-success">
+                    <div class="row">
+                    <div class="col-1">
+                        <p id="rcorner"></p>
+                    </div>
+                    <div class="col-9" style=" margin-top: 0.7%; text-align:left; color: black; font-size: 30px;">
+                        {{ application.name }}
+                    </div>
+                    <form class="open_application">
+                        <div>
+                            <input name="application_template_id" value="{{ application.id }}" hidden>
+                            <button type="submit" style="font-size=20px;" class="btn green btn-rounded"><b>Fill</b></button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <div class="container" hidden id="application_form">
+                <!--Form Name and Description-->
+                <form name="new_form" id="new_form" action="{% url 'add_form' %}" method="POST">{% csrf_token %}
+                    <div id="formDetails" class="md-form row">
+                        <div class="col-5">
+                        <input type="text" id="formName" style="font-size: 30px; color: white;" class="formInput form-control" name="formName"><br>
+                        <label for="formName" class="formInputLabel" style="color: white;">Form Name</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="text" id="formDesc" placeholder="Form Description" style="color: white; font-size: 15;" class="formInput form-control" name="formDesc">
+                        </div>
+                        <div class="col-1">
+                            <input type="number" name="totalFields" class="form-control" id="totalFields" hidden value="1">
+                        </div>
+                    </div>
+                    <br>
+                    <!--Form Questions-->
+                    <div id="questions" style="margin-bottom:50px; ">
+                    </div>
+                    <div class="row">
+                      <div class="col-12" style="text-align:right">
+                        <button type="submit" font-size="40px" class="btn green btn-rounded ml-0" id="create_workflow">Submit</button>
+                      </div>
+                    </div>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+    <!-- Radio Question Template -->
+  	<script id="add_radio_question" type="text/template">
+        {% verbatim %}
+  		<div class="card border-success m-2" style="max-width: 100%;">
+            <div>
+                <input type="text" name="{{ question_number }}_type" class="form-control" hidden value="radio">
+            </div>
+            <div class="card-body text-success">
+                <div class="row m-3">
+                    <div class="col-1">
+                        <h3 style="font-size: 30px;">{{ question_number }}</h3>
+                    </div>
+                    <div class="col-7" style="text-align:left;">
+                        <div class="md-form">
+                            <input placeholder="Enter the question" type="text" id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+
+                  <div id="radio_options">
+                      <div>
+                          <input type="number" name="{{ question_number }}_total_options" class="form-control" hidden value="2">
+                      </div>
+                    <div class="row m-1">
+                        <div class="col-1">
+                            <i class="far fa-circle"></i>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <div class="md-form">
+                                        <input type="text" class="form-control" name="{{ question_number }}_1_option" placeholder="Enter the option">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row m-1">
+                        <div class="col-1">
+                            <i class="far fa-circle"></i>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <div class="md-form mt-0">
+                                        <input type="text" class="form-control" name="{{ question_number }}_2_option" placeholder="Enter the option">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                  </div>
+                </div>
+                <div class="col-6" style="text-align:left">
+                   <button type="button" font-size="40px" class="btn green btn-rounded ml-0" onclick="add_option_radio(this)">Add an option</button>
+                </div>
+            </div>
+        </div>
+  	</script>
+
+  	<script id="add_checkbox_question" type="text/template">
+  		<div class="card border-success m-2" style="max-width: 100%;">
+                <div>
+                    <input type="text" name="{{ question_number }}_type" class="form-control" hidden value="checkbox">
+                </div>
+                <div class="card-body text-success">
+                    <div class="row m-3 p-3">
+                        <div class="col-1">
+                            <h3 style="font-size: 30px;">{{ question_number }}</h3>
+                        </div>
+                        <div class="col-7" style="text-align:left;">
+                            <div class="md-form">
+                                <input placeholder="Enter the question" type="text" id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-3">
+                      <div id="checkbox_options" class="checkboxs">
+                        <div class="row m-1">
+                            <div>
+                                <input type="number" name="{{ question_number }}_total_options" class="form-control" hidden value="2">
+                            </div>
+                            <div class="col-10">
+                              <div class="custom-control custom-checkbox">
+                                <label class="custom-control-label">
+                                    <div class="md-form mt-0">
+                                        <input type="text" class="form-control" name="{{ question_number }}_1_option" placeholder="Enter the Option">
+                                    </div>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row m-1">
+                            <div class="col-10">
+                              <div class="custom-control custom-checkbox">
+                                <label class="custom-control-label">
+                                    <div class="md-form mt-0">
+                                        <input type="text" class="form-control" name="{{ question_number }}_2_option" placeholder="Enter the Option">
+                                    </div>
+                                </label>
+                              </div>
+                            </div>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="col-6" style="text-align:left">
+                       <button type="button" font-size="40px" id="hello" class="btn green btn-rounded ml-0" onclick="add_option_checkbox(this)">Add an option</button>
+                    </div>
+                </div>
+            </div>
+  	</script>
+
+  	<script id="add_long_answer_question" type="text/template">
+  		<div class="card border-success m-2" style="max-width: 100%;">
+                <div>
+                    <input type="text" name="{{ question_number }}_type" class="form-control" hidden value="long_answer">
+                </div>
+                <div class="card-body text-success">
+                    <div class="row m-3">
+                        <div class="col-1">
+                            <h3 style="font-size: 30px;">{{ question_number }}</h3>
+                        </div>
+                        <div class="col-7" style="text-align:left;">
+                            <div class="md-form">
+                                <input placeholder="Enter the question"id="{{ question_number }}" name="{{ question_number }}_question" type="text" style="color: black; font-size: 20px;" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-11 mr-4">
+                        <div class="form-group green-border-focus" style="margin-left: 40px;">
+                        	<textarea class="form-control" disabled placeholder="Enter text here" id="longAnswer" rows="3"></textarea>
+                      	</div>
+                    </div>
+                </div>
+            </div>
+  	</script>
+
+  	<script id="add_multiple_type_question" type="text/template">
+  		<div class="card border-success m-2" style="max-width: 100%;">
+                <div class="card-body text-success">
+                    <div class="row m-3">
+                        <div class="col-1">
+                            <h3 style="font-size: 30px;">{{ question_number }}</h3>
+                        </div>
+                        <div class="col-7" style="text-align:left;">
+                            <div class="md-form">
+                                <input placeholder="Enter the question" type="text"id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <select id="selected_type" name="{{ question_number }}_type" class="browser-default custom-select" onchange="SetInputType(this)">
+                                <option selected>Select the answer type</option>
+                                <option value="Email">Email</option>
+    	                            <option value="Number">Number</option>
+                                <option value="Date">Date</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-8 mr-3">
+                        <div class="md-form">
+                            <input id="input_txt" disabled placeholder="Enter the text" type="text" length="100" style="margin: 10px;" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+  	</script>
+
+  	<script id="add_option_radio" type="text/template">
+	    <div class="row m-1">
+            <div class="col-1">
+                <i class="far fa-circle"></i>
+            </div>
+	        <div class="col-9">
+	            <div class="form-check">
+	                <label class="form-check-label">
+	                    <div class="md-form mt-0">
+	                        <input type="text" class="form-control" name="{{ id }}_{{ option_number }}_option" placeholder="Enter the option">
+	                    </div>
+	                </label>
+	            </div>
+	        </div>
+	        <div class="col-1" style="text-align:right">
+	            <a class="btn-floating btn-sm btn-success" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+	        </div>
+	    </div>
+	</script>
+
+	<script id="add_option_checkbox" type="text/template">
+	  <div class="row m-1">
+          <div class="col-10">
+	        <div class="custom-control custom-checkbox">
+	          <label class="custom-control-label">
+	              <div class="md-form mt-0">
+	                  <input type="text" class="form-control" name="{{ id }}_{{ option_number }}_option" placeholder="Enter the Option">
+	              </div>
+	          </label>
+	        </div>
+	      </div>
+	      <div class="col-1" style="text-align:right">
+	          <a class="btn-floating btn-sm btn-success" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+	      </div>
+	  </div>
+  	</script>
+    {% endverbatim %}
+  	<script>
+
+    const checkbox_question_template = Handlebars.compile(document.querySelector('#add_checkbox_question').innerHTML);
+    const option_field_checkbox_template = Handlebars.compile(document.querySelector('#add_option_checkbox').innerHTML);
+    const radio_question_template = Handlebars.compile(document.querySelector('#add_radio_question').innerHTML);
+	  const option_field_radio_template = Handlebars.compile(document.querySelector('#add_option_radio').innerHTML);
+	  const long_answer_question_template = Handlebars.compile(document.querySelector('#add_long_answer_question').innerHTML);
+	  const multiple_type_question_template = Handlebars.compile(document.querySelector('#add_multiple_type_question').innerHTML);
+
+	var question_count = 0;
+
+	function add_option_checkbox(o){
+	  const id= o.parentElement.parentElement.children[0].children[1].children[0].children[0].id;
+	  const option_count = parseInt(o.parentElement.parentElement.children[1].children[0].children[0].children[0].children[0].value);
+	  o.parentElement.parentElement.children[1].children[0].children[0].children[0].children[0].value = option_count + 1;
+      const new_option = option_field_checkbox_template({'id':id, 'option_number': option_count+1});
+      o.parentElement.parentElement.children[1].children[0].insertAdjacentHTML('beforeEnd', new_option);
+	}
+
+	function add_option_radio(o){
+	  const id= o.parentElement.parentElement.children[0].children[1].children[0].children[0].id;
+	  const option_count = parseInt(o.parentElement.parentElement.children[1].children[0].children[0].children[0].value);
+	  o.parentElement.parentElement.children[1].children[0].children[0].children[0].value = option_count + 1;
+      const new_option = option_field_radio_template({'id':id, 'option_number': option_count+1});
+      o.parentElement.parentElement.children[1].children[0].insertAdjacentHTML('beforeEnd', new_option);
+	}
+
+
+    document.querySelector('#add_question_radio_button').onclick = () => {
+      question_count++;
+      document.querySelector('#totalFields').value = question_count;
+      if(question_count==1)
+      {
+        document.querySelector('#add_message').remove();
+      }
+      const new_question = radio_question_template({'question_number':question_count});
+      document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+    }
+
+	document.querySelector('#add_question_checkbox_button').onclick = () => {
+        question_count++;
+        document.querySelector('#totalFields').value = question_count;
+        if(question_count==1)
+        {
+          document.querySelector('#add_message').remove();
+        }
+		const new_question = checkbox_question_template({'question_number':question_count});
+		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+	}
+
+	document.querySelector('#add_question_long_answer_button').onclick = () => {
+        question_count++;
+        document.querySelector('#totalFields').value = question_count;
+        if(question_count==1)
+        {
+          document.querySelector('#add_message').remove();
+        }
+		const new_question = long_answer_question_template({'question_number':question_count});
+		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+	}
+
+	document.querySelector('#add_question_multiple_type_button').onclick = () => {
+    question_count++;
+    document.querySelector('#totalFields').value = question_count;
+    if(question_count==1)
+        {
+      document.querySelector('#add_message').remove();
+        }
+		const new_question = multiple_type_question_template({'question_number':question_count});
+		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+	}
+
+
+    function SetInputType(selected_type) {
+        var field = document.getElementById("input_txt");
+        if (selected_type.value == "Email") {
+            field.setAttribute('TYPE', 'Email');
+        }
+        else if (selected_type.value == "Number") {
+            field.setAttribute('TYPE', 'Number');
+        }
+        else if (selected_type.value == "Date") {
+            field.setAttribute('TYPE', 'date');
+        }
+    }
+  </script>
+{% endblock %}

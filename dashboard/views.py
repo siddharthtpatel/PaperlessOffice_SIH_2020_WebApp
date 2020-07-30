@@ -209,3 +209,18 @@ def application_template(request):
                                                              'application_templates': application_templates})
     else:
         return redirect('/')
+
+
+def fill_application(request):
+    if verify_token(request):
+        applications = get_application_templates()
+        if applications is False:
+            # TODO: Error handling
+            print('Error Loading Documents')
+        print(applications)
+        return render(request, 'fill_application.html', {'title': 'Daftar | Fill Applications',
+                                             'isUser': User().isUser,
+                                             'first_name': User().first_name,
+                                             'applications': applications})
+    else:
+        return redirect('/')
