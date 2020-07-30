@@ -136,3 +136,10 @@ def new_document(request):
     else:
         return redirect('/')
 
+def new_application_template(request):
+    if verify_token(request):
+        # TODO
+
+        return render(request, 'new_application_template.html', {'title': 'Daftar | New Application Template'})
+    else:
+        return redirect('/')

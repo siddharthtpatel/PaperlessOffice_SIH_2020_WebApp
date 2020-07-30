@@ -10,5 +10,6 @@ urlpatterns = [
     path('new-workflow', views.new_workflow, name="new_workflow"),
     path('add_workflow', views.add_workflow, name="add_workflow"),
     path('new_document', views.new_document, name="new_document"),
+    path('new_application_template', views.new_application_template, name="new_application_template"),
 
 ]

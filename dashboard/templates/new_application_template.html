@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<main>
+        <!-- Default form subscription -->
+    <div style="margin-bottom:140px;">
+        <form class="text-center border border-light p-5" action="#!">
+
+            <p class="h4 mb-4">Create New Application Template</p>
+
+            <!-- Name -->
+            <div class="row">
+                <div class="col-1 d-flex flex-column justify-content-center" >
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="md-form mt-3 col-11">
+                <input type="text" id="materialSubscriptionFormPasswords" class="form-control">
+                <label for="materialSubscriptionFormPasswords">Name</label>
+            </div>
+            </div>
+            <!-- WorkFlowID -->
+            <div class="row">
+                <div class="col-1 d-flex flex-column justify-content-center" >
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="col-11">
+                    <select class="browser-default custom-select mb-4">
+                        <option value="" disabled selected>WorkFlow Name</option>
+                        <option value="1">Feature request</option>
+                        <option value="2">Feature request</option>
+                        <option value="3">Feature request</option>
+                        <option value="4">Feature request</option>
+                    </select>
+                </div>
+            </div>
+            <!-- FormID -->
+            <div class="row">
+                <div class="col-1 d-flex flex-column justify-content-center" >
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="col-11">
+                    <select class="browser-default custom-select mb-4">
+                        <option value="" disabled selected>Form Name</option>
+                        <option value="1">Feature request</option>
+                        <option value="2">Feature request</option>
+                        <option value="3">Feature request</option>
+                        <option value="4">Feature request</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                    <div class="col-12" style="text-align:center;">
+                        <button type="submit" class="btn btn-success btn-rounded btn-lg"id="js-upload-submit"  >Create</button>
+                    </div>
+            </div>
+
+        </form>
+    </div>
+
+
+
+</main>
+{% endblock %}
