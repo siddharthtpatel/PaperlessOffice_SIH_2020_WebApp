@@ -4,9 +4,10 @@
 <main>
         <!-- Default form subscription -->
     <div style="margin-bottom:140px;">
-        <form class="text-center border border-light p-5" action="#!">
+        <form name="new_application_template" id="new_application_template" class="text-center border border-light p-5"
+              action="{% url 'add_application_template' %}" method="POST">{% csrf_token %}
 
-            <p class="h4 mb-4">Create New Application Template</p>
+            <p class="h3 mb-4">Create New Application Template</p>
 
             <!-- Name -->
             <div class="row">
@@ -14,7 +15,7 @@
                     <i class="fas fa-edit"></i>
                 </div>
                 <div class="md-form mt-3 col-11">
-                <input type="text" id="materialSubscriptionFormPasswords" class="form-control">
+                <input type="text" id="materialSubscriptionFormPasswords" name="name" class="form-control">
                 <label for="materialSubscriptionFormPasswords">Name</label>
             </div>
             </div>
@@ -24,12 +25,11 @@
                     <i class="fas fa-network-wired"></i>
                 </div>
                 <div class="col-11">
-                    <select class="browser-default custom-select mb-4">
+                    <select class="browser-default custom-select mb-4" name="workflow_id">
                         <option value="" disabled selected>WorkFlow Name</option>
-                        <option value="1">Feature request</option>
-                        <option value="2">Feature request</option>
-                        <option value="3">Feature request</option>
-                        <option value="4">Feature request</option>
+                        {% for workflow in workflows %}
+                            <option value="{{workflow.id}}">{{workflow.name}}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -39,12 +39,11 @@
                     <i class="fas fa-file-alt"></i>
                 </div>
                 <div class="col-11">
-                    <select class="browser-default custom-select mb-4">
+                    <select class="browser-default custom-select mb-4" name="form_id">
                         <option value="" disabled selected>Form Name</option>
-                        <option value="1">Feature request</option>
-                        <option value="2">Feature request</option>
-                        <option value="3">Feature request</option>
-                        <option value="4">Feature request</option>
+                        {% for form in forms %}
+                            <option value="{{form.id}}">{{form.title}}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>

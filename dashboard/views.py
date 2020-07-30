@@ -7,7 +7,7 @@ from django.urls import reverse
 
 import daftar
 from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows, add_forms, \
-    add_workflows, get_forms
+    add_workflows, get_forms, add_application_templates, get_application_templates
 from daftar.models import User
 from daftar.views import verify_token
 
@@ -131,9 +131,9 @@ def add_form(request):
         if request.method == 'POST':
             response = add_forms(request.POST)
             if response:
-                return HttpResponseRedirect(reverse('workflow'))
+                return HttpResponseRedirect(reverse('form'))
             else:
-                return HttpResponseRedirect(reverse('add_form'))
+                return HttpResponseRedirect(reverse('new_form'))
     else:
         return redirect('/')
 
@@ -155,17 +155,57 @@ def form(request):
 
 def new_document(request):
     if verify_token(request):
-        # TODO
-
-        return render(request, 'new_document.html', {'title': 'Daftar | New Document'})
+        return render(request, 'new_document.html', {'title': 'Daftar | New Document',
+                                                     'isUser': User().isUser,
+                                                     'first_name': User().first_name
+                                                     })
     else:
         return redirect('/')
 
 
 def new_application_template(request):
     if verify_token(request):
-        # TODO
+        forms = get_forms()
+        if forms is False:
+            # TODO: Error handling
+            print('Error Loading Forms')
 
-        return render(request, 'new_application_template.html', {'title': 'Daftar | New Application Template'})
+        workflows = get_workflows()
+        if workflows is False:
+            # TODO: Error handling
+            print('Error Loading Workflows')
+
+        return render(request, 'new_application_template.html', {'title': 'Daftar | New Application Template',
+                                                                 'isUser': User().isUser,
+                                                                 'first_name': User().first_name,
+                                                                 'forms': forms,
+                                                                 'workflows': workflows})
+    else:
+        return redirect('/')
+
+
+def add_application_template(request):
+    if verify_token(request):
+        if request.method == 'POST':
+            response = add_application_templates(request.POST)
+            if response:
+                return HttpResponseRedirect(reverse('new_application_template'))
+            else:
+                return HttpResponseRedirect(reverse('new_application_template'))
+    else:
+        return redirect('/')
+
+
+def application_template(request):
+    if verify_token(request):
+        application_templates = get_application_templates()
+        if application_templates is False:
+            # TODO: Error handling
+            print('Error Loading Documents')
+
+        return render(request, 'application_template.html', {'title': 'Daftar | Application Templates',
+                                                             'isUser': User().isUser,
+                                                             'first_name': User().first_name,
+                                                             'application_templates': application_templates})
     else:
         return redirect('/')
