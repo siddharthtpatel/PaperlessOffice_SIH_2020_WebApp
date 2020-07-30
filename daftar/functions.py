@@ -3,7 +3,7 @@ import json
 import requests
 
 import daftar
-from daftar.models import User, StorageDocument, Application, Authority, Workflow, Form
+from daftar.models import User, StorageDocument, Application, Authority, Workflow, Form, ApplicationTemplates
 
 
 def get_storage_documents(limit=None):
@@ -159,3 +159,41 @@ def get_forms(filter=None, limit=None):
         forms.append(Form(form))
 
     return forms
+
+
+def add_application_templates(form):
+    data = {
+        "name": form.get('name'),
+        "workflowId": form.get('workflow_id'),
+        "formId": form.get('form_id')
+    }
+    url = daftar.settings.DAFTAR_HOST + "/applications/templates"
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.post(url, json=data, headers=hed)
+    if response.status_code == requests.codes.ok:
+        return True
+    else:
+        return False
+
+
+def get_application_templates(filter=None, limit=None):
+    url = daftar.settings.DAFTAR_HOST + "/applications/templates"
+
+    if filter is not None:
+        url += '?filter=' + str(filter) + '&'
+
+    if limit is not None:
+        url += '?limit=' + str(limit)
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.get(url, headers=hed)
+
+    if response.status_code != 200:
+        return False
+
+    application_templates = []
+    for application_template in response.json():
+        application_templates.append(ApplicationTemplates(application_template))
+
+    return application_templates
