@@ -8,7 +8,23 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title>E-Daftar | SIH 2020</title>
-
+  <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicons/apple-icon-57x57.png' %}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicons/apple-icon-60x60.png' %}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicons/apple-icon-72x72.png' %}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicons/apple-icon-76x76.png' %}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicons/apple-icon-114x114.png' %}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicons/apple-icon-150x150.png' %}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicons/apple-icon-144x144.png' %}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicons/apple-icon-152x152.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicons/apple-icon-180x180.png' %}">
+  <link rel="icon" type="image/png" sizes="192x192"  href="{% static 'favicons/apple-icon-192x192.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/apple-icon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicons/apple-icon-96x96.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/apple-icon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicons/manifest.json' %}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="{% static 'favicons/ms-icon-144x144.png' %}">
+  <meta name="theme-color" content="#ffffff">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 
@@ -49,7 +65,7 @@
 <body>
 
   <!-- Login Modal -->
-  <div class="modal fade" id="loginModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="loginModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" method="POST">
     <div class="modal-dialog form-dark" role="document">
       <!--Content-->
       <div class="modal-content card card-image green lighten-3" style="">
@@ -395,7 +411,7 @@
         </div>
         {% elif signup_success %}
         <div class="alert alert-success alert-dismissible fade show mt-5" role="alert" style="position:absolute">
-          Successfully Signed Up. Now you can login!
+          Successfully Signed Up, please verify your email and login!
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -511,12 +527,11 @@
             <!--First row-->
             <div class="row mb-4">
               <div class="col-2">
-                <i class="fas fa-university fa-2x mb-1 green-text" aria-hidden="true"></i>
+                <i class="fas fa-lock fa-2x mb-1 green-text" aria-hidden="true"></i>
               </div>
               <div class="col-10 mb-2">
-                <h5 class="feature-title font-weight-bold mb-2">| Government offices</h5>
-                <p class="grey-text">The government offices uses tonnes of papers in the paperwork and all the
-                  formalities, this can be changed with E DAFTAR.</p>
+                <h5 class="feature-title font-weight-bold mb-2">| Digital Signatures</h5>
+                <p class="grey-text">Complete Digital Signature process using the best-in-class ECDSA algorithms from best banks.</p>
               </div>
             </div>
             <!--/First row-->
@@ -524,12 +539,11 @@
             <!--Second row-->
             <div class="row">
               <div class="col-2">
-                <i class="fas fa-gavel fa-2x mb-1 green-text" aria-hidden="true"></i>
+                <i class="fas fa-bell fa-2x mb-1 green-text" aria-hidden="true"></i>
               </div>
               <div class="col-10 mb-2">
-                <h5 class="feature-title font-weight-bold mb-2">| Courts</h5>
-                <p class="grey-text">It will be an advancement in the way of the current paperwork of court occurs and
-                  can get other advantages alongside with E DAFTAR.</p>
+                <h5 class="feature-title font-weight-bold mb-2">| Daftar Notifications</h5>
+                <p class="grey-text">Fully end-to-end automated notifications via verified E-mail for users and authorities.</p>
               </div>
             </div>
             <!--/Second row-->
@@ -543,12 +557,11 @@
             <!--First row-->
             <div class="row mb-4">
               <div class="col-2">
-                <i class="fas fa-chart-line fa-2x mb-1 green-text" aria-hidden="true"></i>
+                <i class="far fa-money-bill-alt fa-2x mb-1 green-text" aria-hidden="true"></i>
               </div>
               <div class="col-10 mb-2">
-                <h5 class="feature-title font-weight-bold mb-2">| Corporate offices</h5>
-                <p class="grey-text">Coraporates has a lot of beurocracies and paperwork needs to go through strict
-                  workflow, all this can be maintained well with E DAFTAR.</p>
+                <h5 class="feature-title font-weight-bold mb-2">| Cost Savings</h5>
+                <p class="grey-text">Daftar shows you how much cost savings has been done on each document, application you apply digitally.</p>
               </div>
             </div>
             <!--/First row-->
@@ -556,12 +569,11 @@
             <!--Second row-->
             <div class="row">
               <div class="col-2">
-                <i class="far fa-money-bill-alt fa-2x mb-1 green-text" aria-hidden="true"></i>
+                <i class="fas fa-network-wired fa-2x mb-1 green-text" aria-hidden="true"></i>
               </div>
               <div class="col-10 mb-2">
-                <h5 class="feature-title font-weight-bold mb-2">| Banks</h5>
-                <p class="grey-text">Banking involves many types of forms with different requirements with E DAFTAR this
-                  can be monitored and the process will be easied as well.</p>
+                <h5 class="feature-title font-weight-bold mb-2">| Workflows and Forms</h5>
+                <p class="grey-text">Provides dynamic workflows and forms for creating automated applications for users.</p>
               </div>
             </div>
             <!--/Second row-->
@@ -573,14 +585,13 @@
           <div class="col-md-4">
 
             <!--First row-->
-            <div class="row mb-4">
+            <div class="row mb-5">
               <div class="col-2">
-                <i class="fas fa-graduation-cap fa-2x mb-1 green-text" aria-hidden="true"></i>
+                <i class="fas fa-mobile-alt fa-2x mb-1 green-text" aria-hidden="true"></i>
               </div>
               <div class="col-10 mb-2">
-                <h5 class="feature-title font-weight-bold mb-2">| Schools and Colleges</h5>
-                <p class="grey-text">Educational institues have many circulars, forms and documents to be maintained,
-                  which will be easied by <br>E DAFTAR to invest more time in what matters more.</p>
+                <h5 class="feature-title font-weight-bold mb-2">| Daftar Android App</h5>
+                <p class="grey-text">Android App provides scanning of document using Computer Vision and apply for applications easily.</p>
               </div>
             </div>
             <!--/First row-->
@@ -588,12 +599,11 @@
             <!--Second row-->
             <div class="row">
               <div class="col-2">
-                <i class="fas fa-hospital-alt fa-2x mb-1 green-text" aria-hidden="true"></i>
+                <i class="fas fa-shield-alt fa-2x mb-1 green-text" aria-hidden="true"></i>
               </div>
               <div class="col-10 mb-2">
-                <h5 class="feature-title font-weight-bold mb-2">| Hospitals</h5>
-                <p class="grey-text">Forms, medical reports, prescriptions are big part of hospital management, all this
-                  and other documents can be easily managed with E DAFTAR.</p>
+                <h5 class="feature-title font-weight-bold mb-2">| Secure Documents</h5>
+                <p class="grey-text">Daftar provides downloading and uploading documents securely.</p>
               </div>
             </div>
             <!--/Second row-->
@@ -625,15 +635,18 @@
           Our Team</h2>
 
         <!-- Section description -->
-        <p style="font-size:160%;" class="text-center w-responsive mx-auto my-5 wow fadeIn">HexaGeeks</p>
+        <p style="font-size:160%;" class="text-center w-responsive mx-auto wow fadeIn">HexaGeeks</p>
 
+        <div class="w-100 text-center">
+          <img width="400px" align="center" height="300px" src="{% static 'img/team_white.png' %}" class="">
+        </div>
         <!-- First row -->
         <div class="row text-center">
 
           <!--First column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="{% static 'team_members/manjot.png' %}" class="z-depth-1" height="270" width="230">
+              <img src="{% static 'team_members/manjot.jpeg' %}" class="z-depth-1" height="200" width="200">
             </div>
             <h4 class="font-weight-bold my-4">Manjot Singh Sidhu</h4>
             <p class="grey-text">Team Leader</p>
@@ -643,7 +656,7 @@
           <!--Second column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="{% static 'team_members/shrey.jpeg' %}" class="z-depth-1" height="270" width="230">
+              <img src="{% static 'team_members/shrey.jpeg' %}" class="z-depth-1" height="200" width="200">
             </div>
             <h4 class="font-weight-bold my-4">Shrey Limbani</h4>
             <p class="grey-text">Team Member</p>
@@ -653,7 +666,7 @@
           <!--Third column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="{% static 'team_members/sid.jpeg' %}" class="z-depth-1" height="270" width="230">
+              <img src="{% static 'team_members/sid.jpeg' %}" class="z-depth-1" height="200" width="200">
             </div>
             <h4 class="font-weight-bold my-4">Siddharth Patel</h4>
             <p class="grey-text">Team Member</p>
@@ -663,7 +676,7 @@
           <!--Third column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="{% static 'team_members/aniket.jpeg' %}" class="z-depth-1" height="270" width="230">
+              <img src="{% static 'team_members/aniket.jpeg' %}" class="z-depth-1" height="200" width="200">
             </div>
             <h4 class="font-weight-bold my-4">Aniket Ranjan</h4>
             <p class="grey-text">Team Member</p>
@@ -673,7 +686,7 @@
           <!--Third column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="{% static 'img/rick.png' %}" class="z-depth-1">
+              <img src="{% static 'team_members/aryan.jpg' %}" class="z-depth-1" height="200" width="200">
             </div>
             <h4 class="font-weight-bold my-4">Aryan Soni</h4>
             <p class="grey-text">Team Member</p>
@@ -683,7 +696,7 @@
           <!--Third column-->
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="{% static 'team_members/kiru.jpeg' %}" class="z-depth-1" height="270" width="230">
+              <img src="{% static 'team_members/kiru.jpg' %}" class="z-depth-1" height="200" width="200">
             </div>
             <h4 class="font-weight-bold my-4">Kirthana</h4>
             <p class="grey-text">Team Member</p>
@@ -693,7 +706,7 @@
 
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="{% static 'img/morty.png' %}" class="z-depth-1">
+              <img src="{% static 'team_members/bijeesh.jpg' %}" class="z-depth-1" height="200" width="160">
             </div>
             <h4 class="font-weight-bold my-4">Bijeesh T V</h4>
             <p class="grey-text">Mentor</p>
@@ -701,10 +714,10 @@
 
           <div class="col-lg-3 col-md-6 mb-5">
             <div class="avatar">
-              <img src="{% static 'img/morty.png' %}" class="z-depth-1">
+              <img src="{% static 'team_members/gokulapriya.jpg' %}" class="z-depth-1" height="200" width="160">
             </div>
-            <h4 class="font-weight-bold my-4">-</h4>
-            <p class="grey-text">-</p>
+            <h4 class="font-weight-bold my-4">Gokulapriya R</h4>
+            <p class="grey-text">Mentor</p>
           </div>
 
         </div>
@@ -719,81 +732,6 @@
 
   <!--Footer-->
   <footer class="page-footer footer-tiles text-center text-md-left grey darken-4 mt-0 pt-2">
-
-    <!--Footer Links-->
-    <div class="container mb-2">
-
-      <!--First row-->
-      <div class="row mt-5">
-
-        <!--First column-->
-        <div class="col-xl-4 col-lg-4 pb-1 wow fadeIn" data-wow-delay="0.3s">
-          <!--About-->
-          <h5 class="title mb-4"><strong>ABOUT OUR SERVICES</strong></h5>
-
-          <p>Our service can benifit various organization.In goverment offices as there is tonnes of paperworks these formality can be done with E-Daftar.Similiary in organization like corporate office, school and college, courts, bank.  </p>
-
-          <p class="mb-1-half"> Our services will reduce the work load. It is more organized as the apporach of dealing the problem will be according to the customer's demand. So it more flexible. </p>
-          <!--/About -->
-
-          <div class="footer-socials">
-
-            <!--Facebook-->
-            <a type="button" class="btn-floating btn-primary"><i class="fab fa-facebook-f"></i></a>
-            <!--Dribbble-->
-            <a type="button" class="btn-floating btn-primary"><i class="fab fa-dribbble"></i></a>
-            <!--Twitter-->
-            <a type="button" class="btn-floating btn-primary"><i class="fab fa-twitter"></i></a>
-            <!--Google +-->
-            <a type="button" class="btn-floating btn-primary"><i class="fab fa-google-plus-g"></i></a>
-            <!--Linkedin-->
-
-          </div>
-        </div>
-        <!--/First column-->
-
-        <hr class="w-100 clearfix d-lg-none">
-
-        <!--Second column-->
-        <div class="col-xl-4 col-lg-4 col-md-6 pt-1 pb-1 wow fadeIn" data-wow-delay="0.3s">
-          <!--Search-->
-          <h5 class="text-uppercase mb-4"><strong>Search something</strong></h5>
-
-          <ul class="footer-search list-unstyled">
-            <li>
-              <form class="search-form" role="search">
-                <div class="md-form waves-light waves-effect waves-light">
-                  <input type="text" class="form-control" placeholder="Search">
-                </div>
-              </form>
-            </li>
-          </ul>
-
-          <!--Info-->
-          <p><i class="fas fa-home mr-3"></i> Bangalore,Karnataka 560029,India</p>
-          <p><i class="fas fa-envelope mr-3"></i> manjot.sidhu@btech.christuniversity.in</p>
-          <p><i class="fas fa-phone mr-3"></i> 9876471747</p>
-
-        </div>
-        <!--/Second column-->
-        <!--Second column-->
-        <div class="col-xl-4 col-lg-4 col-md-6 pt-1 pb-1 wow fadeIn" data-wow-delay="0.3s">
-
-          <ul class="footer-search list-unstyled">
-            <li>
-              <img width="400px" height="300px" src="{% static 'img/team_black.png' %}" class="">
-            </li>
-          </ul>
-
-        </div>
-        <!--/Second column-->
-
-      </div>
-      <!--/First row-->
-
-    </div>
-    <!--/Footer Links-->
-
     <!--Copyright-->
     <div class="footer-copyright py-3 text-center">
       <div class="container-fluid">
