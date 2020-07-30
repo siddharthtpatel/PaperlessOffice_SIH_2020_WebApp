@@ -67,7 +67,9 @@
                           <td>{{ doc.creatorName }}</td>
                           <td>{{ doc.fileDesc }}</td>
                           <td>{{ doc.timestamp }}</td>
-                          <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
+                          <td><span onclick="on_view_click(this)"> <i class="fas fa-eye" style="cursor:pointer" aria-hidden="true"></i></span>
+                              <span class="ml-2" onclick="on_info_click(this)"><i class="fas fa-info-circle"></i></span>
+                          </td>
                                 </tr>
                           {% endfor %}
                         </tbody>
@@ -106,8 +108,10 @@
                           <td>{{ doc.creatorName }}</td>
                           <td>{{ doc.fileDesc }}</td>
                           <td>{{ doc.timestamp }}</td>
-                          <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
-                                </tr>
+                          <td><span onclick="on_view_click(this)"> <i class="fas fa-eye" style="cursor:pointer" aria-hidden="true"></i></span>
+                              <span class="ml-2" onclick="on_info_click(this)"><i class="fas fa-info-circle"></i></span>
+                          </td>
+                            </tr>
                           {% endfor %}
                         </tbody>
                       </table>
@@ -145,7 +149,9 @@
                           <td>{{ doc.creatorName }}</td>
                           <td>{{ doc.fileDesc }}</td>
                           <td>{{ doc.timestamp }}</td>
-                          <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
+                          <td><span onclick="on_view_click(this)"> <i class="fas fa-eye" style="cursor:pointer" aria-hidden="true"></i></span>
+                              <span class="ml-2" onclick="on_info_click(this)"><i class="fas fa-info-circle"></i></span>
+                          </td>
                                 </tr>
                           {% endfor %}
                         </tbody>
@@ -173,5 +179,14 @@
     $('#PublicDocumentsDT').DataTable();
     $('.dataTables_length').addClass('bs-select');
   });
+</script>
+<script>
+    function on_view_click(o){
+    console.log(o);
+	}
+
+	function on_info_click(o){
+	console.log("info clicked");
+	}
 </script>
 {% endblock %}
