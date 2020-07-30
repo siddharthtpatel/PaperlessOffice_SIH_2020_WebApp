@@ -93,7 +93,7 @@
             </div>
             <div class="row">
               <div class="col-12" style="text-align:right">
-                <button type="submit" font-size="40px" class="btn green btn-rounded ml-0" id="create_workflow">Create Form</button>
+                <button type="submit" font-size="40px" class="btn green btn-rounded ml-0" disabled id="create_workflow">Create Form</button>
               </div>
             </div>
             <br>
@@ -120,6 +120,9 @@
                         <div class="md-form">
                             <input placeholder="Enter the question" type="text" id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
                         </div>
+                    </div>
+                    <div class="col-4" style="text-align:right">
+                            <a class="btn-floating btn-sm btn-success" onclick="DeleteQuestion(this)"><i class="fas fa-minus-circle"></i></a>
                     </div>
                 </div>
                 <div class="row m-3">
@@ -182,6 +185,9 @@
                                 <input placeholder="Enter the question" type="text" id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
                             </div>
                         </div>
+                        <div class="col-4" style="text-align:right">
+                            <a class="btn-floating btn-sm btn-success" onclick="DeleteQuestion(this)"><i class="fas fa-minus-circle"></i></a>
+                        </div>
                     </div>
                     <div class="row m-3">
                       <div id="checkbox_options" class="checkboxs">
@@ -234,6 +240,9 @@
                                 <input placeholder="Enter the question"id="{{ question_number }}" name="{{ question_number }}_question" type="text" style="color: black; font-size: 20px;" class="form-control">
                             </div>
                         </div>
+                        <div class="col-4" style="text-align:right">
+                            <a class="btn-floating btn-sm btn-success" onclick="DeleteQuestion(this)"><i class="fas fa-minus-circle"></i></a>
+                        </div>
                     </div>
                     <div class="col-11 mr-4">
                         <div class="form-group green-border-focus" style="margin-left: 40px;">
@@ -256,13 +265,16 @@
                                 <input placeholder="Enter the question" type="text"id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <select id="selected_type" name="{{ question_number }}_type" class="browser-default custom-select" onchange="SetInputType(this)">
-                                <option selected>Select the answer type</option>
+                                <option selected disabled>Select the answer type</option>
                                 <option value="Email">Email</option>
-    	                            <option value="Number">Number</option>
+                                <option value="Number">Number</option>
                                 <option value="Date">Date</option>
                             </select>
+                        </div>
+                        <div class="col-1" style="text-align:right">
+                            <a class="btn-floating btn-sm btn-success" onclick="DeleteQuestion(this)"><i class="fas fa-minus-circle"></i></a>
                         </div>
                     </div>
                     <div class="col-8 mr-3">
@@ -289,7 +301,7 @@
 	            </div>
 	        </div>
 	        <div class="col-1" style="text-align:right">
-	            <a class="btn-floating btn-sm btn-success" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+	            <a class="btn-floating btn-sm btn-success" onclick="DeleteOption(this)"><i class="fas fa-minus-circle"></i></a>
 	        </div>
 	    </div>
 	</script>
@@ -306,99 +318,115 @@
 	        </div>
 	      </div>
 	      <div class="col-1" style="text-align:right">
-	          <a class="btn-floating btn-sm btn-success" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+	          <a class="btn-floating btn-sm btn-success" onclick="DeleteOption(this)"><i class="fas fa-minus-circle"></i></a>
 	      </div>
 	  </div>
   	</script>
     {% endverbatim %}
   	<script>
 
-    const checkbox_question_template = Handlebars.compile(document.querySelector('#add_checkbox_question').innerHTML);
-    const option_field_checkbox_template = Handlebars.compile(document.querySelector('#add_option_checkbox').innerHTML);
-    const radio_question_template = Handlebars.compile(document.querySelector('#add_radio_question').innerHTML);
-	  const option_field_radio_template = Handlebars.compile(document.querySelector('#add_option_radio').innerHTML);
-	  const long_answer_question_template = Handlebars.compile(document.querySelector('#add_long_answer_question').innerHTML);
-	  const multiple_type_question_template = Handlebars.compile(document.querySelector('#add_multiple_type_question').innerHTML);
+        const checkbox_question_template = Handlebars.compile(document.querySelector('#add_checkbox_question').innerHTML);
+        const option_field_checkbox_template = Handlebars.compile(document.querySelector('#add_option_checkbox').innerHTML);
+        const radio_question_template = Handlebars.compile(document.querySelector('#add_radio_question').innerHTML);
+        const option_field_radio_template = Handlebars.compile(document.querySelector('#add_option_radio').innerHTML);
+        const long_answer_question_template = Handlebars.compile(document.querySelector('#add_long_answer_question').innerHTML);
+        const multiple_type_question_template = Handlebars.compile(document.querySelector('#add_multiple_type_question').innerHTML);
 
-	var question_count = 0;
+	    var question_count = 0;
 
-	function add_option_checkbox(o){
-	  const id= o.parentElement.parentElement.children[0].children[1].children[0].children[0].id;
-	  const option_count = parseInt(o.parentElement.parentElement.children[1].children[0].children[0].children[0].children[0].value);
-	  o.parentElement.parentElement.children[1].children[0].children[0].children[0].children[0].value = option_count + 1;
-      const new_option = option_field_checkbox_template({'id':id, 'option_number': option_count+1});
-      o.parentElement.parentElement.children[1].children[0].insertAdjacentHTML('beforeEnd', new_option);
-	}
-
-	function add_option_radio(o){
-	  const id= o.parentElement.parentElement.children[0].children[1].children[0].children[0].id;
-	  const option_count = parseInt(o.parentElement.parentElement.children[1].children[0].children[0].children[0].value);
-	  o.parentElement.parentElement.children[1].children[0].children[0].children[0].value = option_count + 1;
-      const new_option = option_field_radio_template({'id':id, 'option_number': option_count+1});
-      o.parentElement.parentElement.children[1].children[0].insertAdjacentHTML('beforeEnd', new_option);
-	}
-
-
-    document.querySelector('#add_question_radio_button').onclick = () => {
-      question_count++;
-      document.querySelector('#totalFields').value = question_count;
-      if(question_count==1)
-      {
-        document.querySelector('#add_message').remove();
-      }
-      const new_question = radio_question_template({'question_number':question_count});
-      document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
-    }
-
-	document.querySelector('#add_question_checkbox_button').onclick = () => {
-        question_count++;
-        document.querySelector('#totalFields').value = question_count;
-        if(question_count==1)
-        {
-          document.querySelector('#add_message').remove();
+        function add_option_checkbox(o){
+          const id= o.parentElement.parentElement.children[0].children[1].children[0].children[0].id;
+          const option_count = parseInt(o.parentElement.parentElement.children[1].children[0].children[0].children[0].children[0].value);
+          o.parentElement.parentElement.children[1].children[0].children[0].children[0].children[0].value = option_count + 1;
+          const new_option = option_field_checkbox_template({'id':id, 'option_number': option_count+1});
+          o.parentElement.parentElement.children[1].children[0].insertAdjacentHTML('beforeEnd', new_option);
         }
-		const new_question = checkbox_question_template({'question_number':question_count});
-		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
-	}
 
-	document.querySelector('#add_question_long_answer_button').onclick = () => {
-        question_count++;
-        document.querySelector('#totalFields').value = question_count;
-        if(question_count==1)
-        {
-          document.querySelector('#add_message').remove();
+        function add_option_radio(o){
+          const id= o.parentElement.parentElement.children[0].children[1].children[0].children[0].id;
+          const option_count = parseInt(o.parentElement.parentElement.children[1].children[0].children[0].children[0].value);
+          o.parentElement.parentElement.children[1].children[0].children[0].children[0].value = option_count + 1;
+          const new_option = option_field_radio_template({'id':id, 'option_number': option_count+1});
+          o.parentElement.parentElement.children[1].children[0].insertAdjacentHTML('beforeEnd', new_option);
         }
-		const new_question = long_answer_question_template({'question_number':question_count});
-		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
-	}
 
-	document.querySelector('#add_question_multiple_type_button').onclick = () => {
-    question_count++;
-    document.querySelector('#totalFields').value = question_count;
-    if(question_count==1)
-        {
-      document.querySelector('#add_message').remove();
-        }
-		const new_question = multiple_type_question_template({'question_number':question_count});
-		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
-	}
 
-    function DeleteRow(o){
-      var p=o.parentNode.parentNode;
-         p.parentNode.removeChild(p);
-    }
+        document.querySelector('#add_question_radio_button').onclick = () => {
+          question_count++;
+          RemoveHelpMessage();
+          document.querySelector('#totalFields').value = question_count;
+          const new_question = radio_question_template({'question_number':question_count});
+          document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+          document.querySelector('#questions').scrollTop = document.querySelector('#questions').scrollHeight;
+        }
 
-    function SetInputType(selected_type) {
-        var field = document.getElementById("input_txt");
-        if (selected_type.value == "Email") {
-            field.setAttribute('TYPE', 'Email');
+        document.querySelector('#add_question_checkbox_button').onclick = () => {
+            question_count++;
+            RemoveHelpMessage();
+            document.querySelector('#totalFields').value = question_count;
+            const new_question = checkbox_question_template({'question_number':question_count});
+            document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+            document.querySelector('#questions').scrollTop = document.querySelector('#questions').scrollHeight;
         }
-        else if (selected_type.value == "Number") {
-            field.setAttribute('TYPE', 'Number');
+
+        document.querySelector('#add_question_long_answer_button').onclick = () => {
+            question_count++;
+            RemoveHelpMessage();
+            document.querySelector('#totalFields').value = question_count;
+            const new_question = long_answer_question_template({'question_number':question_count});
+            document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+            document.querySelector('#questions').scrollTop = document.querySelector('#questions').scrollHeight;
         }
-        else if (selected_type.value == "Date") {
-            field.setAttribute('TYPE', 'date');
+
+        document.querySelector('#add_question_multiple_type_button').onclick = () => {
+            question_count++;
+            RemoveHelpMessage();
+            document.querySelector('#totalFields').value = question_count;
+            const new_question = multiple_type_question_template({'question_number':question_count});
+            document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+            document.querySelector('#questions').scrollBy(0, 500);
         }
-    }
+
+        function DeleteOption(o){
+            var p=o.parentNode.parentNode;
+             p.parentNode.removeChild(p);
+        }
+
+        function DeleteQuestion(o){
+            var p=o.parentNode.parentNode.parentNode.parentNode;
+            p.parentNode.removeChild(p);
+            question_count--;
+            if(question_count==0)
+                {
+                document.querySelector('#add_message').hidden = false;
+                }
+            if( question_count == 0){
+                document.querySelector('#create_workflow').disabled = true;
+            }
+
+        }
+
+        function SetInputType(selected_type) {
+            var field = document.getElementById("input_txt");
+            if (selected_type.value == "Email") {
+                field.setAttribute('TYPE', 'Email');
+            }
+            else if (selected_type.value == "Number") {
+                field.setAttribute('TYPE', 'Number');
+            }
+            else if (selected_type.value == "Date") {
+                field.setAttribute('TYPE', 'date');
+            }
+         }
+
+        function RemoveHelpMessage(){
+            if(question_count==1)
+                {
+                document.querySelector('#add_message').hidden = true;
+                }
+            if( question_count > 0){
+                document.querySelector('#create_workflow').disabled = false;
+            }
+        }
   </script>
 {% endblock %}
