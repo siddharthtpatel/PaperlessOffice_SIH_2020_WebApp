@@ -15,5 +15,6 @@ urlpatterns = [
     path('form', views.form, name="form"),
     path('new-form', views.new_form, name="new_form"),
     path('add_form', views.add_form, name="add_form"),
-    path('new_document', views.new_document, name="new_document")
+    path('new_document', views.new_document, name="new_document"),
+    path('new_application_template', views.new_application_template, name="new_application_template")
 ]

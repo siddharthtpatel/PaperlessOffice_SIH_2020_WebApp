@@ -161,6 +161,7 @@ def new_document(request):
     else:
         return redirect('/')
 
+
 def new_application_template(request):
     if verify_token(request):
         # TODO
