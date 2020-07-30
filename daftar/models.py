@@ -138,3 +138,33 @@ class Form(object):
             self.isCreator = True
         else:
             self.isCreator = False
+
+
+class ApplicationTemplates(object):
+
+    def __init__(self, json):
+        self.id = json['_id']['$oid']
+        self.name = json['name']
+        self.creatorName = json['creatorName']
+        self.stages = json['stages']
+
+        if User().token == json['creatorId']:
+            self.isCreator = True
+        else:
+            self.isCreator = False
+
+        url = daftar.settings.DAFTAR_HOST
+        hed = {'Authorization': 'Bearer ' + User().token}
+
+        request = requests.get(url+"/workflow", stream=True, headers=hed)
+        workflows = js.loads(request.text)
+        for workflow in workflows:
+            if json['workflowId'] == workflow['_id']['$oid']:
+                self.workflowName = workflow['name']
+
+        request = requests.get(url + "/form", stream=True, headers=hed)
+        forms = js.loads(request.text)
+        for form in forms:
+            if json['formId'] == form['_id']['$oid']:
+                self.formName = form['title']
+
