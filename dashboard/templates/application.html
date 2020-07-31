@@ -31,9 +31,61 @@
   
 </style>
   <!-- Main layout -->
-  <main id="add_modal_main">
-    
+
+  <main>
     <div class="container">
+        <div class="modal fade" id="signModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+              aria-hidden="true">
+
+              <form action="{% url 'sign_application' %}" method="POST">{% csrf_token %}
+              <input name="action" value="Sign" hidden>
+              <input name="id" class="id" value="" hidden>
+
+              <!-- Change class .modal-sm to change the size of the modal -->
+              <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title w-100" id="myModalLabel">Are you sure, you want to Sign? </h4>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="submit" style="width:150px;" class="btn btn-success btn-lg">Sign</button>
+                          <button type="button" style="width:150px;" data-dismiss="modal" aria-label="Close" class="btn btn-danger btn-lg">
+                                Cancel
+                          </button>
+                      </div>
+                </div>
+              </div>
+              </form>
+            </div>
+            <!-- Central Modal Small -->
+        <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <!-- Change class .modal-sm to change the size of the modal -->
+            <form action="{% url 'sign_application' %}" method="POST">{% csrf_token %}
+                <input name="action" value="Reject" hidden>
+                <input name="id" class="id" value="" hidden>
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title w-100" id="myModalLabel">Are you sure, you want to Reject?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <h5>Comments:</h5>
+                        <input type="text" id="messageReject" placeholder="Enter text here" name="message" class="form-control">
+                      </div>
+                      <div class="modal-footer">
+                          <button type="submit" style="width:150px;" class="btn btn-danger btn-lg">Reject</button>
+                          <button type="button" style="width:150px; background-color:gray; color:white;" data-dismiss="modal" aria-label="Close" class="btn btn-lg">
+                                Cancel
+                          </button>
+                      </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
     <!-- Button trigger modal -->
     <button id="open_cost_saving_popup" type="button" class="btn btn-primary" data-toggle="modal" data-target="#sideModalTR" hidden>
       Open popup
@@ -66,8 +118,12 @@
             </div>
             <div class="modal-content">
                 <div class="modal-footer p-1">
-                    <button type="button" class="btn btn-success btn-md" style="font-size:15px; width:120px;">Sign</button>
-                    <button type="button" class="btn btn btn-md" style="font-size:15px; width:120px; color: white; background-color: tomato;">Reject</button>
+                    {% if isUser %}
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary btn-md" style="font-size:15px; width:120px;">Cancel</button>
+                    {% else %}
+                        <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#signModal" class="btn btn-success btn-md" style="font-size:15px; width:120px;">Sign</button>
+                        <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#rejectModal" class="btn btn btn-md" style="font-size:15px; width:120px; color: white; background-color: tomato;">Reject</button>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -124,7 +180,7 @@
                           <td>{{ application.creatorName }}</td>
                           <td>{{ application.stage }}/{{ application.stages }}</td>
                           <td>{{ application.timestamp }}</td>
-                          <td><span onclick="on_view_click(this)"> <i class="fas fa-eye" style="cursor:pointer" aria-hidden="true"></i></span>
+                          <td><span onclick="Info(this)"> <i class="fas fa-eye" style="cursor:pointer" aria-hidden="true"></i></span>
                               <span class="ml-2" id="{{ application.id }}" data-toggle="modal" data-target="#centralModalLg" onclick="Info(this)"><i  style="cursor:pointer" class="fas fa-info-circle"></i></span>
                           </td>
                           </tr>
@@ -355,6 +411,7 @@
         return cookieValue;
     }
 
+
     const csrftoken = getCookie('csrftoken');
 
     function Info(o){
@@ -365,7 +422,7 @@
 
     application_request.onload = () =>{
         var application = JSON.parse(application_request.responseText);
-
+      
         const workflow_request = new XMLHttpRequest();
         workflow_request.open('POST','fetch_workflow');
         const data = new FormData();
@@ -375,10 +432,13 @@
 
         let workflow;
         workflow_request.onload = () =>{
-          console.log(JSON.parse(workflow_request.responseText));
           workflow = JSON.parse(workflow_request.responseText);
           
-
+          var arr = document.getElementsByClassName('id');
+          for(i=0; i<arr.length; i++){
+            arr[0].value = application['_id']['$oid'];
+          }
+  
           current_status = "Pending";
           if( application['status'] == 1 ){
               current_status = "Approved";
@@ -388,10 +448,8 @@
           }
           var authorities = [];
           workflow['stages'].forEach(function (arrayItem) {
-            console.log(arrayItem.authName);
             authorities.push(arrayItem.authName);
           });
-          console.log(authorities);
 
           const application_modal = view_application_modal_template({
               'application_title': application['name'],
