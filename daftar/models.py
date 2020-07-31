@@ -20,8 +20,12 @@ class User(object):
             self.first_name = None
             self.last_name = None
             self.dob = None
+            self.public_key = None
+            self.private_key = None
             self.isUser = None
             self.token = None
+            self.email = None
+            self.costOfPaper = None
 
         def __str__(self):
             return self + self.id

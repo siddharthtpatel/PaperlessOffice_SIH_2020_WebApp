@@ -8,7 +8,7 @@ from django.urls import reverse
 import daftar
 from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows, add_forms, \
     add_workflows, get_forms, add_application_templates, get_application_templates, get_application_template, get_form, \
-    get_workflow, submit_applications
+    get_workflow, submit_applications, save_changes
 from daftar.models import User
 from daftar.views import verify_token
 
@@ -252,5 +252,24 @@ def submit_application(request):
             else:
                 return HttpResponseRedirect(reverse('fill_application'))
 
+    else:
+        return redirect('/')
+
+
+def my_account(request):
+    if verify_token(request):
+
+        return render(request, 'account.html', {'title': 'Daftar | My Account',
+                                                'user': User()})
+    else:
+        return redirect('/')
+
+
+def save_cost_changes(request):
+    if verify_token(request):
+        if request.method == 'POST':
+            response = save_changes(request.POST)
+            print(response)
+            return redirect('/')
     else:
         return redirect('/')

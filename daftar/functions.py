@@ -243,10 +243,10 @@ def get_workflow(workflow_id):
 def submit_applications(form):
     form_details = {}
     i = 1
-    for i in range(1, int(form.get('fields_count'))+1):
+    for i in range(1, int(form.get('fields_count')) + 1):
         if form.get(f'{i}_type') == "checkbox":
             answers = []
-            for j in range(1, int(form.get(f'{i}_answer_count'))+1):
+            for j in range(1, int(form.get(f'{i}_answer_count')) + 1):
                 if form.get(f'{i}_answer_{j}') is not None:
                     answers.append(form.get(f'{i}_answer_{j}'))
             form_details[form.get(f'{i}_question')] = answers
@@ -264,7 +264,18 @@ def submit_applications(form):
     hed = {'Authorization': 'Bearer ' + User().token}
     response = requests.post(url, json=data, headers=hed)
     if response.status_code == requests.codes.ok:
-    #if False:
+        # if False:
+        return True
+    else:
+        return False
+
+
+def save_changes(form):
+    url = daftar.settings.DAFTAR_HOST + "/settings/costOfPaper/" + form.get("costOfPaper")
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.post(url, {}, headers=hed)
+    if response.status_code == requests.codes.ok:
         return True
     else:
         return False
