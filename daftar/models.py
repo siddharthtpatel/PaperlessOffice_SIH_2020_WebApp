@@ -119,7 +119,7 @@ class Workflow(object):
         self.stages = json['stages']
         self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
 
-        if User().token == json['creatorId']:
+        if User().id == json['creatorId']:
             self.isCreator = True
         else:
             self.isCreator = False
@@ -138,7 +138,7 @@ class Form(object):
             self.fields.append(Field(field, i))
             i = i + 1
 
-        if User().token == json['creator']:
+        if User().id == json['creator']:
             self.isCreator = True
         else:
             self.isCreator = False
@@ -154,7 +154,7 @@ class ApplicationTemplates(object):
         self.workflowId = json['workflowId']
         self.formId = json['formId']
 
-        if User().token == json['creatorId']:
+        if User().id == json['creatorId']:
             self.isCreator = True
         else:
             self.isCreator = False
