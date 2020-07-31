@@ -56,6 +56,7 @@ def application(request):
         return render(request, 'application.html', {'title': 'Daftar | Applications',
                                                     'isUser': User().isUser,
                                                     'first_name': User().first_name,
+                                                    'user_id': User().id,
                                                     'all_applications': all_applications,
                                                     'pending_applications': pending_applications,
                                                     'approved_applications': approved_applications,

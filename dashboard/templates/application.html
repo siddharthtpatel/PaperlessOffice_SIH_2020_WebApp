@@ -33,7 +33,7 @@
   <!-- Main layout -->
 
   <main>
-    <div class="container">
+    <div class="container" >
         <div class="modal fade" id="signModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
               aria-hidden="true">
 
@@ -121,8 +121,8 @@
                     {% if isUser %}
                         <button type="button" data-dismiss="modal" class="btn btn-secondary btn-md" style="font-size:15px; width:120px;">Cancel</button>
                     {% else %}
-                        <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#signModal" class="btn btn-success btn-md" style="font-size:15px; width:120px;">Sign</button>
-                        <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#rejectModal" class="btn btn btn-md" style="font-size:15px; width:120px; color: white; background-color: tomato;">Reject</button>
+                        <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#signModal" class="btn btn-success btn-md action-button" hidden style="font-size:15px; width:120px;">Sign</button>
+                        <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#rejectModal" class="btn btn btn-md action-button" hidden style="font-size:15px; width:120px; color: white; background-color: tomato;">Reject</button>
                     {% endif %}
                 </div>
             </div>
@@ -135,7 +135,7 @@
 
           } 
         </style>
-      <div class="black-text">
+      <div class="black-text" id="{{user_id}}">
             <ul class="nav md-tabs nav-justified green mb-0" id="myTab" role="tablist">
                 <li class="nav-item">
                   <a href="#AllApplication" class="nav-link active" data-toggle="tab"><h5 class="font-weight-500 my-1" >All Applications</h5></a>
@@ -375,6 +375,14 @@
               <div class="col-6">
                 <h5>{{status}}</h5>
               </div>
+              {{#if message }}
+              <div class="col-6">
+                <h5>Message</h5>
+              </div>
+              <div class="col-6">
+                <h5>{{message}}</h5>
+              </div>
+              {{/if}}
               <div class="progress md-progress float-right" style="height:15px;  width:95%;">
                 <div class="progress-bar progress-bar-striped green progress-bar-animated"
                     role="progressbar" style="width: {{ progress }}%; height: 15px"
@@ -415,6 +423,10 @@
     const csrftoken = getCookie('csrftoken');
 
     function Info(o){
+    var arr1 = document.getElementsByClassName('action-button');
+    for(i=0; i<arr1.length; i++){
+        arr1[i].hidden = true;
+    }
     document.querySelector('#modalContent').innerHTML = "";
     const id = o.id;
     const application_request = new XMLHttpRequest();
@@ -422,7 +434,15 @@
 
     application_request.onload = () =>{
         var application = JSON.parse(application_request.responseText);
-      
+
+        var user_id = document.querySelector('.black-text').id
+        if(application['assignedId'] == user_id && application['status'] != '-1'){
+              var arr1 = document.getElementsByClassName('action-button');
+              for(i=0; i<arr1.length; i++){
+                arr1[i].hidden = false;
+              }
+         }
+
         const workflow_request = new XMLHttpRequest();
         workflow_request.open('POST','fetch_workflow');
         const data = new FormData();
@@ -436,7 +456,7 @@
           
           var arr = document.getElementsByClassName('id');
           for(i=0; i<arr.length; i++){
-            arr[0].value = application['_id']['$oid'];
+            arr[i].value = application['_id']['$oid'];
           }
   
           current_status = "Pending";
@@ -446,6 +466,7 @@
           if( application['status'] == -1 ){
               current_status = "Rejected";
           }
+
           var authorities = [];
           workflow['stages'].forEach(function (arrayItem) {
             authorities.push(arrayItem.authName);
@@ -460,6 +481,7 @@
               'stages': application['stages'],
               'status': current_status,
               'progress': parseInt(application['stage'])*100/parseInt(application['stages']),
+              'message': application['message'],
               'authorities' : authorities
           });
           document.querySelector('#modalContent').innerHTML = application_modal;
