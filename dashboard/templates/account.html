@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<!-- Main layout -->
+  <main>
+    <div class="container">
+      <!-- Section: Applications -->
+      <section class="pb-12">
+        <div class="jumbotron">
+          <h2 class="display-4">Hi, {{ user.first_name }}</h2>
+          <p class="lead">Welcome to your account, you can verify your personal details.</p>
+          <hr class="my-4">
+
+          <p>Your Email : <b>{{ user.email }}</b></p>
+          <p>Your Full Name: <b> {{user.first_name }} {{ user.last_name}}</b></p>
+          <p>Date of Birth: <b> {{ user.dob }}</b></p>
+          <p>Public Key: <a type="button" data-toggle="collapse" href="#pub_key_c" aria-expanded="false" aria-controls="collapseExample" class="btn-floating deep-purple"><i class="fas fa-eye" aria-hidden="true"></i></a>
+
+            <div class="collapse" id="pub_key_c">
+              <div class="mt-3">
+                <pre style="color:purple">{{ user.public_key }}
+                </pre>
+              </div>
+            </div>
+          </p>
+
+          <p>Private Key: <a type="button" data-toggle="collapse" href="#priv_key_c" aria-expanded="false" aria-controls="collapseExample" class="btn-floating red"><i class="fas fa-eye" aria-hidden="true"></i></a>
+
+            <div class="collapse" id="priv_key_c">
+              <div class="mt-3">
+                <pre style="color:red">{{ user.private_key }}
+                </pre>
+              </div>
+            </div>
+          </p>
+
+          <p>
+            <form action="{% url 'save_changes' %}" method="POST">{% csrf_token %}
+              <div class="input-group mb-3" style="width: 30%">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon3">Cost Per Paper (in Rupees)</span>
+                </div>
+                <input type="text" class="form-control" id="costOfPaper" name="costOfPaper" aria-describedby="basic-addon3" value="{{ user.costOfPaper }}">
+
+              <button class="btn btn-outline-info btn-rounded btn-block z-depth-0  my-4 waves-effect" type="submit">Save Changes</button>
+
+            </div>
+          </form>
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+  <!-- Main layout -->
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}
