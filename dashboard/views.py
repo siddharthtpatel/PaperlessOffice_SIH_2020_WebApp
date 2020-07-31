@@ -42,6 +42,10 @@ def application(request):
         pending_applications = get_applications(filter='pending')
         approved_applications = get_applications(filter='signed')
         rejected_applications = get_applications(filter='rejected')
+        cost_per_paper = User().costOfPaper
+        money_saved = cost_per_paper*len(all_applications)
+        trees_saved = len(all_applications)/8333
+        trees_saved =round(trees_saved, 5)
         if all_applications is False:
             # TODO: Error handling
             print('Error Loading Documents')
@@ -53,7 +57,10 @@ def application(request):
                                                     'all_applications': all_applications,
                                                     'pending_applications': pending_applications,
                                                     'approved_applications': approved_applications,
-                                                    'rejected_applications': rejected_applications})
+                                                    'rejected_applications': rejected_applications,
+                                                    'cost_per_paper': cost_per_paper,
+                                                    'money_saved': money_saved,
+                                                    'trees_saved': trees_saved})
     else:
         return redirect('/')
 
