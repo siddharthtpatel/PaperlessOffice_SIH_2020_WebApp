@@ -1,5 +1,6 @@
 from django.urls import path
 
+from daftar import functions
 from . import views
 
 urlpatterns = [
@@ -15,5 +16,6 @@ urlpatterns = [
     path('new_document', views.new_document, name="new_document"),
     path('new_application_template', views.new_application_template, name="new_application_template"),
     path('add_application_template', views.add_application_template, name="add_application_template"),
-    path('application_template', views.application_template, name="application_templates")
+    path('application_template', views.application_template, name="application_templates"),
+    path('fetch_application', functions.fetch_application)
 ]
