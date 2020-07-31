@@ -459,7 +459,7 @@
               'stage': application['stage'],
               'stages': application['stages'],
               'status': current_status,
-              'progress': parseInt(application['stage'])/parseInt(application['stages']*100),
+              'progress': parseInt(application['stage'])*100/parseInt(application['stages']),
               'authorities' : authorities
           });
           document.querySelector('#modalContent').innerHTML = application_modal;
