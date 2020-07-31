@@ -8,6 +8,7 @@ from django.core.files.base import ContentFile
 from django.db import models
 from django.core import files
 from django.core.files.storage import FileSystemStorage, default_storage
+from django import forms
 
 import daftar
 from daftar import settings
@@ -199,3 +200,9 @@ class Option(object):
     def __init__(self, value, option_id):
         self.id = option_id
         self.value = value
+
+
+class UploadFileForm(forms.Form):
+    fileName = forms.CharField(max_length=50)
+    fileDescription = forms.CharField(max_length=50)
+    file = forms.FileField()

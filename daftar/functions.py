@@ -208,7 +208,7 @@ def fetch_application(request):
             response = requests.get(url, headers=hed)
             return HttpResponse(response, content_type=json)
 
-          
+
 def get_application_template(application_template_id):
     url = daftar.settings.DAFTAR_HOST + "/applications/templates/" + application_template_id
 
@@ -289,4 +289,41 @@ def save_changes(form):
     if response.status_code == requests.codes.ok:
         return True
     else:
+        return False
+
+
+class FileLimiter(object):
+    def __init__(self, file_obj, read_limit):
+        self.read_limit = read_limit
+        self.amount_seen = 0
+        self.file_obj = file_obj
+
+        # So that requests doesn't try to chunk the upload but will instead stream it:
+        self.len = read_limit
+
+    def read(self, amount=-1):
+        if self.amount_seen >= self.read_limit:
+            return b''
+        remaining_amount = self.read_limit - self.amount_seen
+        data = self.file_obj.read(min(amount, remaining_amount))
+        self.amount_seen += len(data)
+        return data
+
+
+def upload_new_document(fileName, fileDesc, file, fileExt):
+    url = daftar.settings.DAFTAR_HOST + "/storage"
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+
+    data = {
+        "fileName": fileName,
+        "fileDescription": fileDesc,
+        "fileExt": fileExt
+    }
+    response = requests.post(url, data, headers=hed,
+                             files=dict(file=file))
+    if response.status_code == requests.codes.ok:
+        return True
+    else:
+        print(response.json())
         return False
