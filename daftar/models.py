@@ -20,8 +20,12 @@ class User(object):
             self.first_name = None
             self.last_name = None
             self.dob = None
+            self.public_key = None
+            self.private_key = None
             self.isUser = None
             self.token = None
+            self.email = None
+            self.costOfPaper = None
 
         def __str__(self):
             return self + self.id
@@ -119,7 +123,7 @@ class Workflow(object):
         self.stages = json['stages']
         self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
 
-        if User().token == json['creatorId']:
+        if User().id == json['creatorId']:
             self.isCreator = True
         else:
             self.isCreator = False
@@ -132,9 +136,13 @@ class Form(object):
         self.title = json['title']
         self.description = json['description']
         self.creatorId = json['creator']
-        self.fields = json['fields']
+        self.fields = []
+        i = 1
+        for field in json['fields']:
+            self.fields.append(Field(field, i))
+            i = i + 1
 
-        if User().token == json['creator']:
+        if User().id == json['creator']:
             self.isCreator = True
         else:
             self.isCreator = False
@@ -147,8 +155,10 @@ class ApplicationTemplates(object):
         self.name = json['name']
         self.creatorName = json['creatorName']
         self.stages = json['stages']
+        self.workflowId = json['workflowId']
+        self.formId = json['formId']
 
-        if User().token == json['creatorId']:
+        if User().id == json['creatorId']:
             self.isCreator = True
         else:
             self.isCreator = False
@@ -156,7 +166,7 @@ class ApplicationTemplates(object):
         url = daftar.settings.DAFTAR_HOST
         hed = {'Authorization': 'Bearer ' + User().token}
 
-        request = requests.get(url+"/workflow", stream=True, headers=hed)
+        request = requests.get(url + "/workflow", stream=True, headers=hed)
         workflows = js.loads(request.text)
         for workflow in workflows:
             if json['workflowId'] == workflow['_id']['$oid']:
@@ -168,3 +178,24 @@ class ApplicationTemplates(object):
             if json['formId'] == form['_id']['$oid']:
                 self.formName = form['title']
 
+
+class Field(object):
+
+    def __init__(self, json, field_id):
+        self.id = field_id
+        self.type = json['type']
+        self.question = json['question']
+
+        if json['type'] in ('radio', 'checkbox'):
+            self.options = []
+            i = 1
+            for option in json['options'].values():
+                self.options.append(Option(option, i))
+                i = i + 1
+
+
+class Option(object):
+
+    def __init__(self, value, option_id):
+        self.id = option_id
+        self.value = value

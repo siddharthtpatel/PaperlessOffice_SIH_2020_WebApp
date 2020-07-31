@@ -16,6 +16,10 @@ def verify_token(request):
             user.id = data['_id']['$oid']
             user.first_name = data['first_name']
             user.last_name = data['last_name']
+            user.email = data['email']
+            user.public_key = data['public_key']
+            user.private_key = data['private_key']
+            user.costOfPaper = data['costOfPaper']
             user.dob = data['dob']
             user.isUser = data['role'] == 'user'
             user.token = token

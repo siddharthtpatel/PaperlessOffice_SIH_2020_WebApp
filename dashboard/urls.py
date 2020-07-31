@@ -5,6 +5,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('account', views.my_account, name='account'),
+    path('save_changes', views.save_cost_changes, name='save_changes'),
     path('applications', views.application, name='application'),
     path('storage', views.storage, name='storage'),
     path('workflow', views.workflow, name="workflow"),
@@ -18,4 +20,6 @@ urlpatterns = [
     path('add_application_template', views.add_application_template, name="add_application_template"),
     path('application_template', views.application_template, name="application_templates"),
     path('fetch_application', functions.fetch_application)
+    path('fill_application', views.fill_application, name="fill_application"),
+    path('submit_application', views.submit_application, name="submit_application")
 ]

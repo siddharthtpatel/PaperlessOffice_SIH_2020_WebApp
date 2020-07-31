@@ -7,7 +7,8 @@ from django.urls import reverse
 
 import daftar
 from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows, add_forms, \
-    add_workflows, get_forms, add_application_templates, get_application_templates
+    add_workflows, get_forms, add_application_templates, get_application_templates, get_application_template, get_form, \
+    get_workflow, submit_applications, save_changes
 from daftar.models import User
 from daftar.views import verify_token
 
@@ -189,7 +190,7 @@ def add_application_template(request):
         if request.method == 'POST':
             response = add_application_templates(request.POST)
             if response:
-                return HttpResponseRedirect(reverse('new_application_template'))
+                return HttpResponseRedirect(reverse('application_template'))
             else:
                 return HttpResponseRedirect(reverse('new_application_template'))
     else:
@@ -207,5 +208,68 @@ def application_template(request):
                                                              'isUser': User().isUser,
                                                              'first_name': User().first_name,
                                                              'application_templates': application_templates})
+    else:
+        return redirect('/')
+
+
+def fill_application(request):
+    if verify_token(request):
+
+        if request.method == 'GET':
+            applications = get_application_templates()
+            if applications is False:
+                # TODO: Error handling
+                print('Error Loading Documents')
+            return render(request, 'fill_application.html', {'title': 'Daftar | Fill Applications',
+                                                             'isUser': User().isUser,
+                                                             'first_name': User().first_name,
+                                                             'applications': applications,
+                                                             'isApplicationNotSelected': True})
+        else:
+            application_template_id = request.POST.get('application_template_id')
+            application_template = get_application_template(application_template_id)
+            form = get_form(application_template.formId)
+            workflow = get_workflow(application_template.workflowId)
+
+            return render(request, 'fill_application.html', {'title': 'Daftar | Fill Applications',
+                                                             'isUser': User().isUser,
+                                                             'first_name': User().first_name,
+                                                             'application_template': application_template,
+                                                             'form': form,
+                                                             'workflow': workflow,
+                                                             'fields': form.fields,
+                                                             'isApplicationNotSelected': False})
+    else:
+        return redirect('/')
+
+
+def submit_application(request):
+    if verify_token(request):
+        if request.method == 'POST':
+            response = submit_applications(request.POST)
+            if response:
+                return HttpResponseRedirect(reverse('application'))
+            else:
+                return HttpResponseRedirect(reverse('fill_application'))
+
+    else:
+        return redirect('/')
+
+
+def my_account(request):
+    if verify_token(request):
+
+        return render(request, 'account.html', {'title': 'Daftar | My Account',
+                                                'user': User()})
+    else:
+        return redirect('/')
+
+
+def save_cost_changes(request):
+    if verify_token(request):
+        if request.method == 'POST':
+            response = save_changes(request.POST)
+            print(response)
+            return redirect('/')
     else:
         return redirect('/')

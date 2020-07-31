@@ -3,9 +3,9 @@
 {% block css %}
     <style>
           .btn-floating {
-          right: 28px;
+          right: 35px;
           bottom: 15px;
-          background-color: green;
+          background-color: #29a329;
         }
         #floating_button {
           border-radius: 25px;
@@ -19,7 +19,12 @@
           right: 10px;
           cursor: pointer;
         }
-
+        .btn{
+            color: white;
+        }
+        .btn:hover{
+            color: white;
+        }
         #formDetails {
           border-radius: 25px;
           background:	 #29a329;
@@ -38,9 +43,6 @@
         .formInput {
           font-size: 15px;
           color: white;
-        }
-        .btn{
-            color: black;
         }
         .form-control{
              padding: .0rem .0rem;
@@ -93,7 +95,7 @@
             </div>
             <div class="row">
               <div class="col-12" style="text-align:right">
-                <button type="submit" font-size="40px" class="btn green btn-rounded ml-0" id="create_workflow">Create Form</button>
+                <button type="submit" font-size="40px" disabled class="btn green btn-rounded ml-0" id="create_form">Create Form</button>
               </div>
             </div>
             <br>
@@ -112,38 +114,39 @@
                 <input type="text" name="{{ question_number }}_type" class="form-control" hidden value="radio">
             </div>
             <div class="card-body text-success">
-                <div class="row m-3">
+                <div class="row ml-1 p-3">
                     <div class="col-1">
                         <h3 style="font-size: 30px;">{{ question_number }}</h3>
                     </div>
                     <div class="col-7" style="text-align:left;">
-                        <div class="md-form">
+                        <div class="md-form mt-0 ml-0">
                             <input placeholder="Enter the question" type="text" id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
                         </div>
                     </div>
+                    <div class="col-4" style="text-align:right">
+                        <a class="icons-lg git-ic" title="Delete this question" style="margin-bottom:0px;" onclick="DeleteQuestion(this)"><i class="fas fa-times fa-2x"></i></a>
+                    </div>
                 </div>
-                <div class="row m-3">
-
+                <div class="row ml-3">
                   <div id="radio_options">
                       <div>
                           <input type="number" name="{{ question_number }}_total_options" class="form-control" hidden value="2">
                       </div>
-                    <div class="row m-1">
+                    <div class="row ml-1">
                         <div class="col-1">
                             <i class="far fa-circle"></i>
                         </div>
                         <div class="col-9">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <div class="md-form">
+                                    <div class="md-form mt-0">
                                         <input type="text" class="form-control" name="{{ question_number }}_1_option" placeholder="Enter the option">
                                     </div>
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <div class="row m-1">
+                    <div class="row ml-1">
                         <div class="col-1">
                             <i class="far fa-circle"></i>
                         </div>
@@ -157,7 +160,6 @@
                             </div>
                         </div>
                     </div>
-                    <br>
                   </div>
                 </div>
                 <div class="col-6" style="text-align:left">
@@ -173,37 +175,40 @@
                     <input type="text" name="{{ question_number }}_type" class="form-control" hidden value="checkbox">
                 </div>
                 <div class="card-body text-success">
-                    <div class="row m-3 p-3">
+                    <div class="row ml-1 p-3">
                         <div class="col-1">
                             <h3 style="font-size: 30px;">{{ question_number }}</h3>
                         </div>
                         <div class="col-7" style="text-align:left;">
-                            <div class="md-form">
+                            <div class="md-form mt-0 ml-0">
                                 <input placeholder="Enter the question" type="text" id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
                             </div>
                         </div>
+                        <div class="col-4" style="text-align:right">
+                            <a class="icons-lg git-ic" title="Delete this question" style="margin-bottom:0px;" onclick="DeleteQuestion(this)"><i class="fas fa-times fa-2x"></i></a>
+                        </div>
                     </div>
-                    <div class="row m-3">
+                    <div class="row ml-3">
                       <div id="checkbox_options" class="checkboxs">
-                        <div class="row m-1">
+                        <div class="row ml-1">
                             <div>
                                 <input type="number" name="{{ question_number }}_total_options" class="form-control" hidden value="2">
                             </div>
-                            <div class="col-10">
+                            <div class="col-9">
                               <div class="custom-control custom-checkbox">
                                 <label class="custom-control-label">
-                                    <div class="md-form mt-0">
+                                    <div class="md-form ml-4 mt-0">
                                         <input type="text" class="form-control" name="{{ question_number }}_1_option" placeholder="Enter the Option">
                                     </div>
                                 </label>
                               </div>
                             </div>
                           </div>
-                          <div class="row m-1">
-                            <div class="col-10">
+                          <div class="row ml-1">
+                            <div class="col-9">
                               <div class="custom-control custom-checkbox">
                                 <label class="custom-control-label">
-                                    <div class="md-form mt-0">
+                                    <div class="md-form ml-4 mt-0">
                                         <input type="text" class="form-control" name="{{ question_number }}_2_option" placeholder="Enter the Option">
                                     </div>
                                 </label>
@@ -230,9 +235,12 @@
                             <h3 style="font-size: 30px;">{{ question_number }}</h3>
                         </div>
                         <div class="col-7" style="text-align:left;">
-                            <div class="md-form">
+                            <div class="md-form mt-0">
                                 <input placeholder="Enter the question"id="{{ question_number }}" name="{{ question_number }}_question" type="text" style="color: black; font-size: 20px;" class="form-control">
                             </div>
+                        </div>
+                        <div class="col-4 pr-0" style="text-align:right">
+                            <a class="icons-lg git-ic" title="Delete this question" style="margin-bottom:0px;" onclick="DeleteQuestion(this)"><i class="fas fa-times fa-2x"></i></a>
                         </div>
                     </div>
                     <div class="col-11 mr-4">
@@ -252,17 +260,20 @@
                             <h3 style="font-size: 30px;">{{ question_number }}</h3>
                         </div>
                         <div class="col-7" style="text-align:left;">
-                            <div class="md-form">
+                            <div class="md-form mt-0">
                                 <input placeholder="Enter the question" type="text"id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <select id="selected_type" name="{{ question_number }}_type" class="browser-default custom-select" onchange="SetInputType(this)">
                                 <option selected>Select the answer type</option>
                                 <option value="Email">Email</option>
     	                            <option value="Number">Number</option>
                                 <option value="Date">Date</option>
                             </select>
+                        </div>
+                        <div class="col-1 pr-0" style="text-align:right">
+                            <a class="icons-lg git-ic" title="Delete this question" style="margin-bottom:0px;" onclick="DeleteQuestion(this)"><i class="fas fa-times fa-2x"></i></a>
                         </div>
                     </div>
                     <div class="col-8 mr-3">
@@ -275,7 +286,7 @@
   	</script>
 
   	<script id="add_option_radio" type="text/template">
-	    <div class="row m-1">
+	    <div class="row ml-1">
             <div class="col-1">
                 <i class="far fa-circle"></i>
             </div>
@@ -289,24 +300,24 @@
 	            </div>
 	        </div>
 	        <div class="col-1" style="text-align:right">
-	            <a class="btn-floating btn-sm btn-success" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+	            <a class="btn-floating btn-sm btn-success" title="Delete this option" style="margin-bottom:0px;" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
 	        </div>
 	    </div>
 	</script>
 
 	<script id="add_option_checkbox" type="text/template">
-	  <div class="row m-1">
+	  <div class="row ml-1">
           <div class="col-10">
 	        <div class="custom-control custom-checkbox">
 	          <label class="custom-control-label">
-	              <div class="md-form mt-0">
+	              <div class="md-form ml-4 mt-0">
 	                  <input type="text" class="form-control" name="{{ id }}_{{ option_number }}_option" placeholder="Enter the Option">
 	              </div>
 	          </label>
 	        </div>
 	      </div>
 	      <div class="col-1" style="text-align:right">
-	          <a class="btn-floating btn-sm btn-success" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+	          <a class="btn-floating btn-sm btn-success" title="Delete this option" style="margin-bottom:0px" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
 	      </div>
 	  </div>
   	</script>
@@ -342,10 +353,7 @@
     document.querySelector('#add_question_radio_button').onclick = () => {
       question_count++;
       document.querySelector('#totalFields').value = question_count;
-      if(question_count==1)
-      {
-        document.querySelector('#add_message').remove();
-      }
+      EnableCreateFormButton();
       const new_question = radio_question_template({'question_number':question_count});
       document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
     }
@@ -353,10 +361,7 @@
 	document.querySelector('#add_question_checkbox_button').onclick = () => {
         question_count++;
         document.querySelector('#totalFields').value = question_count;
-        if(question_count==1)
-        {
-          document.querySelector('#add_message').remove();
-        }
+        EnableCreateFormButton();
 		const new_question = checkbox_question_template({'question_number':question_count});
 		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
 	}
@@ -364,21 +369,15 @@
 	document.querySelector('#add_question_long_answer_button').onclick = () => {
         question_count++;
         document.querySelector('#totalFields').value = question_count;
-        if(question_count==1)
-        {
-          document.querySelector('#add_message').remove();
-        }
+        EnableCreateFormButton();
 		const new_question = long_answer_question_template({'question_number':question_count});
 		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
 	}
 
 	document.querySelector('#add_question_multiple_type_button').onclick = () => {
-    question_count++;
-    document.querySelector('#totalFields').value = question_count;
-    if(question_count==1)
-        {
-      document.querySelector('#add_message').remove();
-        }
+        question_count++;
+        document.querySelector('#totalFields').value = question_count;
+        EnableCreateFormButton();
 		const new_question = multiple_type_question_template({'question_number':question_count});
 		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
 	}
@@ -386,6 +385,26 @@
     function DeleteRow(o){
       var p=o.parentNode.parentNode;
          p.parentNode.removeChild(p);
+    }
+    function DeleteQuestion(o){
+      var p=o.parentNode.parentNode.parentNode.parentNode;
+         p.parentNode.removeChild(p);
+         question_count--;
+         DisableCreateFormButton();
+    }
+    function EnableCreateFormButton(){
+        document.querySelector('#create_form').disabled = false;
+        if(question_count>0)
+        {
+            document.querySelector('#add_message').hidden = true;
+        }
+    }
+    function DisableCreateFormButton(){
+        document.querySelector('#create_form').disabled = true;
+        if(question_count==0)
+        {
+            document.querySelector('#add_message').hidden = false;
+        }
     }
 
     function SetInputType(selected_type) {
