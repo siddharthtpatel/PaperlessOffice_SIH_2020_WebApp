@@ -1,9 +1,11 @@
 import json
 
 import requests
+from django.http import HttpResponse
 
 import daftar
 from daftar.models import User, StorageDocument, Application, Authority, Workflow, Form, ApplicationTemplates
+from daftar.views import verify_token
 
 
 def get_storage_documents(limit=None):
@@ -198,6 +200,15 @@ def get_application_templates(filter=None, limit=None):
     return application_templates
 
 
+def fetch_application(request):
+    if verify_token(request):
+        if request.method == "POST":
+            url = daftar.settings.DAFTAR_HOST + "/applications/" + str(request.POST.get('id'))
+            hed = {'Authorization': 'Bearer ' + User().token}
+            response = requests.get(url, headers=hed)
+            return HttpResponse(response, content_type=json)
+
+          
 def get_application_template(application_template_id):
     url = daftar.settings.DAFTAR_HOST + "/applications/templates/" + application_template_id
 

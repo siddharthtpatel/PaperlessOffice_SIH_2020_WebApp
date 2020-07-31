@@ -18,8 +18,21 @@
     }
 </style>
   <!-- Main layout -->
-  <main>
-    <div class="container"></div>
+  <main id="add_modal_main">
+    <div class="modal fade" id="centralModalLg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="modalContent">
+            </div>
+            <div class="modal-content">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-lg">Reject</button>
+                    <button type="button" class="btn btn-primary btn-lg">Sign</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
         <style>
         .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
             background-color: green;
@@ -72,7 +85,7 @@
                           <td>{{ application.stage }}/{{ application.stages }}</td>
                           <td>{{ application.timestamp }}</td>
                           <td><span onclick="on_view_click(this)"> <i class="fas fa-eye" style="cursor:pointer" aria-hidden="true"></i></span>
-                              <span class="ml-2" onclick="on_info_click(this)"><i class="fas fa-info-circle"></i></span>
+                              <span class="ml-2" id="{{ application.id }}" data-toggle="modal" data-target="#centralModalLg" onclick="Info(this)"><i  style="cursor:pointer" class="fas fa-info-circle"></i></span>
                           </td>
                           </tr>
                           {% endfor %}
@@ -112,7 +125,7 @@
                           <td>{{ application.stage }}/{{ application.stages }}</td>
                           <td>{{ application.timestamp }}</td>
                           <td><span onclick="on_view_click(this)"> <i class="fas fa-eye" style="cursor:pointer" aria-hidden="true"></i></span>
-                              <span class="ml-2" onclick="on_info_click(this)"><i class="fas fa-info-circle"></i></span>
+                              <span class="ml-2" id="{{ application.id }}" data-toggle="modal" data-target="#centralModalLg" onclick="Info(this)"><i  style="cursor:pointer" class="fas fa-info-circle"></i></span>
                           </td>
                             </tr>
                           {% endfor %}
@@ -152,7 +165,7 @@
                           <td>{{ application.stage }}/{{ application.stages }}</td>
                           <td>{{ application.timestamp }}</td>
                           <td><span onclick="on_view_click(this)"> <i class="fas fa-eye" style="cursor:pointer" aria-hidden="true"></i></span>
-                              <span class="ml-2" onclick="on_info_click(this)"><i class="fas fa-info-circle"></i></span>
+                              <span class="ml-2" id="{{ application.id }}" data-toggle="modal" data-target="#centralModalLg" onclick="Info(this)"><i  style="cursor:pointer" class="fas fa-info-circle"></i></span>
                           </td>
                             </tr>
                           {% endfor %}
@@ -192,7 +205,7 @@
                           <td>{{ application.stage }}/{{ application.stages }}</td>
                           <td>{{ application.timestamp }}</td>
                           <td><span onclick="on_view_click(this)"> <i class="fas fa-eye" style="cursor:pointer" aria-hidden="true"></i></span>
-                              <span class="ml-2" onclick="on_info_click(this)"><i class="fas fa-info-circle"></i></span>
+                              <span class="ml-2" id="{{ application.id }}" data-toggle="modal" data-target="#centralModalLg" onclick="Info(this)"><i  style="cursor:pointer" class="fas fa-info-circle"></i></span>
                           </td>
                             </tr>
                           {% endfor %}
@@ -220,5 +233,111 @@
     $('#rejectedApplicationsDT').DataTable();
     $('.dataTables_length').addClass('bs-select');
   });
+
+
+</script>
+<script id="view_application_modal" type="text/template">
+      <!-- Change class .modal-sm to change the size of the modal -->
+      {% verbatim %}
+
+          <div class="modal-header">
+            <h4 class="modal-title w-100" id="myModalLabel">{{ application_title }}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="border-bottom: 1px solid #91b59c">
+              <h5>Date Submitted : {{date}}</h5>
+              <h6>Tracking Id: {{ application_id }}</h6>
+              <hr>
+              <h4>Form </h4>
+              {{#each form}}
+            <div style="padding:2px;">
+                <h5>Question: {{ @key }}</h5>
+                <h6 style="margin-left:15px;">Response: {{ this }}</h6>
+            </div>
+              {{/each}}
+          </div>
+          <div class="modal-body row ml-3 p-2">
+              <div class="col-12">
+                <h4>Workflow</h4>
+              </div>
+              <div class="col-6">
+                <h5>Current Stage</h5>
+              </div>
+              <div class="col-6">
+                <h5>{{stage}}</h5>
+              </div>
+              <div class="col-6">
+                <h5>Total Stages</h5>
+              </div>
+              <div class="col-6">
+                <h5>{{stages}}</h5>
+              </div>
+              <div class="col-6">
+                <h5>Status</h5>
+              </div>
+              <div class="col-6">
+                <h5>{{status}}</h5>
+              </div>
+          </div>
+      {% endverbatim %}
+        <!-- Central Modal Small -->
+</script>
+<script>
+    const view_application_modal_template = Handlebars.compile(document.querySelector('#view_application_modal').innerHTML);
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    function Info(o){
+    document.querySelector('#modalContent').innerHTML = "";
+    const id = o.id;
+    const application_request = new XMLHttpRequest();
+    application_request.open('POST','fetch_application');
+
+    application_request.onload = () =>{
+        var application = JSON.parse(application_request.responseText);
+
+        console.log(application)
+        current_status = "Pending"
+        if( application['status'] == 1 ){
+            current_status = "Approved"
+        }
+        if( application['status'] == -1 ){
+            current_status = "Rejected"
+        }
+        const application_modal = view_application_modal_template({
+            'application_title': application['name'],
+            'application_id': application['_id']['$oid'],
+            'form': application['form'],
+            'date': new Date(parseInt(application['timestamp']['$date'])),
+            'stage': application['stage'],
+            'stages': application['stages'],
+            'status': current_status
+        });
+        document.querySelector('#modalContent').innerHTML = application_modal;
+    };
+
+    const data = new FormData();
+    data.append('csrfmiddlewaretoken', csrftoken);
+    data.append('id', id);
+    application_request.send(data);
+    }
+
 </script>
 {% endblock %}
