@@ -48,14 +48,17 @@
                   <tr>
                   <td>{{ application_template.name }}</td>
                   {% if application_template.isCreator %}
-                      <td>{{ application_template.creatorName }}</td>
+                      <td>You</td>
                   {% else %}
-                    <td>You</td>
+                      <td>{{ application_template.creatorName }}</td>
                   {% endif %}
                   <td>{{ application_template.workflowName }}</td>
                   <td>{{ application_template.formName }}</td>
                       {% if application_template.isCreator %}
-                  <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">Edit</button></td>
+                        <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">Edit</button>
+                        <button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
+                      {% else %}
+                        <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
                       {% endif %}
                         </tr>
                   {% endfor %}
