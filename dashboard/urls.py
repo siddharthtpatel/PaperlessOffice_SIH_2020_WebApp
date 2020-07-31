@@ -16,5 +16,6 @@ urlpatterns = [
     path('new_application_template', views.new_application_template, name="new_application_template"),
     path('add_application_template', views.add_application_template, name="add_application_template"),
     path('application_template', views.application_template, name="application_templates"),
-    path('fill_application', views.fill_application, name="fill_application")
+    path('fill_application', views.fill_application, name="fill_application"),
+    path('submit_application', views.submit_application, name="submit_application")
 ]

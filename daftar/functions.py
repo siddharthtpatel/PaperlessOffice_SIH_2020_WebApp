@@ -103,7 +103,6 @@ def add_forms(form):
             'title': form.get('formName'),
             'description': form.get('formDesc'),
             'fields': fields}
-    print(data)
 
     url = daftar.settings.DAFTAR_HOST + "/form"
 
@@ -197,3 +196,75 @@ def get_application_templates(filter=None, limit=None):
         application_templates.append(ApplicationTemplates(application_template))
 
     return application_templates
+
+
+def get_application_template(application_template_id):
+    url = daftar.settings.DAFTAR_HOST + "/applications/templates/" + application_template_id
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.get(url, headers=hed)
+
+    if response.status_code != 200:
+        return False
+
+    application_template = ApplicationTemplates(response.json())
+
+    return application_template
+
+
+def get_form(form_id):
+    url = daftar.settings.DAFTAR_HOST + "/form/" + form_id
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.get(url, headers=hed)
+
+    if response.status_code != 200:
+        return False
+
+    form = Form(response.json())
+
+    return form
+
+
+def get_workflow(workflow_id):
+    url = daftar.settings.DAFTAR_HOST + "/workflow/" + workflow_id
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.get(url, headers=hed)
+
+    if response.status_code != 200:
+        return False
+
+    workflow = Workflow(response.json())
+
+    return workflow
+
+
+def submit_applications(form):
+    form_details = {}
+    i = 1
+    for i in range(1, int(form.get('fields_count'))+1):
+        if form.get(f'{i}_type') == "checkbox":
+            answers = []
+            for j in range(1, int(form.get(f'{i}_answer_count'))+1):
+                if form.get(f'{i}_answer_{j}') is not None:
+                    answers.append(form.get(f'{i}_answer_{j}'))
+            form_details[form.get(f'{i}_question')] = answers
+        else:
+            form_details[form.get(f'{i}_question')] = form.get(f'{i}_answer')
+
+    data = {
+        "name": form.get('name'),
+        "templateId": form.get('id'),
+        "form": form_details
+    }
+    print(data)
+    url = daftar.settings.DAFTAR_HOST + "/applications"
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.post(url, json=data, headers=hed)
+    if response.status_code == requests.codes.ok:
+    #if False:
+        return True
+    else:
+        return False
