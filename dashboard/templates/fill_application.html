@@ -1,0 +1,289 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<style>
+	#formDesc::placeholder { 
+	    color: #d9d9d9;
+	}
+    #formDetails {
+	  border-radius: 25px;
+	  background: #29a329;
+	  padding: 10px; 
+	  width: auto;
+	}
+    .formInputLabel {
+	  margin-left: 20px;
+	  margin-top: 2px;
+	  color: white;
+	}
+	.formInput {
+	  font-size: 15px;
+	  color: white;
+	}
+	.btn{
+	    color: black;
+	}
+	.form-control{
+	     padding: .0rem .0rem;
+	}
+	.md-form .form-control {
+	  padding: .0rem 0 .0rem;
+	}
+    #formDetails{
+        box-shadow: 0px 2px 5px #666;
+    }
+    #rcorner {
+        border-radius: 0px 15px 0px 15px;
+        background: green;
+        margin-top: 30%;
+        padding: 15px; 
+        width: 20px;
+        height: 20px; 
+    }
+    .white-skin input[type=checkbox]:checked+label:before {
+    border-right: 2px solid #28a745;
+    border-bottom: 2px solid #28a745;
+    }
+    .form-check-input[type=radio].with-gap:checked+label:after, .form-check-input[type=radio].with-gap:checked+label:before, .form-check-input[type=radio]:checked+label:after, label.btn input[type=radio].with-gap:checked+label:after, label.btn input[type=radio].with-gap:checked+label:before, label.btn input[type=radio]:checked+label:after {
+    border: 2px solid green;
+    }
+    .form-check-input[type=radio].with-gap:checked+label:after, .form-check-input[type=radio]:checked+label:after, label.btn input[type=radio].with-gap:checked+label:after, label.btn input[type=radio]:checked+label:after {
+    background-color: #00c851;
+    }
+    .form-control:focus{
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(0, 204, 0, 0.25);
+    }
+</style>
+<main>
+    <div class="container">
+        {%  if isApplicationNotSelected %}
+        <div id="application_templates">
+            <div id="formDetails" class="md-form row">
+                <div class="col-8 ml-8" style=" color:white ;font-size: 50px; font-family: 'Times New Roman', Times, serif;">
+                E-Application
+            </div>
+            </div> 
+            <!-- Types of Applications -->
+            {% for application in applications %}
+            <div class="card m-2" style="max-width: 100%; background-color: white;">
+                <div class="card-body text-success">
+                    <div class="row">
+                    <div class="col-1">
+                        <p id="rcorner"></p>
+                    </div>
+                    <div class="col-9" style=" margin-top: 0.7%; text-align:left; color: black; font-size: 30px;">
+                        {{ application.name }}
+                    </div>
+                    <form class="open_application" action="{% url 'fill_application' %}" method="POST">{% csrf_token %}
+                        <div>
+                            <input name="application_template_id" value="{{ application.id }}" hidden>
+                            <button type="submit" style="font-size=20px;" class="btn green btn-rounded"><b>Fill</b></button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {%  else %}
+        <div>
+            <div class="container" id="application_form">
+                <!--Form Name and Description-->
+                <form name="new_form" id="new_form" action="{% url 'submit_application' %}" method="POST">{% csrf_token %}
+                    <div id="formDetails" class="md-form row" style="margin:5px;">
+                        <div class="col-1">
+                            <input type="text" name="id" class="form-control" hidden value="{{ application_template.id }}">
+                        </div>
+                        <div class="col-1">
+                            <input type="text" name="name" class="form-control" hidden value="{{ application_template.name }}">
+                        </div>
+                        <div class="col-1">
+                            <input type="number" name="fields_count" class="form-control" hidden value="{{ fields|length }}">
+                        </div>
+                        <div class="col-12">
+                            <h3 class="formInputLabel" style="">{{ application_template.name }}</h3>
+                        </div>
+                        <div class="col-12">
+                            <h6 class="formInputLabel" style="">{{ form.description }}</h6>
+                        </div>
+                    </div>
+                    <br>
+                    <!--Form Questions-->
+                    <div id="questions" style="margin-bottom:50px; ">
+                        {% for field in fields %}
+                            {% if field.type == 'radio' %}
+                                <div class="card border-success m-2" style="max-width: 100%;">
+                                    <div class="card-body text-success">
+                                        <div class="row">
+                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                                <h3 style="font-size: 30px;">{{ field.id }}.</h3>
+                                            </div>
+                                            <div class="col d-flex flex-column justify-content-center" style="text-align:left; margin:0px; margin-left:3px;">
+                                                <div class="md-form">
+                                                    <h3>{{ field.question }}</h3>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input type="text" name="{{ field.id }}_question" class="form-control" hidden value="{{ field.question }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            {% for option in field.options %}
+                                            <div class="col-12 form-check" style="font-size:18px;">
+                                                  <input type="radio" class="form-check-input" id="{{ option.value }}" name="{{ field.id }}_answer" value="{{ option.value }}">
+                                                  <label class="form-check-label" for="{{ option.value }}">{{ option.value }}</label>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elif field.type == 'checkbox' %}
+                                <div class="card border-success m-2" style="max-width: 100%;">
+                                    <div class="card-body text-success">
+                                        <div class="row">
+                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                                <h3 style="font-size: 30px;">{{ field.id }}.</h3>
+                                            </div>
+                                            <div class="col d-flex flex-column justify-content-center" style="text-align:left;">
+                                                <div class="md-form">
+                                                    <h3>{{ field.question }}</h3>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input type="text" name="{{ field.id }}_question" class="form-control" hidden value="{{ field.question }}">
+                                                    <input type="text" name="{{ field.id }}_answer_count" class="form-control" hidden value="{{ field.options|length }}">
+                                                    <input type="text" name="{{ field.id }}_type" class="form-control" hidden value="checkbox">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            {% for option in field.options %}
+                                            <div class="col-12 form-check" style="font-size:18px;">
+                                                  <input type="checkbox" class="form-check-input" id="{{ option.value }}" name="{{ field.id }}_answer_{{ option.id }}" value="{{ option.value }}">
+                                                  <label class="form-check-label" for="{{ option.value }}">{{ option.value }}</label>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elif field.type == 'Email' %}
+                                <div class="card border-success m-2" style="max-width: 100%;">
+                                    <div class="card-body text-success">
+                                        <div class="row">
+                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                                <h3 style="font-size: 30px;">{{ field.id }}.</h3>
+                                            </div>
+                                            <div class="col  d-flex flex-column justify-content-center" style="text-align:left;">
+                                                <div class="md-form">
+                                                    <h3>{{ field.question }}</h3>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input type="text" name="{{ field.id }}_question" class="form-control" hidden value="{{ field.question }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 md-form">
+                                                  <input type="{{ field.type }}" id="{{ field.question }}" class="form-control" name="{{ field.id }}_answer">
+                                                  <label for="{{ field.question }}">Write Some Answer</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elif field.type == 'Number' %}
+                                <div class="card border-success m-2" style="max-width: 100%;">
+                                    <div class="card-body text-success">
+                                        <div class="row">
+                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                                <h3 style="font-size: 30px;">{{ field.id }}.</h3>
+                                            </div>
+                                            <div class="col d-flex flex-column justify-content-center" style="text-align:left;">
+                                                <div class="md-form">
+                                                    <h3>{{ field.question }}</h3>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input type="text" name="{{ field.id }}_question" class="form-control" hidden value="{{ field.question }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 md-form">
+                                                  <input type="{{ field.type }}" id="{{ field.question }}" class="form-control" name="{{ field.id }}_answer">
+                                                  <label for="{{ field.question }}">Write Some Answer</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elif field.type == 'Date' %}
+                                <div class="card border-success m-2" style="max-width: 100%;">
+                                    <div class="card-body text-success">
+                                        <div class="row">
+                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                                <h3 style="font-size: 30px;">{{ field.id }}.</h3>
+                                            </div>
+                                            <div class="col  d-flex flex-column justify-content-center" style="text-align:left;">
+                                                <div class="md-form">
+                                                    <h3>{{ field.question }}</h3>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input type="text" name="{{ field.id }}_question" class="form-control" hidden value="{{ field.question }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker col-8" inline="true">
+                                              <input placeholder="Select date" type="date" name="{{ field.id }}_answer" id="example" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elif field.type == 'long_answer' %}
+                                <div class="card border-success m-2" style="max-width: 100%;">
+                                    <div class="card-body text-success">
+                                        <div class="row">
+                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                                <h3 style="font-size: 30px;">{{ field.id }}.</h3>
+                                            </div>
+                                            <div class="col  d-flex flex-column justify-content-center" style="text-align:left;">
+                                                <div class="md-form">
+                                                    <h3>{{ field.question }}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-1">
+                                                <input type="text" name="{{ field.id }}_question" class="form-control" hidden value="{{ field.question }}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group green-border-focus col-12">
+                                              <label for="{{ field.question }}">Enter your text here...</label>
+                                              <textarea class="form-control" name="{{ field.id }}_answer" id="{{ field.question }}" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                      <div class="col-12" style="text-align:right">
+                        <button type="submit" font-size="40px" class="btn green btn-rounded ml-0" style="color:white;">Submit</button>
+                      </div>
+                    </div>
+                    <br>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    /*var questions = document.querySelector('#questions').children;
+    for(i=1; i<=questions.length; i++){
+        questions[i-1].children[0].children[0].children[0].children[0].innerHTML = i.toString() + ".";
+    }*/
+</script>
+{% endblock %}

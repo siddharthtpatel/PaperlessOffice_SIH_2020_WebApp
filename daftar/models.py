@@ -132,7 +132,11 @@ class Form(object):
         self.title = json['title']
         self.description = json['description']
         self.creatorId = json['creator']
-        self.fields = json['fields']
+        self.fields = []
+        i = 1
+        for field in json['fields']:
+            self.fields.append(Field(field, i))
+            i = i + 1
 
         if User().token == json['creator']:
             self.isCreator = True
@@ -147,6 +151,8 @@ class ApplicationTemplates(object):
         self.name = json['name']
         self.creatorName = json['creatorName']
         self.stages = json['stages']
+        self.workflowId = json['workflowId']
+        self.formId = json['formId']
 
         if User().token == json['creatorId']:
             self.isCreator = True
@@ -156,7 +162,7 @@ class ApplicationTemplates(object):
         url = daftar.settings.DAFTAR_HOST
         hed = {'Authorization': 'Bearer ' + User().token}
 
-        request = requests.get(url+"/workflow", stream=True, headers=hed)
+        request = requests.get(url + "/workflow", stream=True, headers=hed)
         workflows = js.loads(request.text)
         for workflow in workflows:
             if json['workflowId'] == workflow['_id']['$oid']:
@@ -168,3 +174,24 @@ class ApplicationTemplates(object):
             if json['formId'] == form['_id']['$oid']:
                 self.formName = form['title']
 
+
+class Field(object):
+
+    def __init__(self, json, field_id):
+        self.id = field_id
+        self.type = json['type']
+        self.question = json['question']
+
+        if json['type'] in ('radio', 'checkbox'):
+            self.options = []
+            i = 1
+            for option in json['options'].values():
+                self.options.append(Option(option, i))
+                i = i + 1
+
+
+class Option(object):
+
+    def __init__(self, value, option_id):
+        self.id = option_id
+        self.value = value
