@@ -290,3 +290,12 @@ def save_changes(form):
         return True
     else:
         return False
+
+
+def fetch_workflow(request):
+    if verify_token(request):
+        if request.method == "POST":
+            url = daftar.settings.DAFTAR_HOST + "/workflow/" + str(request.POST.get('id'))
+            hed = {'Authorization': 'Bearer ' + User().token}
+            response = requests.get(url, headers=hed)
+            return HttpResponse(response, content_type=json)
