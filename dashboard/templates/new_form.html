@@ -95,7 +95,7 @@
             </div>
             <div class="row">
               <div class="col-12" style="text-align:right">
-                <button type="submit" font-size="40px" class="btn green btn-rounded ml-0" id="create_workflow">Create Form</button>
+                <button type="submit" font-size="40px" disabled class="btn green btn-rounded ml-0" id="create_form">Create Form</button>
               </div>
             </div>
             <br>
@@ -353,10 +353,7 @@
     document.querySelector('#add_question_radio_button').onclick = () => {
       question_count++;
       document.querySelector('#totalFields').value = question_count;
-      if(question_count==1)
-      {
-        document.querySelector('#add_message').remove();
-      }
+      EnableCreateFormButton();
       const new_question = radio_question_template({'question_number':question_count});
       document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
     }
@@ -364,10 +361,7 @@
 	document.querySelector('#add_question_checkbox_button').onclick = () => {
         question_count++;
         document.querySelector('#totalFields').value = question_count;
-        if(question_count==1)
-        {
-          document.querySelector('#add_message').remove();
-        }
+        EnableCreateFormButton();
 		const new_question = checkbox_question_template({'question_number':question_count});
 		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
 	}
@@ -375,21 +369,15 @@
 	document.querySelector('#add_question_long_answer_button').onclick = () => {
         question_count++;
         document.querySelector('#totalFields').value = question_count;
-        if(question_count==1)
-        {
-          document.querySelector('#add_message').remove();
-        }
+        EnableCreateFormButton();
 		const new_question = long_answer_question_template({'question_number':question_count});
 		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
 	}
 
 	document.querySelector('#add_question_multiple_type_button').onclick = () => {
-    question_count++;
-    document.querySelector('#totalFields').value = question_count;
-    if(question_count==1)
-        {
-      document.querySelector('#add_message').remove();
-        }
+        question_count++;
+        document.querySelector('#totalFields').value = question_count;
+        EnableCreateFormButton();
 		const new_question = multiple_type_question_template({'question_number':question_count});
 		document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
 	}
@@ -401,6 +389,22 @@
     function DeleteQuestion(o){
       var p=o.parentNode.parentNode.parentNode.parentNode;
          p.parentNode.removeChild(p);
+         question_count--;
+         DisableCreateFormButton();
+    }
+    function EnableCreateFormButton(){
+        document.querySelector('#create_form').disabled = false;
+        if(question_count>0)
+        {
+            document.querySelector('#add_message').hidden = true;
+        }
+    }
+    function DisableCreateFormButton(){
+        document.querySelector('#create_form').disabled = true;
+        if(question_count==0)
+        {
+            document.querySelector('#add_message').hidden = false;
+        }
     }
 
     function SetInputType(selected_type) {
