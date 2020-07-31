@@ -84,7 +84,7 @@
                     <form class="open_application" action="{% url 'fill_application' %}" method="POST">{% csrf_token %}
                         <div>
                             <input name="application_template_id" value="{{ application.id }}" hidden>
-                            <button type="submit" style="font-size=20px;" class="btn green btn-rounded"><b>Fill</b></button>
+                            <button type="submit" style="font-size:20px;" class="btn green btn-rounded"><b>Fill</b></button>
                         </div>
                     </form>
                     </div>
@@ -108,10 +108,10 @@
                             <input type="number" name="fields_count" class="form-control" hidden value="{{ fields|length }}">
                         </div>
                         <div class="col-12">
-                            <h1 class="formInputLabel" style="">{{ application_template.name }}</h1>
+                            <h1 class="formInputLabel">{{ application_template.name }}</h1>
                         </div>
                         <div class="col-12">
-                            <h6 class="formInputLabel" style="">{{ form.description }}</h6>
+                            <h6 class="formInputLabel">{{ form.description }}</h6>
                         </div>
                     </div>
                     <!--Form Questions-->
@@ -120,8 +120,8 @@
                             {% if field.type == 'radio' %}
                                 <div class="card border-success m-2" style="max-width: 100%;">
                                     <div class="card-body text-success">
-                                        <div class="row">
-                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                        <div class="row ml-2">
+                                            <div class="col0 pl-2 ml-2 d-flex flex-column justify-content-center">
                                                 <h3 style="font-size: 30px;">{{ field.id }}.</h3>
                                             </div>
                                             <div class="col d-flex flex-column justify-content-center" style="text-align:left; margin:0px; margin-left:3px;">
@@ -146,8 +146,8 @@
                             {% elif field.type == 'checkbox' %}
                                 <div class="card border-success m-2" style="max-width: 100%;">
                                     <div class="card-body text-success">
-                                        <div class="row">
-                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                        <div class="row ml-2">
+                                            <div class="col0 pl-2 ml-2 d-flex flex-column justify-content-center">
                                                 <h3 style="font-size: 30px;">{{ field.id }}.</h3>
                                             </div>
                                             <div class="col d-flex flex-column justify-content-center" style="text-align:left;">
@@ -174,8 +174,8 @@
                             {% elif field.type == 'Email' %}
                                 <div class="card border-success m-2" style="max-width: 100%;">
                                     <div class="card-body text-success">
-                                        <div class="row">
-                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                        <div class="row ml-2">
+                                            <div class="col0 pl-2 ml-2 d-flex flex-column justify-content-center">
                                                 <h3 style="font-size: 30px;">{{ field.id }}.</h3>
                                             </div>
                                             <div class="col  d-flex flex-column justify-content-center" style="text-align:left;">
@@ -198,8 +198,8 @@
                             {% elif field.type == 'Number' %}
                                 <div class="card border-success m-2" style="max-width: 100%;">
                                     <div class="card-body text-success">
-                                        <div class="row">
-                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                        <div class="row ml-2">
+                                            <div class="col0 pl-2 ml-2 d-flex flex-column justify-content-center">
                                                 <h3 style="font-size: 30px;">{{ field.id }}.</h3>
                                             </div>
                                             <div class="col d-flex flex-column justify-content-center" style="text-align:left;">
@@ -222,8 +222,8 @@
                             {% elif field.type == 'Date' %}
                                 <div class="card border-success m-2" style="max-width: 100%;">
                                     <div class="card-body text-success">
-                                        <div class="row">
-                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                        <div class="row ml-2">
+                                            <div class="col0 pl-2 ml-2 d-flex flex-column justify-content-center">
                                                 <h3 style="font-size: 30px;">{{ field.id }}.</h3>
                                             </div>
                                             <div class="col  d-flex flex-column justify-content-center" style="text-align:left;">
@@ -245,8 +245,8 @@
                             {% elif field.type == 'long_answer' %}
                                 <div class="card border-success m-2" style="max-width: 100%;">
                                     <div class="card-body text-success">
-                                        <div class="row">
-                                            <div class="col-1 pl-2 ml-2 d-flex flex-column justify-content-center">
+                                        <div class="row ml-2">
+                                            <div class="col0 pl-2 ml-2 d-flex flex-column justify-content-center">
                                                 <h3 style="font-size: 30px;">{{ field.id }}.</h3>
                                             </div>
                                             <div class="col  d-flex flex-column justify-content-center" style="text-align:left;">
