@@ -46,6 +46,7 @@ def application(request):
         money_saved = cost_per_paper*len(all_applications)
         trees_saved = len(all_applications)/8333
         trees_saved =round(trees_saved, 5)
+        
         if all_applications is False:
             # TODO: Error handling
             print('Error Loading Documents')

@@ -291,7 +291,7 @@ def save_changes(form):
     else:
         return False
 
-
+      
 def sign_applications(form):
     url = daftar.settings.DAFTAR_HOST + "/applications/"+form.get('id')
     if form.get('action') == "Sign":
@@ -312,3 +312,12 @@ def sign_applications(form):
         return True
     else:
         return False
+
+      
+def fetch_workflow(request):
+    if verify_token(request):
+        if request.method == "POST":
+            url = daftar.settings.DAFTAR_HOST + "/workflow/" + str(request.POST.get('id'))
+            hed = {'Authorization': 'Bearer ' + User().token}
+            response = requests.get(url, headers=hed)
+            return HttpResponse(response, content_type=json)

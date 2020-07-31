@@ -375,6 +375,20 @@
               <div class="col-6">
                 <h5>{{status}}</h5>
               </div>
+              <div class="progress md-progress float-right" style="height:15px;  width:95%;">
+                <div class="progress-bar progress-bar-striped green progress-bar-animated"
+                    role="progressbar" style="width: {{ progress }}%; height: 15px"
+                    aria-valuenow="{{ stage }}" aria-valuemin="0" aria-valuemax="{{ stages }}">
+                        {{ stage }}/{{ stages }}
+                </div>
+              </div>
+              <div class="row" style="width:95%; align-items:center">
+                {{#each authorities}}
+                    <div class="col" style="text-align:center;">
+                      <p>{{this}}</p>
+                    </div>
+                {{/each}}
+              </div>
           </div>
       {% endverbatim %}
         <!-- Central Modal Small -->
@@ -408,31 +422,51 @@
 
     application_request.onload = () =>{
         var application = JSON.parse(application_request.responseText);
+      
+        const workflow_request = new XMLHttpRequest();
+        workflow_request.open('POST','fetch_workflow');
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', csrftoken);
+        data.append('id', application['workflowId']);
+        workflow_request.send(data);
 
-        var arr = document.getElementsByClassName('id');
-        for(i=0; i<arr.length; i++){
+        let workflow;
+        workflow_request.onload = () =>{
+          workflow = JSON.parse(workflow_request.responseText);
+          
+          var arr = document.getElementsByClassName('id');
+          for(i=0; i<arr.length; i++){
             arr[0].value = application['_id']['$oid'];
-        }
+          }
+  
+          current_status = "Pending";
+          if( application['status'] == 1 ){
+              current_status = "Approved";
+          }
+          if( application['status'] == -1 ){
+              current_status = "Rejected";
+          }
+          var authorities = [];
+          workflow['stages'].forEach(function (arrayItem) {
+            authorities.push(arrayItem.authName);
+          });
 
-        console.log(application)
-        current_status = "Pending"
-        if( application['status'] == 1 ){
-            current_status = "Approved"
-        }
-        if( application['status'] == -1 ){
-            current_status = "Rejected"
-        }
-        const application_modal = view_application_modal_template({
-            'application_title': application['name'],
-            'application_id': application['_id']['$oid'],
-            'form': application['form'],
-            'date': new Date(parseInt(application['timestamp']['$date'])),
-            'stage': application['stage'],
-            'stages': application['stages'],
-            'status': current_status
-        });
-        document.querySelector('#modalContent').innerHTML = application_modal;
+          const application_modal = view_application_modal_template({
+              'application_title': application['name'],
+              'application_id': application['_id']['$oid'],
+              'form': application['form'],
+              'date': new Date(parseInt(application['timestamp']['$date'])),
+              'stage': application['stage'],
+              'stages': application['stages'],
+              'status': current_status,
+              'progress': parseInt(application['stage'])/parseInt(application['stages']*100),
+              'authorities' : authorities
+          });
+          document.querySelector('#modalContent').innerHTML = application_modal;
+        };
     };
+
+    
 
     const data = new FormData();
     data.append('csrfmiddlewaretoken', csrftoken);
