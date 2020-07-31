@@ -54,6 +54,12 @@
         border-color: #28a745;
         box-shadow: 0 0 0 0.2rem rgba(0, 204, 0, 0.25);
     }
+    .md-form{
+        color: black;
+    }
+    .form-check-label{
+        color: black;
+    }
 </style>
 <main>
     <div class="container">
@@ -91,7 +97,7 @@
             <div class="container" id="application_form">
                 <!--Form Name and Description-->
                 <form name="new_form" id="new_form" action="{% url 'submit_application' %}" method="POST">{% csrf_token %}
-                    <div id="formDetails" class="md-form row" style="margin:5px;">
+                    <div id="formDetails" class="md-form row" style="margin:5px; margin-bottom:20px;">
                         <div class="col-1">
                             <input type="text" name="id" class="form-control" hidden value="{{ application_template.id }}">
                         </div>
@@ -102,13 +108,12 @@
                             <input type="number" name="fields_count" class="form-control" hidden value="{{ fields|length }}">
                         </div>
                         <div class="col-12">
-                            <h3 class="formInputLabel" style="">{{ application_template.name }}</h3>
+                            <h1 class="formInputLabel" style="">{{ application_template.name }}</h1>
                         </div>
                         <div class="col-12">
                             <h6 class="formInputLabel" style="">{{ form.description }}</h6>
                         </div>
                     </div>
-                    <br>
                     <!--Form Questions-->
                     <div id="questions" style="margin-bottom:50px; ">
                         {% for field in fields %}
@@ -128,7 +133,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row ml-3">
                                             {% for option in field.options %}
                                             <div class="col-12 form-check" style="font-size:18px;">
                                                   <input type="radio" class="form-check-input" id="{{ option.value }}" name="{{ field.id }}_answer" value="{{ option.value }}">
@@ -156,7 +161,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row ml-3">
                                             {% for option in field.options %}
                                             <div class="col-12 form-check" style="font-size:18px;">
                                                   <input type="checkbox" class="form-check-input" id="{{ option.value }}" name="{{ field.id }}_answer_{{ option.id }}" value="{{ option.value }}">
@@ -182,7 +187,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row ml-3">
                                             <div class="col-12 md-form">
                                                   <input type="{{ field.type }}" id="{{ field.question }}" class="form-control" name="{{ field.id }}_answer">
                                                   <label for="{{ field.question }}">Write Some Answer</label>
@@ -206,7 +211,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row ml-3">
                                             <div class="col-12 md-form">
                                                   <input type="{{ field.type }}" id="{{ field.question }}" class="form-control" name="{{ field.id }}_answer">
                                                   <label for="{{ field.question }}">Write Some Answer</label>
@@ -230,7 +235,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row ml-5">
                                             <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker col-8" inline="true">
                                               <input placeholder="Select date" type="date" name="{{ field.id }}_answer" id="example" class="form-control">
                                             </div>
@@ -253,10 +258,9 @@
                                                 <input type="text" name="{{ field.id }}_question" class="form-control" hidden value="{{ field.question }}">
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="form-group green-border-focus col-12">
-                                              <label for="{{ field.question }}">Enter your text here...</label>
-                                              <textarea class="form-control" name="{{ field.id }}_answer" id="{{ field.question }}" rows="3"></textarea>
+                                        <div class="row ml-5">
+                                            <div class="form-group green-border-focus col-11">
+                                              <textarea class="form-control" placeholder="Enter your text here..." name="{{ field.id }}_answer" id="{{ field.question }}" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>
