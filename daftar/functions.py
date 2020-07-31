@@ -290,3 +290,25 @@ def save_changes(form):
         return True
     else:
         return False
+
+
+def sign_applications(form):
+    url = daftar.settings.DAFTAR_HOST + "/applications/"+form.get('id')
+    if form.get('action') == "Sign":
+        url += "/sign"
+    else:
+        url += "/reject"
+
+    data = {
+        "message": form.get('message')
+    }
+
+    hed = {'Authorization': 'Bearer ' + User().token}
+    response = requests.post(url, json=data, headers=hed)
+    print(response.text)
+    print(response.status_code)
+    if response.status_code == requests.codes.ok:
+    #if True:
+        return True
+    else:
+        return False

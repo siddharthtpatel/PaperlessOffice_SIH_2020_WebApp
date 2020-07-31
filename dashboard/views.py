@@ -8,7 +8,7 @@ from django.urls import reverse
 import daftar
 from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows, add_forms, \
     add_workflows, get_forms, add_application_templates, get_application_templates, get_application_template, get_form, \
-    get_workflow, submit_applications, save_changes
+    get_workflow, submit_applications, save_changes, sign_applications
 from daftar.models import User
 from daftar.views import verify_token
 
@@ -278,5 +278,18 @@ def save_cost_changes(request):
             response = save_changes(request.POST)
             print(response)
             return redirect('/')
+    else:
+        return redirect('/')
+
+
+def sign_application(request):
+    if verify_token(request):
+        if request.method == 'POST':
+            response = sign_applications(request.POST)
+            print(response)
+            if response:
+                return HttpResponseRedirect(reverse('application'))
+            else:
+                return HttpResponseRedirect(reverse('application'))
     else:
         return redirect('/')
