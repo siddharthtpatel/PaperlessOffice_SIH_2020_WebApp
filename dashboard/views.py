@@ -8,8 +8,9 @@ from django.urls import reverse
 import daftar
 from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows, add_forms, \
     add_workflows, get_forms, add_application_templates, get_application_templates, get_application_template, get_form, \
-    get_workflow, submit_applications, save_changes
-from daftar.models import User
+    get_workflow, submit_applications, save_changes, upload_new_document, sign_applications
+from daftar.models import User, UploadFileForm
+
 from daftar.views import verify_token
 
 
@@ -55,6 +56,7 @@ def application(request):
         return render(request, 'application.html', {'title': 'Daftar | Applications',
                                                     'isUser': User().isUser,
                                                     'first_name': User().first_name,
+                                                    'user_id': User().id,
                                                     'all_applications': all_applications,
                                                     'pending_applications': pending_applications,
                                                     'approved_applications': approved_applications,
@@ -172,6 +174,23 @@ def new_document(request):
         return redirect('/')
 
 
+def add_new_dcoument(request):
+    if verify_token(request):
+        if request.method == 'POST':
+            form = UploadFileForm(request.POST, request.FILES)
+            if form.is_valid():
+                data = form.cleaned_data
+                io_file = request.FILES['file'].file
+                file_value = io_file.getvalue()
+
+                upload_new_document(data['fileName'], data['fileDescription'], file_value, str(data['file']).split('.')[-1])
+                return HttpResponseRedirect(reverse('storage'))
+            else:
+                return HttpResponseRedirect(reverse('new_document'))
+    else:
+        return redirect('/')
+
+
 def new_application_template(request):
     if verify_token(request):
         forms = get_forms()
@@ -279,5 +298,18 @@ def save_cost_changes(request):
             response = save_changes(request.POST)
             print(response)
             return redirect('/')
+    else:
+        return redirect('/')
+
+
+def sign_application(request):
+    if verify_token(request):
+        if request.method == 'POST':
+            response = sign_applications(request.POST)
+            print(response)
+            if response:
+                return HttpResponseRedirect(reverse('application'))
+            else:
+                return HttpResponseRedirect(reverse('application'))
     else:
         return redirect('/')
