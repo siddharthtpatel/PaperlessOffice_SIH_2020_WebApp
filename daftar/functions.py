@@ -358,3 +358,4 @@ def fetch_workflow(request):
             hed = {'Authorization': 'Bearer ' + User().token}
             response = requests.get(url, headers=hed)
             return HttpResponse(response, content_type=json)
+
