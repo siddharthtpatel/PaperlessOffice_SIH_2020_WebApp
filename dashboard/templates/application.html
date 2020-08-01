@@ -436,7 +436,7 @@
         var application = JSON.parse(application_request.responseText);
 
         var user_id = document.querySelector('.black-text').id
-        if(application['assignedId'] == user_id && application['status'] != '-1'){
+        if(application['assignedId'] == user_id && application['status'] == '0'){
               var arr1 = document.getElementsByClassName('action-button');
               for(i=0; i<arr1.length; i++){
                 arr1[i].hidden = false;
