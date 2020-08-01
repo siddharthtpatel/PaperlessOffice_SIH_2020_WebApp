@@ -4,6 +4,7 @@ import requests
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 import daftar
 from daftar.functions import get_storage_documents, get_applications, get_authorities, get_workflows, add_forms, \
@@ -68,6 +69,7 @@ def application(request):
         return redirect('/')
 
 
+@xframe_options_exempt
 def storage(request):
     if verify_token(request):
         docs = get_storage_documents()

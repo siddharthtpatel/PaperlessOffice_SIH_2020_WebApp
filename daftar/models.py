@@ -61,7 +61,7 @@ class StorageDocument(models.Model):
 
         if self.fileExt == 'jpg' or self.fileExt == 'png' or self.fileExt == 'jpeg':
             print('JPG/PNG/JPEG image detected')
-            self.load_img()
+        self.load_img()
 
         url = daftar.settings.DAFTAR_HOST + "/users"
         hed = {'Authorization': 'Bearer ' + User().token}
