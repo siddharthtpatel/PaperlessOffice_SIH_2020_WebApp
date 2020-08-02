@@ -40,7 +40,6 @@
                     <th scope="col"><h6><b>Created By</b></h6></th>
                     <th scope="col"><h6><b>Workflow Name</b></h6></th>
                     <th scope="col"><h6><b>Form Name</b></h6></th>
-                      <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -54,14 +53,6 @@
                   {% endif %}
                   <td>{{ application_template.workflowName }}</td>
                   <td>{{ application_template.formName }}</td>
-                      {% if application_template.isCreator %}
-                        <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">Edit</button>
-                        <button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
-                      {% else %}
-                        <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
-                      {% endif %}
-                        </tr>
-                  {% endfor %}
                 </tbody>
             </table>
         </div>
