@@ -19,6 +19,15 @@ def index(request):
     if verify_token(request):
         docs = get_storage_documents(limit=4)
         applications = get_applications(limit=3)
+        cost_per_paper = User().costOfPaper
+        all_applications = get_applications()
+        money_saved = cost_per_paper*len(all_applications)
+        money_saved = round(money_saved, 5)
+        trees_saved = len(all_applications)/8333
+        trees_saved =round(trees_saved, 5)
+        pending_applications = len(get_applications(filter='pending'))
+        signed_applications = len(get_applications(filter='signed'))
+        rejected_applications = len(get_applications(filter='rejected'))
 
         if docs is False:
             # TODO: Error handling
@@ -33,7 +42,13 @@ def index(request):
         return render(request, 'dashboard.html', {'title': 'Daftar | Dashboard',
                                                   'isUser': User().isUser,
                                                   'first_name': User().first_name,
-                                                  'docs': docs, 'applications': applications})
+                                                  'docs': docs,
+                                                  'applications': applications,
+                                                  'money_saved': money_saved,
+                                                  'trees_saved': trees_saved ,
+                                                  'pending_applications': pending_applications,
+                                                  'signed_applications': signed_applications,
+                                                  'rejected_applications': rejected_applications  })
     else:
         return redirect('/')
 
@@ -90,7 +105,6 @@ def storage(request):
 def new_workflow(request):
     if verify_token(request):
         auth_list = get_authorities()
-        print(auth_list)
         if auth_list is False:
             # TODO: Error handling
             print('Error Loading Documents')

@@ -31,6 +31,7 @@
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/mdb1.min.css' %}">
   <!-- Your custom styles (optional) -->
 
   <style>
@@ -52,7 +53,7 @@
   {% endblock %}
 </head>
 
-<body class="fixed-sn white-skin">
+<body class="fixed-sn white-skin" style="background-color: white;">
 
   <!-- Main Navigation -->
   <header>
@@ -315,24 +316,6 @@
         $('.custom-dark').toggleClass('white-text unique-color-dark lighten-3 darken-3 text-white')
       });
     });
-
-    //doughnut
-    var ctxD = document.getElementById("doughnutChart").getContext('2d');
-    var myLineChart = new Chart(ctxD, {
-      type: 'doughnut',
-      data: {
-        labels: ["Pending", "Signed", "Rejected"],
-        datasets: [{
-          data: [3, 5, 2],
-          backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C"],
-          hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870"]
-        }]
-      },
-      options: {
-        responsive: true
-      }
-    });
-
 
   </script>
 </body>

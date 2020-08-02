@@ -21,9 +21,15 @@
     <div class="modal fade" id="centralModalLg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
-                <div class="modal-header p-1" style="text-align:right; background:gray;">
-                    <button type="button" data-dismiss="modal" class="btn btn-sm" style="font-size:15px; width:120px; background:dark-gray;">X</button>
+              <div class="row">
+                <div class="col">
                 </div>
+                <div class="col-1">
+                  <div class="modal-header p-1" style="background: transperent;">
+                    <button type="button" data-dismiss="modal" class="btn btn-sm" style="font-size:15px; width:80px; background:dark-gray;">X</button>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="modal-content" id="modalContent">
             </div>
@@ -41,6 +47,19 @@
             background-color: #8fd19e;
          }
         </style>
+        <section class="pb-12">
+          <div class="row ml-1 mr-1">
+             <div class="col-9">
+                 <h2>Storage</h2>
+                  <p>Storage stores the documents uploaded by the users. 
+                    The documents can be made private and public according to the need
+                  </p>
+             </div>
+             <div class="col-3" style="text-align:right;">
+                     <button type="button" class="btn btn-outline-success btn-rounded waves-effect" onclick="Export()">Export to Excel</button>
+             </div>
+          </div>
+            <br>
           <div class="black-text">
                 <ul class="nav md-tabs nav-justified green mb-0" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -51,9 +70,6 @@
                   </li>
                   <li class="nav-item">
                       <a href="#PublicDocuments" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1" >Public Documents</h5></a>
-                  </li>
-                    <li class="nav-item">
-                      <a class="nav-link" onclick="Export()"><h5 class="font-weight-500 my-1" >Export To Excel</h5></a>
                   </li>
                 </ul>
             </div>
