@@ -176,7 +176,7 @@ def new_document(request):
         return redirect('/')
 
 
-def add_new_dcoument(request):
+def add_new_document(request):
     if verify_token(request):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
@@ -219,7 +219,7 @@ def add_application_template(request):
         if request.method == 'POST':
             response = add_application_templates(request.POST)
             if response:
-                return HttpResponseRedirect(reverse('application_template'))
+                return HttpResponseRedirect(reverse('application_templates'))
             else:
                 return HttpResponseRedirect(reverse('new_application_template'))
     else:
