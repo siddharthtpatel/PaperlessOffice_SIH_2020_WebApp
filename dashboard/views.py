@@ -106,15 +106,17 @@ def new_workflow(request):
     if verify_token(request):
         auth_list = get_authorities()
 
-    if auth_list is False:
-        # TODO: Error handling
-        print('Error Loading Documents')
-        return
+        if auth_list is False:
+            # TODO: Error handling
+            print('Error Loading Documents')
+            return
 
-    return render(request, 'new_workflow.html', {'title': 'Daftar | Workflow',
-                                                 'isUser': User().isUser,
-                                                 'first_name': User().first_name,
-                                                 'authorities': auth_list})
+        return render(request, 'new_workflow.html', {'title': 'Daftar | Workflow',
+                                                     'isUser': User().isUser,
+                                                     'first_name': User().first_name,
+                                                     'authorities': auth_list})
+    else:
+        return redirect('/')
 
 
 def add_workflow(request):
