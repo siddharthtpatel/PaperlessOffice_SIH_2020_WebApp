@@ -246,30 +246,35 @@
                     </div>
                   </div> 
               </div>
+              <style>
+                .card-wrapper {
+                  min-height: 200px;
+                }
+              </style>
 
               {% if docs|length < 1 %}
-              <div class="mt-3 container text-center">
+              <div class="mt-3 container text-center"  style="height: 200px;">
                   <h4>Your Storage is empty!</h4>
                   <p>Please add new Documents.</p>
               </div>
               {% else %}
               <!-- Card content -->
-              <div class="card-body card-columns">
+              <div class="card-body card-columns pb-1" >
 
                   {% for doc in docs %}
                   <!-- Card -->
-                  <div class="card-wrapper mb-3">
-                      <div id="card-{{ doc.id }}" class="card card-rotating">
+                  <div class="card-wrapper mb-3" style="height: 200px;">
+                      <div id="card-{{ doc.id }}" class="card card-rotating" style="height:200px">
 
-                          <div class="face front h-100">
-                              <div class="view overlay h-100">
+                          <div class="face front">
+                              <div class="view overlay"  style="height: 200px;">
                                   {% if not doc.file_url %}
                                   <img src="{% static 'img/file_404.png' %}" class="img-fluid img-thumbnail h-100" alt="{{ doc.fileName }}">
                                   {% else %}
                                   <img src="{{ doc.file_url }}" class="img-fluid img-thumbnail" style="object-fit: fill;" alt="{{ doc.fileName }}">
                                   {% endif %}
                                   <a class="rotate-btn" data-card="card-{{ doc.id }}">
-                                      <div class="mask flex-center rgba-blue-light">
+                                      <div class="mask flex-center rgba-blue-light" style="height: 200px;">
                                           <h4 class="white-text">{{ doc.fileName }}</h4>
                                       </div>
                                   </a>
