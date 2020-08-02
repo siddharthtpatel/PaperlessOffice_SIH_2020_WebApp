@@ -1,7 +1,9 @@
 import json
 
 import requests
-from django.http import HttpResponse
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.http import HttpResponse, FileResponse
 
 import daftar
 from daftar.models import User, StorageDocument, Application, Authority, Workflow, Form, ApplicationTemplates
@@ -328,9 +330,9 @@ def upload_new_document(fileName, fileDesc, file, fileExt):
         print(response.json())
         return False
 
-      
+
 def sign_applications(form):
-    url = daftar.settings.DAFTAR_HOST + "/applications/"+form.get('id')
+    url = daftar.settings.DAFTAR_HOST + "/applications/" + form.get('id')
     if form.get('action') == "Sign":
         url += "/sign"
     else:
@@ -345,12 +347,12 @@ def sign_applications(form):
     print(response.text)
     print(response.status_code)
     if response.status_code == requests.codes.ok:
-    #if True:
+        # if True:
         return True
     else:
         return False
 
-      
+
 def fetch_workflow(request):
     if verify_token(request):
         if request.method == "POST":
@@ -359,3 +361,20 @@ def fetch_workflow(request):
             response = requests.get(url, headers=hed)
             return HttpResponse(response, content_type=json)
 
+
+def export(request):
+    if verify_token(request):
+        if request.method == "POST":
+            url = daftar.settings.DAFTAR_HOST + "/" + request.POST.get('name') + "?excel"
+            hed = {'Authorization': 'Bearer ' + User().token}
+            response = requests.get(url, headers=hed)
+
+            file_name = default_storage.save('excel', ContentFile(response.content))
+            file_url = default_storage.url(file_name)
+
+            f = open("media/"+file_name + ".xls", 'x')
+            f.close()
+            f = open("media/"+file_name + ".xls", 'wb+')
+            f.write(response.content)
+            f.close()
+            return HttpResponse(file_url + ".xls")
