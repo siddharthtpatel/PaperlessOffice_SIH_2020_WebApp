@@ -316,24 +316,6 @@
       });
     });
 
-    //doughnut
-    var ctxD = document.getElementById("doughnutChart").getContext('2d');
-    var myLineChart = new Chart(ctxD, {
-      type: 'doughnut',
-      data: {
-        labels: ["Pending", "Signed", "Rejected"],
-        datasets: [{
-          data: [3, 5, 2],
-          backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C"],
-          hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870"]
-        }]
-      },
-      options: {
-        responsive: true
-      }
-    });
-
-
   </script>
 </body>
 
