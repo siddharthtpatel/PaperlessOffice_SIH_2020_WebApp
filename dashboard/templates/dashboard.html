@@ -101,7 +101,7 @@
                             <div class="col-7">
                                 <p class="text-uppercase" style="font-size:15px">Pending</p>
                             </div>
-                            <div class="col-1">
+                            <div class="col-4">
                               <p class="text-uppercase ml-2" style="font-size:15px">{{ pending_applications }}</p>
                             </div>
                           </div>
@@ -109,7 +109,7 @@
                             <div class="col-7">
                                 <p class="text-uppercase" style="font-size:15px">Signed</p>
                             </div>
-                            <div class="col-1">
+                            <div class="col-4">
                               <p class="text-uppercase ml-2" style="font-size:15px">{{ signed_applications }}</p>
                             </div>
                           </div>
@@ -117,7 +117,7 @@
                             <div class="col-7">
                                 <p class="text-uppercase" style="font-size:15px">Rejected</p>
                             </div>
-                            <div class="col-1">
+                            <div class="col-4">
                               <p class="text-uppercase ml-2" style="font-size:15px">{{ rejected_applications }}</p>
                             </div>
                           </div>
@@ -208,14 +208,14 @@
                           </div>
                           <div class="col-4">
                               <div class="text-center">
-                                  <div class="mt-5">
+                                  <div class="mt-1">
+                                      <span class="badge badge-success mb-4">{{ doc.stage }}/{{ doc.stages }}</span>
                                       <div class="progress md-progress float-right"
                                            style="height:15px;">
                                           <div class="progress-bar progress-bar-striped green progress-bar-animated"
                                                role="progressbar" style="width: {{ doc.progress }}%;height: 15px"
                                                aria-valuenow="{{ doc.stage }}" aria-valuemin="0"
                                                aria-valuemax="{{ doc.stages }}">
-                                              {{ doc.stage }}/{{ doc.stages }}
                                           </div>
                                       </div>
                                   </div>
