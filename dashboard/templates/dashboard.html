@@ -101,7 +101,7 @@
                             <div class="col-7">
                                 <p class="text-uppercase" style="font-size:15px">Pending</p>
                             </div>
-                            <div class="col-1">
+                            <div class="col-4">
                               <p class="text-uppercase ml-2" style="font-size:15px">{{ pending_applications }}</p>
                             </div>
                           </div>
@@ -109,7 +109,7 @@
                             <div class="col-7">
                                 <p class="text-uppercase" style="font-size:15px">Signed</p>
                             </div>
-                            <div class="col-1">
+                            <div class="col-4">
                               <p class="text-uppercase ml-2" style="font-size:15px">{{ signed_applications }}</p>
                             </div>
                           </div>
@@ -117,7 +117,7 @@
                             <div class="col-7">
                                 <p class="text-uppercase" style="font-size:15px">Rejected</p>
                             </div>
-                            <div class="col-1">
+                            <div class="col-4">
                               <p class="text-uppercase ml-2" style="font-size:15px">{{ rejected_applications }}</p>
                             </div>
                           </div>
@@ -176,10 +176,10 @@
                   <div class="col">
                     <h5 class="font-weight-500 my-1">Applications</h5>
                   </div>
-                  <div class="col">
-                    <button type="button" class="close" title="Go to Applications" >
+                  <div class="col-1">
+                    <a href="{% url 'application' %}" title="Go to Applications" >
                       <span aria-hidden="true"><i class="fas fa-external-link-alt" style="color: white;"></i></span>
-                    </button>
+                    </a>
                   </div>
                 </div> 
             </div>
@@ -239,10 +239,10 @@
                     <div class="col">
                       <h5 class="font-weight-500 my-1"> Storage</h5>
                     </div>
-                    <div class="col">
-                      <button type="button" class="close" title="Go to Storage" >
+                    <div class="col-1">
+                      <a href="{% url 'storage' %}" title="Go to Storage" >
                         <span aria-hidden="true"><i class="fas fa-external-link-alt" style="color: white;"></i></span>
-                      </button>
+                      </a>
                     </div>
                   </div> 
               </div>
