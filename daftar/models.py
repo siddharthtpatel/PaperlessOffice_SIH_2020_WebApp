@@ -112,6 +112,7 @@ class Authority(object):
     def __init__(self, json):
         self.id = json['_id']['$oid']
         self.name = json['first_name'] + ' ' + json['last_name']
+        self.role = json['role']
 
 
 class Workflow(object):

@@ -90,16 +90,18 @@ def storage(request):
 def new_workflow(request):
     if verify_token(request):
         auth_list = get_authorities()
+        print(auth_list)
+        if auth_list is False:
+            # TODO: Error handling
+            print('Error Loading Documents')
+            return
 
-    if auth_list is False:
-        # TODO: Error handling
-        print('Error Loading Documents')
-        return
-
-    return render(request, 'new_workflow.html', {'title': 'Daftar | Workflow',
-                                                 'isUser': User().isUser,
-                                                 'first_name': User().first_name,
-                                                 'authorities': auth_list})
+        return render(request, 'new_workflow.html', {'title': 'Daftar | Workflow',
+                                                     'isUser': User().isUser,
+                                                     'first_name': User().first_name,
+                                                     'authorities': auth_list})
+    else:
+        return redirect('/')
 
 
 def add_workflow(request):
@@ -176,7 +178,7 @@ def new_document(request):
         return redirect('/')
 
 
-def add_new_dcoument(request):
+def add_new_document(request):
     if verify_token(request):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
@@ -219,7 +221,7 @@ def add_application_template(request):
         if request.method == 'POST':
             response = add_application_templates(request.POST)
             if response:
-                return HttpResponseRedirect(reverse('application_template'))
+                return HttpResponseRedirect(reverse('application_templates'))
             else:
                 return HttpResponseRedirect(reverse('new_application_template'))
     else:

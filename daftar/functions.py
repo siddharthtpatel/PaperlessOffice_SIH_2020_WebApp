@@ -66,6 +66,8 @@ def get_authorities(filter=None, limit=None):
     for auth in response.json():
         auth_list.append(Authority(auth))
 
+    print("------")
+    print(auth_list)
     return auth_list
 
 
@@ -121,8 +123,8 @@ def add_forms(form):
 def add_workflows(form):
     stages = []
     for i in range(1, int(form.get('totalStages')) + 1):
-        id_name = form.get(str(i)).split('_')
-        stage = {'authId': id_name[0], 'authName': id_name[1]}
+        id_name = form.get(f'{i}_name').split('_')
+        stage = {'authId': id_name[0], 'authRole': form.get(f'{i}_role'), 'authName': id_name[1]}
         stages.append(stage)
 
     data = {
@@ -372,9 +374,9 @@ def export(request):
             file_name = default_storage.save('excel', ContentFile(response.content))
             file_url = default_storage.url(file_name)
 
-            f = open("media/"+file_name + ".xls", 'x')
+            f = open("media/" + file_name + ".xls", 'x')
             f.close()
-            f = open("media/"+file_name + ".xls", 'wb+')
+            f = open("media/" + file_name + ".xls", 'wb+')
             f.write(response.content)
             f.close()
             return HttpResponse(file_url + ".xls")
