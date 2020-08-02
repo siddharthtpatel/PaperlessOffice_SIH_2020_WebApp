@@ -208,14 +208,14 @@
                           </div>
                           <div class="col-4">
                               <div class="text-center">
-                                  <div class="mt-5">
+                                  <div class="mt-1">
+                                      <span class="badge badge-success mb-4">{{ doc.stage }}/{{ doc.stages }}</span>
                                       <div class="progress md-progress float-right"
                                            style="height:15px;">
                                           <div class="progress-bar progress-bar-striped green progress-bar-animated"
                                                role="progressbar" style="width: {{ doc.progress }}%;height: 15px"
                                                aria-valuenow="{{ doc.stage }}" aria-valuemin="0"
                                                aria-valuemax="{{ doc.stages }}">
-                                              {{ doc.stage }}/{{ doc.stages }}
                                           </div>
                                       </div>
                                   </div>
