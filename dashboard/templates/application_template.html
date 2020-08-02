@@ -47,7 +47,6 @@
                     <th scope="col"><h6><b>Created By</b></h6></th>
                     <th scope="col"><h6><b>Workflow Name</b></h6></th>
                     <th scope="col"><h6><b>Form Name</b></h6></th>
-                      <!-- <th scope="col">Actions</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -61,13 +60,10 @@
                   {% endif %}
                   <td>{{ application_template.workflowName }}</td>
                   <td>{{ application_template.formName }}</td>
-                    <!-- <td style="text-align:center">
-                        <span class="ml-2" id="{{ application.id }}" data-toggle="modal" data-target="#centralModalLg" onclick="Info(this)"><i  style="cursor:pointer" class="fas fa-info-circle fa-2x"></i></span>
-                    </td> -->
-                  </tr>
                   {% endfor %}
                 </tbody>
             </table>
+          
         </div>
         {% endif %}
       </section>
