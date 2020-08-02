@@ -46,7 +46,6 @@
                     <th scope="col"><h6><b>Title</b></h6></th>
                     <th scope="col"><h6><b>Description</b></h6></th>
                     <th scope="col"><h6><b>Fields</b></h6></th>
-                      <th scope="col"></th>
                   </tr>
                 </thead>
                   <tbody>
@@ -59,7 +58,6 @@
                         <p>{{ field.question }}</p>
                       {% endfor %}
                   </td>
-                  <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">Edit</button></td>
                         </tr>
                   {% endfor %}
                 </tbody>
@@ -82,6 +80,7 @@
     $('.dataTables_length').addClass('bs-select');
   });
 </script>
+
 <script>
     function getCookie(name) {
         let cookieValue = null;
@@ -125,3 +124,4 @@
     }
 </script>
 {% endblock %}
+

@@ -47,7 +47,6 @@
                     <th scope="col"><h6><b>Total Stages</b></h6></th>
                     <th scope="col"><h6><b>Created On</b></h6></th>
                     <th scope="col"><h6><b>Stages</b></h6></th>
-                      <th scope="col"></th>
                   </tr>
                 </thead>
                   <tbody>
@@ -57,24 +56,23 @@
                   <td>{{ workflow.totalStages }}</td>
                   <td>{{ workflow.timestamp }}</td>
                   <td>
-                  {% for stage in workflow.stages %}
-                      <div class="row">
-                        <div class="col">{% if stage.authRole == 'hod' %}
-                        <p>HOD - </p>
-                        {% elif stage.authRole == 'class_teacher' %}
-                        <p>Class Teacher - </p>
-                        {% elif stage.authRole == 'admin' %}
-                        <p>Admin - </p>
-                        {% else %}
-                        {% endif %}</div>
-                        <div class="col">
-                          <p>{{ stage.authName }}</p>
-                        </div>
-                      </div>
-                  {% endfor %}
-                  </td>
-                  <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">Edit</button></td>
-                        </tr>
+                      {% for stage in workflow.stages %}
+                          <div class="row">
+                            <div class="col">{% if stage.authRole == 'hod' %}
+                            <p>HOD - </p>
+                            {% elif stage.authRole == 'class_teacher' %}
+                            <p>Class Teacher - </p>
+                            {% elif stage.authRole == 'admin' %}
+                            <p>Admin - </p>
+                            {% else %}
+                            {% endif %}</div>
+                            <div class="col">
+                              <p>{{ stage.authName }}</p>
+                            </div>
+                          </div>
+                      {% endfor %}
+                      </td>
+                    </tr>
                   {% endfor %}
                 </tbody>
               </table>
@@ -96,6 +94,7 @@
     $('.dataTables_length').addClass('bs-select');
   });
 </script>
+
 <script>
     function getCookie(name) {
         let cookieValue = null;
