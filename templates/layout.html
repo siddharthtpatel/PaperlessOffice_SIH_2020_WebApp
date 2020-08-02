@@ -215,7 +215,12 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
               <a class="dropdown-item" href="{% url 'new_document' %}">New Document</a>
-              <a class="dropdown-item" href="{% url 'fill_application' %}">New Application</a>
+              <a class="dropdown-item" href="{% url 'fill_application' %}">Fill Application</a>
+              <a class="dropdown-item">
+                <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#CircularModal" style="background-color: transparent; border: none;padding:0px">
+                  New Circular
+                </button>
+              </a>
             </div>
           </li>
 
@@ -246,6 +251,30 @@
     <!-- Navbar -->
 
   </header>
+  <div class="modal fade" id="CircularModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- Change class .modal-sm to change the size of the modal -->
+      <form action="{% url 'sign_application' %}" method="POST">{% csrf_token %}
+          <input name="action" value="Reject" hidden>
+          <input name="id" class="id" value="" hidden>
+          <div class="modal-dialog modal-md" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title w-100" id="myModalLabel">New Circular</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Message:</h5>
+                  <input type="text" id="messageReject" placeholder="Enter text here" name="message" class="form-control">
+                </div>
+                <div class="modal-footer p-0">
+                    <button type="submit" style="width:150px;" class="btn green btn-md">Send</button>
+                </div>
+              </div>
+          </div>
+      </form>
+  </div>
   <!-- Main Navigation -->
   {% block content %}
   
