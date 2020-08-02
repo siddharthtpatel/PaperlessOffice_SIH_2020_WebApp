@@ -105,7 +105,6 @@ def storage(request):
 def new_workflow(request):
     if verify_token(request):
         auth_list = get_authorities()
-
         if auth_list is False:
             # TODO: Error handling
             print('Error Loading Documents')
