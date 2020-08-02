@@ -22,8 +22,15 @@
     <div class="container">
       <!-- Section: Applications -->
       <section class="pb-12">
-        <h2>Application Templates</h2>
-        <p>Application Templates define the workflow and the form of the application.</p>
+          <div class="row">
+           <div class="col-8">
+                <h2>Application Templates</h2>
+                <p>Application Templates define the workflow and the form of the application.</p>
+           </div>
+           <div class="col-4" style="text-align:right;">
+                   <button type="button" class="btn btn-outline-success btn-rounded waves-effect" onclick="Export()">Export to Excel</button>
+           </div>
+        </div>
 
         {% if application_templates|length < 1 %}
         <div class="mt-3 container text-center">
@@ -40,7 +47,7 @@
                     <th scope="col"><h6><b>Created By</b></h6></th>
                     <th scope="col"><h6><b>Workflow Name</b></h6></th>
                     <th scope="col"><h6><b>Form Name</b></h6></th>
-                      <th scope="col"></th>
+                      <!-- <th scope="col">Actions</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -54,13 +61,10 @@
                   {% endif %}
                   <td>{{ application_template.workflowName }}</td>
                   <td>{{ application_template.formName }}</td>
-                      {% if application_template.isCreator %}
-                        <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">Edit</button>
-                        <button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
-                      {% else %}
-                        <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
-                      {% endif %}
-                        </tr>
+                    <!-- <td style="text-align:center">
+                        <span class="ml-2" id="{{ application.id }}" data-toggle="modal" data-target="#centralModalLg" onclick="Info(this)"><i  style="cursor:pointer" class="fas fa-info-circle fa-2x"></i></span>
+                    </td> -->
+                  </tr>
                   {% endfor %}
                 </tbody>
             </table>
@@ -81,5 +85,47 @@
     $('#application_templatesDT').DataTable();
     $('.dataTables_length').addClass('bs-select');
   });
+</script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    function Export(){
+        const export_request = new XMLHttpRequest();
+        export_request.open('POST','export');
+
+        export_request.onload = () =>{
+            console.log("Request Sent");
+            const url = export_request.response;
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            // the filename you want
+            a.download = 'Workflow.xls';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            alert('Your file has downloaded!');
+        };
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', csrftoken);
+        data.append('name', 'applications/templates');
+        export_request.send(data);
+    }
 </script>
 {% endblock %}
