@@ -40,7 +40,6 @@
                     <th scope="col"><h6><b>Total Stages</b></h6></th>
                     <th scope="col"><h6><b>Created On</b></h6></th>
                     <th scope="col"><h6><b>Stages</b></h6></th>
-                      <th scope="col"></th>
                   </tr>
                 </thead>
                   <tbody>
@@ -53,8 +52,6 @@
                       {% for stage in workflow.stages %}
                         <p>{{ stage.authName }}</p>
                       {% endfor %}
-                  </td>
-                  <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">Edit</button></td>
                         </tr>
                   {% endfor %}
                 </tbody>
