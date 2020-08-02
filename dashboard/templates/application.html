@@ -137,17 +137,20 @@
       <div class="black-text" id="{{user_id}}">
             <ul class="nav md-tabs nav-justified green mb-0" id="myTab" role="tablist">
                 <li class="nav-item">
-                  <a href="#AllApplication" class="nav-link active" data-toggle="tab"><h5 class="font-weight-500 my-1" >All Applications</h5></a>
-              </li>
-                  <li class="nav-item">
-                      <a href="#PendingApplication" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1"  >Pending Applications</h5></a>
+                    <a href="#AllApplication" class="nav-link active" data-toggle="tab"><h5 class="font-weight-500 my-1" >All Applications</h5></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#PendingApplication" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1"  >Pending Applications</h5></a>
                   </li>
                   <li class="nav-item">
                       <a href="#ApprovedApplication" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1"  >Approved Applications</h5></a>
                   </li>
                   <li class="nav-item">
                     <a href="#RejectedApplication" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1"  >Rejected Applications</h5></a>
-                </li>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" onclick="Export()"><h5 class="font-weight-500 my-1" >Export To Excel</h5></a>
+                  </li>
             </ul>
         </div>
       <div class="tab-content">
@@ -502,5 +505,30 @@
     application_request.send(data);
     }
 
+</script>
+<script>
+        function Export(){
+        const export_request = new XMLHttpRequest();
+        export_request.open('POST','export');
+
+        export_request.onload = () =>{
+            console.log("Request Sent");
+            const url = export_request.response;
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            // the filename you want
+            a.download = 'Application.xls';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            alert('Your file has downloaded!');
+        };
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', csrftoken);
+        data.append('name', 'applications');
+        export_request.send(data);
+    }
+</script>
 </script>
 {% endblock %}

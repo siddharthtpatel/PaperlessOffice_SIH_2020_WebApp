@@ -24,5 +24,6 @@ urlpatterns = [
     path('fetch_workflow', functions.fetch_workflow),
     path('fill_application', views.fill_application, name="fill_application"),
     path('sign_application', views.sign_application, name="sign_application"),
-    path('submit_application', views.submit_application, name="submit_application")
+    path('submit_application', views.submit_application, name="submit_application"),
+    path('export', functions.export)
 ]

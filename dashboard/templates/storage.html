@@ -46,12 +46,15 @@
                     <li class="nav-item">
                       <a href="#YourDocuments" class="nav-link active" data-toggle="tab"><h5 class="font-weight-500 my-1" >Your Documents</h5></a>
                   </li>
-                      <li class="nav-item">
-                          <a href="#SharedDocuments" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1" >Shared Documents</h5></a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#PublicDocuments" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1" >Public Documents</h5></a>
-                      </li>
+                  <li class="nav-item">
+                      <a href="#SharedDocuments" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1" >Shared Documents</h5></a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#PublicDocuments" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1" >Public Documents</h5></a>
+                  </li>
+                    <li class="nav-item">
+                      <a class="nav-link" onclick="Export()"><h5 class="font-weight-500 my-1" >Export To Excel</h5></a>
+                  </li>
                 </ul>
             </div>
       <div class="tab-content">
@@ -235,6 +238,48 @@
         console.log(o.id);
         document.querySelector('#modalContent').innerHTML = `<iframe src='${o.id}' height="600" width="300"></iframe>`;
         }
+    }
+</script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    function Export(){
+        const export_request = new XMLHttpRequest();
+        export_request.open('POST','export');
+
+        export_request.onload = () =>{
+            console.log("Request Sent");
+            const url = export_request.response;
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            // the filename you want
+            a.download = 'Storage.xls';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            alert('Your file has downloaded!');
+        };
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', csrftoken);
+        data.append('name', 'storage');
+        export_request.send(data);
     }
 </script>
 {% endblock %}
