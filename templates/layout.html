@@ -134,7 +134,7 @@
                 </ul>
               </div>
             </li>
-            {% if user_type == 'authority' %}
+            {% if user_type != 'user' %}
               <li>
               <a class="collapsible-header waves-effect arrow-r">
                 <i class="fas fa-network-wired"></i>Review Applications<i class="fas fa-angle-down rotate-icon"></i>
@@ -153,34 +153,14 @@
             {% endif %}
             {% if user_type == 'admin' %}
             <li>
-              <a class="collapsible-header waves-effect arrow-r">
-                <i class="fas fa-network-wired"></i>Workflows<i class="fas fa-angle-down rotate-icon"></i>
+              <a href="{% url 'workflow' %}" class="collapsible-header waves-effect">
+                <i class="fas fa-file-alt"></i>Workflows
               </a>
-              <div class="collapsible-body">
-                <ul>
-                  <li>
-                    <a href="{% url 'new_workflow' %}" class="waves-effect">Create new workflow</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'workflow' %}" class="waves-effect">Workflows</a>
-                  </li>
-                </ul>
-              </div>
             </li>
             <li>
-              <a class="collapsible-header waves-effect arrow-r">
-                <i class="fas fa-file-alt"></i>Forms<i class="fas fa-angle-down rotate-icon"></i>
+              <a href="{% url 'form' %}" class="collapsible-header waves-effect">
+                <i class="fas fa-file-alt"></i>Forms
               </a>
-              <div class="collapsible-body">
-                <ul>
-                  <li>
-                    <a href="{% url 'new_form' %}" class="waves-effect">Create new form</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'form' %}" class="waves-effect">Forms</a>
-                  </li>
-                </ul>
-              </div>
             </li>
              <li>
               <a class="collapsible-header waves-effect arrow-r">
