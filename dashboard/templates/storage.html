@@ -17,30 +17,65 @@
       bottom: .5em;
     }
 </style>
+
+    <div class="modal fade" id="centralModalLg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+              <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-1">
+                  <div class="modal-header p-1" style="background: transperent;">
+                    <button type="button" data-dismiss="modal" class="btn btn-sm" style="font-size:15px; width:80px; background:dark-gray;">X</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-content" id="modalContent">
+            </div>
+        </div>
+    </div>
+
   <!-- Main layout -->
   <main>
-    <div class="container"></div>
+    <div class="container">
         <style>
         .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
             background-color: green;
           } 
+        .table-info, .table-info>td, .table-info>th {
+            background-color: #8fd19e;
+         }
         </style>
+        <section class="pb-12">
+          <div class="row ml-1 mr-1">
+             <div class="col-9">
+                 <h2>Storage</h2>
+                  <p>Storage stores the documents uploaded by the users. 
+                    The documents can be made private and public according to the need
+                  </p>
+             </div>
+             <div class="col-3" style="text-align:right;">
+                     <button type="button" class="btn btn-outline-success btn-rounded waves-effect" onclick="Export()">Export to Excel</button>
+             </div>
+          </div>
+            <br>
           <div class="black-text">
                 <ul class="nav md-tabs nav-justified green mb-0" id="myTab" role="tablist">
                     <li class="nav-item">
                       <a href="#YourDocuments" class="nav-link active" data-toggle="tab"><h5 class="font-weight-500 my-1" >Your Documents</h5></a>
                   </li>
-                      <li class="nav-item">
-                          <a href="#SharedDocuments" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1" >Shared Documents</h5></a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#PublicDocuments" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1" >Public Documents</h5></a>
-                      </li>
+                  <li class="nav-item">
+                      <a href="#SharedDocuments" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1" >Shared Documents</h5></a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#PublicDocuments" class="nav-link" data-toggle="tab"><h5 class="font-weight-500 my-1" >Public Documents</h5></a>
+                  </li>
                 </ul>
             </div>
       <div class="tab-content">
           <div class="tab-pane fade show active" id="YourDocuments">
-            <!-- Section: Applications -->
+            <!-- Section: documents -->
               <section class="pb-12">
                 {% if docs|length < 1 %}
                 <div class="mt-3 container text-center">
@@ -56,6 +91,7 @@
                             <th scope="col">File Name</th>
                             <th scope="col">Created By</th>
                             <th scope="col">Description</th>
+                            <th scope="col">File Type</th>
                             <th scope="col">Date</th>
                             <th scope="col">Actions</th>
                           </tr>
@@ -66,8 +102,19 @@
                           <td>{{ doc.fileName }}</td>
                           <td>{{ doc.creatorName }}</td>
                           <td>{{ doc.fileDesc }}</td>
+                          <td>
+                              {%  if doc.fileExt == 'jpg' or doc.fileExt == 'png' or doc.fileExt == 'jpeg' %}
+                                  Image
+                              {% elif doc.fileExt == 'pdf'  %}
+                                  PDF
+                              {% elif doc.fileExt == 'txt'  %}
+                                  Text
+                              {% endif %}
+                          </td>
                           <td>{{ doc.timestamp }}</td>
-                          <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
+                          <td>
+                              <span class="ml-2" id="{{ doc.file_url }}" data-toggle="modal" data-target="#centralModalLg" onclick="Show(this)"><i  style="cursor:pointer" class="fas fa-eye fa-2x"></i></span>
+                          </td>
                                 </tr>
                           {% endfor %}
                         </tbody>
@@ -79,7 +126,7 @@
             <!-- Section: data tables -->
           </div>
           <div class="tab-pane fade" id="SharedDocuments">
-              <!-- Section: Applications -->
+              <!-- Section: documents -->
               <section class="pb-12">
                 {% if docs|length < 1 %}
                 <div class="mt-3 container text-center">
@@ -95,8 +142,9 @@
                             <th scope="col">File Name</th>
                             <th scope="col">Created By</th>
                             <th scope="col">Description</th>
+                            <th scope="col">File Type</th>
                             <th scope="col">Date</th>
-                              <th scope="col"></th>
+                              <th scope="col">Actions</th>
                           </tr>
                         </thead>
                           <tbody>
@@ -105,9 +153,20 @@
                           <td>{{ doc.fileName }}</td>
                           <td>{{ doc.creatorName }}</td>
                           <td>{{ doc.fileDesc }}</td>
+                          <td>
+                              {%  if doc.fileExt == 'jpg' or doc.fileExt == 'png' or doc.fileExt == 'jpeg' %}
+                                  Image
+                              {% elif doc.fileExt == 'pdf'  %}
+                                  PDF
+                              {% elif doc.fileExt == 'txt'  %}
+                                  Text
+                              {% endif %}
+                          </td>
                           <td>{{ doc.timestamp }}</td>
-                          <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
-                                </tr>
+                          <td>
+                              <span class="ml-2" id="{{ doc.file_url }}" data-toggle="modal" data-target="#centralModalLg" onclick="Show(this)"><i  style="cursor:pointer" class="fas fa-eye fa-2x"></i></span>
+                          </td>
+                            </tr>
                           {% endfor %}
                         </tbody>
                       </table>
@@ -118,7 +177,7 @@
             <!-- Section: data tables -->
           </div>
           <div class="tab-pane fade" id="PublicDocuments">
-             <!-- Section: Applications -->
+             <!-- Section: documents -->
               <section class="pb-12">
                 {% if docs|length < 1 %}
                 <div class="mt-3 container text-center">
@@ -134,8 +193,9 @@
                             <th scope="col">File Name</th>
                             <th scope="col">Created By</th>
                             <th scope="col">Description</th>
+                            <th scope="col">File Type</th>
                             <th scope="col">Date</th>
-                              <th scope="col"></th>
+                              <th scope="col">Actions</th>
                           </tr>
                         </thead>
                           <tbody>
@@ -144,8 +204,19 @@
                           <td>{{ doc.fileName }}</td>
                           <td>{{ doc.creatorName }}</td>
                           <td>{{ doc.fileDesc }}</td>
+                          <td>
+                              {%  if doc.fileExt == 'jpg' or doc.fileExt == 'png' or doc.fileExt == 'jpeg' %}
+                                  Image
+                              {% elif doc.fileExt == 'pdf'  %}
+                                  PDF
+                              {% elif doc.fileExt == 'txt'  %}
+                                  Text
+                              {% endif %}
+                          </td>
                           <td>{{ doc.timestamp }}</td>
-                          <td><button class="btn btn-outline-default btn-sm btn-rounded waves-effect">View</button></td>
+                          <td>
+                                <span class="ml-2" id="{{ doc.file_url }}" data-toggle="modal" data-target="#centralModalLg" onclick="Show(this)"><i  style="cursor:pointer" class="fas fa-eye fa-2x"></i></span>
+                          </td>
                                 </tr>
                           {% endfor %}
                         </tbody>
@@ -173,5 +244,58 @@
     $('#PublicDocumentsDT').DataTable();
     $('.dataTables_length').addClass('bs-select');
   });
+</script>
+<script>
+    function Show(o){
+        console.log(o.parentNode.parentNode.children[3].innerHTML.trim());
+        if (o.parentNode.parentNode.children[3].innerHTML.trim() == "Image"){
+        document.querySelector('#modalContent').innerHTML = `<img src='${o.id}' width='100%'>`;}
+        else{
+        console.log(o.id);
+        document.querySelector('#modalContent').innerHTML = `<iframe src='${o.id}' height="600" width="300"></iframe>`;
+        }
+    }
+</script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    function Export(){
+        const export_request = new XMLHttpRequest();
+        export_request.open('POST','export');
+
+        export_request.onload = () =>{
+            console.log("Request Sent");
+            const url = export_request.response;
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            // the filename you want
+            a.download = 'Storage.xls';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            alert('Your file has downloaded!');
+        };
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', csrftoken);
+        data.append('name', 'storage');
+        export_request.send(data);
+    }
 </script>
 {% endblock %}

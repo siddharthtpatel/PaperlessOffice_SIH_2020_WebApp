@@ -8,6 +8,7 @@ from django.core.files.base import ContentFile
 from django.db import models
 from django.core import files
 from django.core.files.storage import FileSystemStorage, default_storage
+from django import forms
 
 import daftar
 from daftar import settings
@@ -20,8 +21,13 @@ class User(object):
             self.first_name = None
             self.last_name = None
             self.dob = None
-            self.isUser = None
+            self.public_key = None
+            self.private_key = None
+            self.role = None
+            self.type = None
             self.token = None
+            self.email = None
+            self.costOfPaper = None
 
         def __str__(self):
             return self + self.id
@@ -56,7 +62,7 @@ class StorageDocument(models.Model):
 
         if self.fileExt == 'jpg' or self.fileExt == 'png' or self.fileExt == 'jpeg':
             print('JPG/PNG/JPEG image detected')
-            self.load_img()
+        self.load_img()
 
         url = daftar.settings.DAFTAR_HOST + "/users"
         hed = {'Authorization': 'Bearer ' + User().token}
@@ -88,11 +94,13 @@ class Application(object):
         self.id = json['_id']['$oid']
         self.name = json['name']
         self.description = json['description']
+        self.creatorId = json['creatorId']
         self.creatorName = json['creatorName']
         self.status = int(json['status'])
         self.stage = int(json['stage'])
         self.stages = int(json['stages'])
         self.assignedName = json['assignedName']
+        self.assignedId = json['assignedId']
         self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
         self.progress = int(self.stage / self.stages * 100)
 
@@ -107,6 +115,7 @@ class Authority(object):
     def __init__(self, json):
         self.id = json['_id']['$oid']
         self.name = json['first_name'] + ' ' + json['last_name']
+        self.role = json['role']
 
 
 class Workflow(object):
@@ -119,7 +128,7 @@ class Workflow(object):
         self.stages = json['stages']
         self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
 
-        if User().token == json['creatorId']:
+        if User().id == json['creatorId']:
             self.isCreator = True
         else:
             self.isCreator = False
@@ -132,9 +141,13 @@ class Form(object):
         self.title = json['title']
         self.description = json['description']
         self.creatorId = json['creator']
-        self.fields = json['fields']
+        self.fields = []
+        i = 1
+        for field in json['fields']:
+            self.fields.append(Field(field, i))
+            i = i + 1
 
-        if User().token == json['creator']:
+        if User().id == json['creator']:
             self.isCreator = True
         else:
             self.isCreator = False
@@ -147,8 +160,10 @@ class ApplicationTemplates(object):
         self.name = json['name']
         self.creatorName = json['creatorName']
         self.stages = json['stages']
+        self.workflowId = json['workflowId']
+        self.formId = json['formId']
 
-        if User().token == json['creatorId']:
+        if User().id == json['creatorId']:
             self.isCreator = True
         else:
             self.isCreator = False
@@ -156,7 +171,7 @@ class ApplicationTemplates(object):
         url = daftar.settings.DAFTAR_HOST
         hed = {'Authorization': 'Bearer ' + User().token}
 
-        request = requests.get(url+"/workflow", stream=True, headers=hed)
+        request = requests.get(url + "/workflow", stream=True, headers=hed)
         workflows = js.loads(request.text)
         for workflow in workflows:
             if json['workflowId'] == workflow['_id']['$oid']:
@@ -168,3 +183,30 @@ class ApplicationTemplates(object):
             if json['formId'] == form['_id']['$oid']:
                 self.formName = form['title']
 
+
+class Field(object):
+
+    def __init__(self, json, field_id):
+        self.id = field_id
+        self.type = json['type']
+        self.question = json['question']
+
+        if json['type'] in ('radio', 'checkbox'):
+            self.options = []
+            i = 1
+            for option in json['options'].values():
+                self.options.append(Option(option, i))
+                i = i + 1
+
+
+class Option(object):
+
+    def __init__(self, value, option_id):
+        self.id = option_id
+        self.value = value
+
+
+class UploadFileForm(forms.Form):
+    fileName = forms.CharField(max_length=50)
+    fileDescription = forms.CharField(max_length=50)
+    file = forms.FileField()
