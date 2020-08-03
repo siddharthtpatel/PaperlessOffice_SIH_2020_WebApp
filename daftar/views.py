@@ -21,8 +21,15 @@ def verify_token(request):
             user.private_key = data['private_key']
             user.costOfPaper = data['costOfPaper']
             user.dob = data['dob']
-            user.isUser = data['role'] == 'user'
+            user.role = data['role']
             user.token = token
+            if user.role == 'user':
+                user.type = 'user'
+            elif user.role == 'admin':
+                user.type = 'admin'
+            else:
+                user.type = 'authority'
+
             return True
         else:
             return False

@@ -28,7 +28,7 @@ def get_storage_documents(limit=None):
     return docs
 
 
-def get_applications(filter=None, limit=None):
+def get_applications(user_id = None ,filter=None, limit=None):
     url = daftar.settings.DAFTAR_HOST + "/applications"
 
     if filter is not None:
@@ -44,8 +44,14 @@ def get_applications(filter=None, limit=None):
         return False
 
     docs = []
-    for doc in response.json():
-        docs.append(Application(doc))
+    if user_id is not None:
+        for doc in response.json():
+            application = Application(doc)
+            if application.assignedId == user_id:
+                docs.append(application)
+    else:
+        for doc in response.json():
+            docs.append(Application(doc))
 
     return docs
 
