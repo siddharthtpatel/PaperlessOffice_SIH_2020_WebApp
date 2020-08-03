@@ -1,0 +1,469 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  .btn-floating {
+    background-color: #29a329;
+  }
+  .btn{
+      color: white;
+  }
+  .btn:hover{
+      color: white;
+  }
+  #formDetails {
+    border-radius: 25px;
+    background:	 #2cac37e1;
+    padding: 10px;
+    width: auto;
+  }
+  #formDesc::placeholder {
+      color: #d9d9d9;
+  }
+  .formInputLabel {
+    margin-left: 20px;
+    margin-top: 2px;
+    font-size: 25px;
+    color: white;
+  }
+  .formInput {
+    font-size: 15px;
+    color: white;
+  }
+  .form-control{
+       padding: .0rem .0rem;
+       font-size: 25px;
+  }
+  .md-form .form-control {
+    padding: .0rem 0 .0rem;
+  }
+#formDetails{
+  box-shadow: 0px 2px 5px #666;
+}
+
+</style>
+<main>
+    <h1>Create New Application Template</h1><br>
+    
+    <form name="new_application_template" id="new_application_template" 
+    action="{% url 'new_application_step1' %}" method="POST">{% csrf_token %}
+    <!-- Name -->
+    <div id="formDetails" class="md-form row mt-0">
+        <div class="col-1 d-flex flex-column justify-content-center" >
+            <i class="fas fa-edit fa-2x"></i>
+        </div>
+        <div class="md-form mt-4 col-11">
+            <label for="application_name" class="formInputLabel" style="color: white;">Application Name</label>
+            <input type="text" id="application_name" name="name" class="form-control" style="font-size: 30px; color: white;">
+        </div>
+    </div>    
+        <!-- Default form subscription -->
+    <div class="text-center border border-light p-4" style="margin-bottom:80px;">
+
+
+            <div class="row ml-1 mr-1 mt-3">
+                <div class="col">
+                    <h2>Step 1</h2><br>
+                     <p>Select a Form from below              
+                    </p>
+                </div>
+             </div>
+             
+            <!-- FormID -->
+            <div class="row">
+                <div class="col-1 d-flex flex-column justify-content-center" >
+                    <i class="fas fa-file-alt fa-2x"></i>
+                </div>
+                <div class="col-11">
+                    <select class="browser-default custom-select" name="form_id">
+                        <option value="" disabled selected>Form Name</option>
+                        {% for form in forms %}
+                            <option value="{{form.id}}">{{form.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row ml-1 mr-1 mt-3">
+                <div class="col">
+                    <h3>OR</h3>
+                     <p>Create a new Form              
+                    </p>
+                </div>
+             </div>
+                <!-- Floating Buttons -->
+              <div class="container">
+                <div class="row md-form">
+                    <div class="col-5 ml-2">
+                    <input type="text" id="formName" style="font-size: 30px; color: black;" class="formInput form-control" name="formName"><br>
+                    <label for="formName" class="formInputLabel" style="color: black;">Form Name</label>
+                    </div>
+                    <div class="col-12 ml-2">
+                        <label for="formDesc" class="formInputLabel" style="color: black;">Form Description</label>
+                        <input type="text" id="formDesc" style="color: black; font-size: 15;" class="formInput form-control" name="formDesc">
+                    </div>
+                    <div class="col-1">
+                        <input type="number" name="totalFields" class="form-control" id="totalFields" hidden value="1">
+                    </div>
+                </div>
+                  <br>
+                  <div id="add_message" class="alert alert-success" style="margin-top: 30px;" role="alert">
+                    <h4 class="alert-heading">Creating a new Form</h4><hr>
+                    <p>
+                      Add question by clicking on the floating buttons bellow. You can select the type of question and click the respective button.<br/>
+                        Once the form has been created, click the 'Next' button to go to the next step.
+                    </p>
+                  </div>
+      
+                  <div id="questions" style="margin-bottom:50px; ">
+      
+                  </div>
+                    <div class="row mb-4">  
+                        <div class="col">
+                            <a class="btn-floating" id="add_question_radio_button" title="Add new Question: Multiple Choice"><i class="fa fa-dot-circle"></i></a><br>
+                        </div>
+                        <div class="col">
+                            <a class="btn-floating" id="add_question_checkbox_button" title="Add new Question: Checkboxes"><i class="fa fa-check-square"></i></a><br>
+                        </div>
+                        <div class="col">
+                            <a class="btn-floating" id="add_question_multiple_type_button" title="Add new Question: Multiple Type Answer"><i class="fa fa-minus"></i></a><br>
+                        </div>
+                        <div class="col">
+                            <a class="btn-floating" id="add_question_long_answer_button" title="Add new Question: Long Answer"><i class="fa fa-align-justify"></i></a>
+                        </div>
+                    </div>   
+                    <div class="row mt-2">
+                        <div class="col-12" style="text-align:right">
+                        <button type="submit" font-size="40px" disabled class="btn green btn-rounded ml-0" id="create_form" hidden>Create Form</button>
+                        </div>
+                    </div>
+                  <br>
+              </div>
+              <hr class="mr-2 ml-2">
+            <div class="row mt-4">
+                    <div class="col-12" style="text-align:center;">
+                        <button type="submit" class="btn btn-success btn-rounded btn-lg"id="js-upload-submit">Next</button>
+                    </div>
+            </div>
+
+        </form>
+    </div>
+</main>
+{% endblock %}
+{% block scripts %}
+<!-- Radio Question Template -->
+  <script id="add_radio_question" type="text/template">
+    {% verbatim %}
+      <div class="card border-success m-2" style="max-width: 100%;">
+        <div>
+            <input type="text" name="{{ question_number }}_type" class="form-control" hidden value="radio">
+        </div>
+        <div class="card-body text-success">
+            <div class="row ml-1 p-3">
+                <div class="col-1">
+                    <h3 style="font-size: 30px;">{{ question_number }}</h3>
+                </div>
+                <div class="col-7" style="text-align:left;">
+                    <div class="md-form mt-0 ml-0">
+                        <input placeholder="Enter the question" type="text" id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
+                    </div>
+                </div>
+                <div class="col-4" style="text-align:right">
+                    <a class="icons-lg git-ic" title="Delete this question" style="margin-bottom:0px;" onclick="DeleteQuestion(this)"><i class="fas fa-times fa-2x"></i></a>
+                </div>
+            </div>
+            <div class="row ml-3">
+              <div id="radio_options">
+                  <div>
+                      <input type="number" name="{{ question_number }}_total_options" class="form-control" hidden value="2">
+                  </div>
+                <div class="row ml-1">
+                    <div class="col-1">
+                        <i class="far fa-circle"></i>
+                    </div>
+                    <div class="col-9">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <div class="md-form mt-0">
+                                    <input type="text" class="form-control" name="{{ question_number }}_1_option" placeholder="Enter the option">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ml-1">
+                    <div class="col-1">
+                        <i class="far fa-circle"></i>
+                    </div>
+                    <div class="col-9">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <div class="md-form mt-0">
+                                    <input type="text" class="form-control" name="{{ question_number }}_2_option" placeholder="Enter the option">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6" style="text-align:left">
+               <button type="button" font-size="40px" class="btn green btn-rounded ml-0" onclick="add_option_radio(this)">Add an option</button>
+            </div>
+        </div>
+    </div>
+  </script>
+
+  <script id="add_checkbox_question" type="text/template">
+      <div class="card border-success m-2" style="max-width: 100%;">
+            <div>
+                <input type="text" name="{{ question_number }}_type" class="form-control" hidden value="checkbox">
+            </div>
+            <div class="card-body text-success">
+                <div class="row ml-1 p-3">
+                    <div class="col-1">
+                        <h3 style="font-size: 30px;">{{ question_number }}</h3>
+                    </div>
+                    <div class="col-7" style="text-align:left;">
+                        <div class="md-form mt-0 ml-0">
+                            <input placeholder="Enter the question" type="text" id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-4" style="text-align:right">
+                        <a class="icons-lg git-ic" title="Delete this question" style="margin-bottom:0px;" onclick="DeleteQuestion(this)"><i class="fas fa-times fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="row ml-3">
+                  <div id="checkbox_options" class="checkboxs">
+                    <div class="row ml-1">
+                        <div>
+                            <input type="number" name="{{ question_number }}_total_options" class="form-control" hidden value="2">
+                        </div>
+                        <div class="col-9">
+                          <div class="custom-control custom-checkbox">
+                            <label class="custom-control-label">
+                                <div class="md-form ml-4 mt-0">
+                                    <input type="text" class="form-control" name="{{ question_number }}_1_option" placeholder="Enter the Option">
+                                </div>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row ml-1">
+                        <div class="col-9">
+                          <div class="custom-control custom-checkbox">
+                            <label class="custom-control-label">
+                                <div class="md-form ml-4 mt-0">
+                                    <input type="text" class="form-control" name="{{ question_number }}_2_option" placeholder="Enter the Option">
+                                </div>
+                            </label>
+                          </div>
+                        </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="col-6" style="text-align:left">
+                   <button type="button" font-size="40px" id="hello" class="btn green btn-rounded ml-0" onclick="add_option_checkbox(this)">Add an option</button>
+                </div>
+            </div>
+        </div>
+  </script>
+
+  <script id="add_long_answer_question" type="text/template">
+      <div class="card border-success m-2" style="max-width: 100%;">
+            <div>
+                <input type="text" name="{{ question_number }}_type" class="form-control" hidden value="long_answer">
+            </div>
+            <div class="card-body text-success">
+                <div class="row m-3">
+                    <div class="col-1">
+                        <h3 style="font-size: 30px;">{{ question_number }}</h3>
+                    </div>
+                    <div class="col-7" style="text-align:left;">
+                        <div class="md-form mt-0">
+                            <input placeholder="Enter the question"id="{{ question_number }}" name="{{ question_number }}_question" type="text" style="color: black; font-size: 20px;" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-4 pr-0" style="text-align:right">
+                        <a class="icons-lg git-ic" title="Delete this question" style="margin-bottom:0px;" onclick="DeleteQuestion(this)"><i class="fas fa-times fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="col-11 mr-4">
+                    <div class="form-group green-border-focus" style="margin-left: 40px;">
+                        <textarea class="form-control" disabled placeholder="Enter text here" id="longAnswer" rows="3"></textarea>
+                      </div>
+                </div>
+            </div>
+        </div>
+  </script>
+
+  <script id="add_multiple_type_question" type="text/template">
+      <div class="card border-success m-2" style="max-width: 100%;">
+            <div class="card-body text-success">
+                <div class="row m-3">
+                    <div class="col-1">
+                        <h3 style="font-size: 30px;">{{ question_number }}</h3>
+                    </div>
+                    <div class="col-7" style="text-align:left;">
+                        <div class="md-form mt-0">
+                            <input placeholder="Enter the question" type="text"id="{{ question_number }}" name="{{ question_number }}_question" style="color: black; font-size: 20px;" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <select id="selected_type" name="{{ question_number }}_type" class="browser-default custom-select" onchange="SetInputType(this)">
+                            <option selected>Select the answer type</option>
+                            <option value="Email">Email</option>
+                                <option value="Number">Number</option>
+                            <option value="Date">Date</option>
+                        </select>
+                    </div>
+                    <div class="col-1 pr-0" style="text-align:right">
+                        <a class="icons-lg git-ic" title="Delete this question" style="margin-bottom:0px;" onclick="DeleteQuestion(this)"><i class="fas fa-times fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="col-8 mr-3">
+                    <div class="md-form">
+                        <input id="input_txt" disabled placeholder="Enter the text" type="text" length="100" style="margin: 10px;" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+  </script>
+
+  <script id="add_option_radio" type="text/template">
+    <div class="row ml-1">
+        <div class="col-1">
+            <i class="far fa-circle"></i>
+        </div>
+        <div class="col-9">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <div class="md-form mt-0">
+                        <input type="text" class="form-control" name="{{ id }}_{{ option_number }}_option" placeholder="Enter the option">
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="col-1" style="text-align:right">
+            <a class="btn-floating btn-sm btn-success" title="Delete this option" style="margin-bottom:0px;" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+        </div>
+    </div>
+</script>
+
+<script id="add_option_checkbox" type="text/template">
+  <div class="row ml-1">
+      <div class="col-10">
+        <div class="custom-control custom-checkbox">
+          <label class="custom-control-label">
+              <div class="md-form ml-4 mt-0">
+                  <input type="text" class="form-control" name="{{ id }}_{{ option_number }}_option" placeholder="Enter the Option">
+              </div>
+          </label>
+        </div>
+      </div>
+      <div class="col-1" style="text-align:right">
+          <a class="btn-floating btn-sm btn-success" title="Delete this option" style="margin-bottom:0px" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+      </div>
+  </div>
+  </script>
+{% endverbatim %}
+  <script>
+
+const checkbox_question_template = Handlebars.compile(document.querySelector('#add_checkbox_question').innerHTML);
+const option_field_checkbox_template = Handlebars.compile(document.querySelector('#add_option_checkbox').innerHTML);
+const radio_question_template = Handlebars.compile(document.querySelector('#add_radio_question').innerHTML);
+  const option_field_radio_template = Handlebars.compile(document.querySelector('#add_option_radio').innerHTML);
+  const long_answer_question_template = Handlebars.compile(document.querySelector('#add_long_answer_question').innerHTML);
+  const multiple_type_question_template = Handlebars.compile(document.querySelector('#add_multiple_type_question').innerHTML);
+
+var question_count = 0;
+
+function add_option_checkbox(o){
+  const id= o.parentElement.parentElement.children[0].children[1].children[0].children[0].id;
+  const option_count = parseInt(o.parentElement.parentElement.children[1].children[0].children[0].children[0].children[0].value);
+  o.parentElement.parentElement.children[1].children[0].children[0].children[0].children[0].value = option_count + 1;
+  const new_option = option_field_checkbox_template({'id':id, 'option_number': option_count+1});
+  o.parentElement.parentElement.children[1].children[0].insertAdjacentHTML('beforeEnd', new_option);
+}
+
+function add_option_radio(o){
+  const id= o.parentElement.parentElement.children[0].children[1].children[0].children[0].id;
+  const option_count = parseInt(o.parentElement.parentElement.children[1].children[0].children[0].children[0].value);
+  o.parentElement.parentElement.children[1].children[0].children[0].children[0].value = option_count + 1;
+  const new_option = option_field_radio_template({'id':id, 'option_number': option_count+1});
+  o.parentElement.parentElement.children[1].children[0].insertAdjacentHTML('beforeEnd', new_option);
+}
+
+
+document.querySelector('#add_question_radio_button').onclick = () => {
+  question_count++;
+  document.querySelector('#totalFields').value = question_count;
+  EnableCreateFormButton();
+  const new_question = radio_question_template({'question_number':question_count});
+  document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+}
+
+document.querySelector('#add_question_checkbox_button').onclick = () => {
+    question_count++;
+    document.querySelector('#totalFields').value = question_count;
+    EnableCreateFormButton();
+    const new_question = checkbox_question_template({'question_number':question_count});
+    document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+}
+
+document.querySelector('#add_question_long_answer_button').onclick = () => {
+    question_count++;
+    document.querySelector('#totalFields').value = question_count;
+    EnableCreateFormButton();
+    const new_question = long_answer_question_template({'question_number':question_count});
+    document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+}
+
+document.querySelector('#add_question_multiple_type_button').onclick = () => {
+    question_count++;
+    document.querySelector('#totalFields').value = question_count;
+    EnableCreateFormButton();
+    const new_question = multiple_type_question_template({'question_number':question_count});
+    document.querySelector('#questions').insertAdjacentHTML('beforeEnd', new_question);
+}
+
+function DeleteRow(o){
+  var p=o.parentNode.parentNode;
+     p.parentNode.removeChild(p);
+}
+function DeleteQuestion(o){
+  var p=o.parentNode.parentNode.parentNode.parentNode;
+     p.parentNode.removeChild(p);
+     question_count--;
+     DisableCreateFormButton();
+}
+function EnableCreateFormButton(){
+    document.querySelector('#create_form').disabled = false;
+    if(question_count>0)
+    {
+        document.querySelector('#add_message').hidden = true;
+    }
+}
+function DisableCreateFormButton(){
+    document.querySelector('#create_form').disabled = true;
+    if(question_count==0)
+    {
+        document.querySelector('#add_message').hidden = false;
+    }
+}
+
+function SetInputType(selected_type) {
+    var field = document.getElementById("input_txt");
+    if (selected_type.value == "Email") {
+        field.setAttribute('TYPE', 'Email');
+    }
+    else if (selected_type.value == "Number") {
+        field.setAttribute('TYPE', 'Number');
+    }
+    else if (selected_type.value == "Date") {
+        field.setAttribute('TYPE', 'date');
+    }
+}
+</script>
+{% endblock %}

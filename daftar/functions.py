@@ -115,7 +115,8 @@ def add_forms(form):
     hed = {'Authorization': 'Bearer ' + User().token}
     response = requests.post(url, json=data, headers=hed)
     if response.status_code == requests.codes.ok:
-        return True
+        form = json.loads(response.text)
+        return form['id']
     else:
         return False
 
@@ -126,9 +127,9 @@ def add_workflows(form):
         id_name = form.get(f'{i}_name').split('_')
         stage = {'authId': id_name[0], 'authRole': form.get(f'{i}_role'), 'authName': id_name[1]}
         stages.append(stage)
-
+    
     data = {
-        "name": form.get('name'),
+        "name": form.get('workflowName'),
         "creatorId": User().id,
         "totalStages": form.get('totalStages'),
         "stages": stages
@@ -139,7 +140,7 @@ def add_workflows(form):
     hed = {'Authorization': 'Bearer ' + User().token}
     response = requests.post(url, json=data, headers=hed)
     if response.status_code == requests.codes.ok:
-        return True
+        return json.loads(response.text)
     else:
         return False
 

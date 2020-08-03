@@ -331,3 +331,79 @@ def sign_application(request):
                 return HttpResponseRedirect(reverse('application'))
     else:
         return redirect('/')
+
+
+def new_application_step1(request):
+    if verify_token(request):
+        if request.method == "GET":
+            forms = get_forms()
+            if forms is False:
+                # TODO: Error handling
+                print('Error Loading Forms')
+
+            return render(request, 'new_application_step1.html', {'title': 'Daftar | New Application Step 1',
+                                                                    'isUser': User().isUser,
+                                                                    'first_name': User().first_name,
+                                                                    'forms': forms})
+        elif request.method == "POST":
+            application_name = request.POST.get('name')
+            if request.POST.get('form_id') is None:
+                form_id = add_forms(request.POST)
+                print (form_id)
+                form_name = get_form(form_id).title
+            else:
+                form_id = request.POST.get('form_id')
+                form_name = get_form(form_id).title
+            
+            workflows = get_workflows()
+            if workflows is False:
+                # TODO: Error handling
+                print('Error Loading Workflows')
+            
+            auth_list = get_authorities()
+            if auth_list is False:
+            # TODO: Error handling
+                print('Error Loading Documents')
+                return
+
+            return render(request, 'new_application_step2.html', {'title': 'Daftar | New Application Step 2',
+                                                                 'isUser': User().isUser,
+                                                                 'first_name': User().first_name,
+                                                                 'workflows': workflows,
+                                                                 'application_name': application_name,
+                                                                 'form_id': form_id,
+                                                                 'form_name': form_name,
+                                                                 'authorities': auth_list
+                                                                 })
+    else:
+        return redirect('/')
+
+
+def add_application(request):
+    if verify_token(request):
+        if request.method == 'POST':
+            if request.POST.get('workflow_id') is None:
+                workflow = add_workflows(request.POST)
+                workflow_id = workflow['id']
+            else:
+                workflow_id = request.POST.get('workflow_id')
+
+            data = {
+                'name': request.POST.get('name'),
+                'formId': request.POST.get('form_id'),
+                'workflowId': workflow_id
+            }
+            url = daftar.settings.DAFTAR_HOST + "/applications/templates"
+
+            hed = {'Authorization': 'Bearer ' + User().token}
+            response = requests.post(url, json=data, headers=hed)
+            print(response.text)
+            if response.status_code == requests.codes.ok:
+                return HttpResponseRedirect(reverse('application_templates'))
+            else:
+                return HttpResponseRedirect(reverse('new_application_step1'))
+    else:
+        return redirect('/')
+    
+
+
