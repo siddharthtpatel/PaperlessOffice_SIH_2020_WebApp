@@ -393,6 +393,7 @@ def new_application_step1(request):
                                                                   'user_type': User().type,
                                                                   'first_name': User().first_name,
                                                                   'forms': forms})
+
         elif request.method == "POST":
             application_name = request.POST.get('name')
             if request.POST.get('form_id') is None:
