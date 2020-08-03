@@ -44,14 +44,15 @@
 
 </style>
 <main>
-    <h1>Create New Application Template</h1><br>
-    
+    <h2>Create New Application Template</h2>
+    <p>Application Template binds the desired Form and Workflow, so that Users can fill the application.</p>
+
     <form name="new_application_template" id="new_application_template" 
     action="{% url 'new_application_step1' %}" method="POST">{% csrf_token %}
     <!-- Name -->
     <div id="formDetails" class="md-form row mt-0">
         <div class="col-1 d-flex flex-column justify-content-center" >
-            <i class="fas fa-edit fa-2x"></i>
+            <i class="fas fa-edit fa-2x text-white"></i>
         </div>
         <div class="md-form mt-4 col-11">
             <label for="application_name" class="formInputLabel" style="color: white;">Application Name</label>
@@ -61,15 +62,45 @@
         <!-- Default form subscription -->
     <div class="text-center border border-light p-4" style="margin-bottom:80px;">
 
+            <div class="row">
+              <div class="col-md-12">
 
-            <div class="row ml-1 mr-1 mt-3">
-                <div class="col">
-                    <h2>Step 1</h2><br>
-                     <p>Select a Form from below              
-                    </p>
-                </div>
-             </div>
-             
+                <!-- Stepers Wrapper -->
+                <ul class="stepper stepper-horizontal">
+
+                  <!-- First Step -->
+                  <li class="active">
+                    <a href="#!">
+                      <span class="circle">1</span>
+                      <span class="label">Select Form</span>
+                    </a>
+                  </li>
+
+                  <!-- Second Step -->
+                  <li class="pending">
+                    <a href="#!">
+                      <span class="circle">2</span>
+                      <span class="label">Select Workflow</span>
+                    </a>
+                  </li>
+
+                  <!-- Third Step -->
+                  <li class="pending">
+                    <a href="#!">
+                      <span class="circle"><i class="fas fa-check"></i></span>
+                      <span class="label">Complete</span>
+                    </a>
+                  </li>
+
+                </ul>
+                <!-- /.Stepers Wrapper -->
+
+              </div>
+            </div>
+            <!-- /.Horizontal Steppers -->
+
+
+
             <!-- FormID -->
             <div class="row">
                 <div class="col-1 d-flex flex-column justify-content-center" >
