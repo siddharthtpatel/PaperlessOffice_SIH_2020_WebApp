@@ -1,0 +1,256 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .btn-floating {
+      background-color: #29a329;
+    }
+    .btn{
+        color: white;
+    }
+    .btn:hover{
+        color: white;
+    }
+    #formDetails {
+      border-radius: 25px;
+      background:	 #2cac37e1;
+      padding: 10px;
+      width: auto;
+    }
+    #formDesc::placeholder {
+        color: #d9d9d9;
+    }
+    .formInputLabel {
+      margin-left: 20px;
+      margin-top: 2px;
+      font-size: 25px;
+      color: white;
+    }
+    .formInput {
+      font-size: 15px;
+      color: white;
+    }
+    .form-control{
+         padding: .0rem .0rem;
+         font-size: 25px;
+    }
+    .md-form .form-control {
+      padding: .0rem 0 .0rem;
+    }
+  #formDetails{
+    box-shadow: 0px 2px 5px #666;
+  }
+  
+  </style>
+  <main>
+    <h2>Create New Application Template</h2>
+    <p>Application Template binds the desired Form and Workflow, so that Users can fill the application.</p>
+      
+    <form name="new_application_template" id="new_application_template" 
+      action="{% url 'add_application' %}" method="POST">{% csrf_token %}
+        <!-- Name -->
+        <div id="formDetails" class="md-form row mt-0">
+            <div class="col-1 d-flex flex-column justify-content-center white-text" >
+                <i class="fas fa-edit fa-2x"></i>
+            </div>
+            <div class="md-form mt-4 col-11">
+                <label for="application_name" class="formInputLabel" style="color: white;">Application Name</label>
+                <input type="text" id="application_name" name="name" class="form-control" style="font-size: 30px; color: white;" value="{{ application_name }}">
+            </div>
+            <div class="col-1 d-flex flex-column justify-content-center  white-text" >
+                <i class="fas fa-file-alt fa-2x"></i>
+            </div>
+            <div class="md-form mt-4 col-11">
+                <label class="formInputLabel" style="color: white; font-size: 20px;">{{ form_name }}</label>
+                <input type="text" id="application_name" name="form_id" class="form-control" style="font-size: 30px; color: white;" value="{{ form_id }}" hidden>
+            </div>
+        </div>    
+            <!-- Default form subscription -->
+        <div class="text-center border border-light p-4" style="margin-bottom:80px;">
+  
+
+            <div class="row">
+              <div class="col-md-12">
+
+                <!-- Stepers Wrapper -->
+                <ul class="stepper stepper-horizontal">
+
+                  <!-- First Step -->
+                  <li class="completed">
+                    <a href="#!">
+                      <span class="circle">1</span>
+                      <span class="label">Select Form</span>
+                    </a>
+                  </li>
+
+                  <!-- Second Step -->
+                  <li class="active">
+                    <a href="#!">
+                      <span class="circle">2</span>
+                      <span class="label">Select Workflow</span>
+                    </a>
+                  </li>
+
+                  <!-- Third Step -->
+                  <li class="pending">
+                    <a href="#!">
+                      <span class="circle"><i class="fas fa-check"></i></span>
+                      <span class="label">Complete</span>
+                    </a>
+                  </li>
+
+                </ul>
+                <!-- /.Stepers Wrapper -->
+
+              </div>
+            </div>
+              <div class="row ml-1 mr-1 mt-3">
+                  <div class="col">
+                       <p>Select a workflow from below
+                      </p>
+                  </div>
+               </div>
+            
+            <!-- WorkFlowID -->
+            <div class="row">
+                <div class="col-1 d-flex flex-column justify-content-center" >
+                    <i class="fas fa-network-wired fa-2x"></i>
+                </div>
+                <div class="col-11">
+                    <select class="browser-default custom-select mb-1" name="workflow_id">
+                        <option value="" disabled selected>WorkFlow Name</option>
+                        {% for workflow in workflows %}
+                            <option value="{{workflow.id}}">{{workflow.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row ml-1 mr-1 mt-3">
+                <div class="col">
+                    <h3>OR</h3>
+                     <p>Create a new WorkFlow              
+                    </p>
+                </div>
+             </div>
+                <div class="container">
+                  <div id="WorkflowNameheader" class="md-form row">
+                    <div class="col-5 ml-2">
+                        <input type="text" id="workflowName" style="font-size: 30px; color: black;" class="formInput form-control" name="workflowName"><br>
+                        <label for="workflowName" class="formInputLabel" style="color: black;">WorkFlow Name</label>
+                    </div>
+                    <div class="col-1">
+                      <input type="number" name="totalStages" class="form-control" id="totalStages" hidden value="1">
+                    </div>
+                  </div>
+                  <div class="card border-success" style="max-width: 100%;">
+                    <div class="card-body text-success" id="authority_list">
+                      <div class="row m-3 p-3">
+                        <div class="col-1">
+                          <h4>1</h4>
+                        </div>
+                        <div class="col-4" style="text-align:left">
+                          <select class="browser-default custom-select" name="1_role" onchange="SetRoleType(this)">
+                              <option disabled selected>Select Authority Role</option>
+                              <option value="admin">Admin</option>
+                              <option value="hod">HoD</option>
+                              <option value="class_teacher">Class Teacher</option>
+                          </select>
+                        </div>
+                        <div class="col-5" style="text-align:left">
+                          </select>
+                            <select class="browser-default custom-select" name="1_name">
+                              <option disabled selected>Select Authority</option>
+                            {% for auth in authorities %}
+                                {% verbatim %}<option id="1" {% endverbatim %} class="role {{auth.role}}" hidden value="{{ auth.id }}_{{ auth.name }}">{{ auth.name }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6 mb-5 ml-5" style="text-align:left">
+                        <button type="button" font-size="40px" class="btn green btn-rounded ml-5" id="add_authority_button">ADD NEW STAGE</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" style="text-align:right">
+                          <button type="submit" font-size="40px" class="btn green btn-rounded ml-0" id="create_workflow" hidden>Create Workflow</button>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              <br>
+              <hr class="mr-2 ml-2">
+            <div class="row">
+                    <div class="col-12" style="text-align:center;">
+                        <button type="submit" class="btn btn-success btn-rounded btn-lg"id="js-upload-submit"  >Create</button>
+                    </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+  <script id="add_authority" type="text/template">
+    <div class="row m-3 mb-0 p-3">
+        <div class="col-1">
+          {% verbatim %}<h4>{{ authority_count }}</h4>
+        </div>
+        <div class="col-4" style="text-align:left">
+          <select class="browser-default custom-select" name="{{ authority_count }}_role" onchange="SetRoleType(this)">
+              <option disabled selected>Select Authority Role</option>
+              <option value="admin">Admin</option>
+              <option value="hod">HoD</option>
+              <option value="class_teacher">Class Teacher</option>
+          </select>
+        </div>
+        <div class="col-5" style="text-align:left">
+          </select>
+            <select class="browser-default custom-select" name="{{ authority_count }}_name">{% endverbatim %}
+              <option disabled selected>Select Authority</option>
+            {% for auth in authorities %}
+                {% verbatim %}<option id="{{authority_count}}" {% endverbatim %} class="role {{auth.role}}" hidden value="{{ auth.id }}_{{ auth.name }}">{{ auth.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col" style="text-align:right">
+          <a class="btn-floating btn-sm btn-success" onclick="DeleteRow(this)"><i class="fas fa-minus-circle"></i></a>
+        </div>
+    </div>
+  </script>
+
+  <script>
+    var authority_count = 1;
+    const authority_template = Handlebars.compile(document.querySelector('#add_authority').innerHTML);
+    document.querySelector('#add_authority_button').onclick = () => {
+      authority_count++;
+      document.querySelector('#totalStages').value = authority_count;
+      const new_authority = authority_template({'authority_count': authority_count});
+      document.querySelector('#authority_list').insertAdjacentHTML('beforeEnd', new_authority);
+    }
+
+    function DeleteRow(o){
+      var p=o.parentNode.parentNode;
+         p.parentNode.removeChild(p);
+      authority_count = document.querySelector('#authority_list').childElementCount;
+      document.querySelector('#totalStages').value = authority_count;
+    }
+
+    function SetRoleType(selected_type) {
+      var elements = document.getElementsByClassName('role');
+      for(i=0; i<elements.length; i++){
+          elements[i].hidden = true;
+      }
+      elements = document.getElementsByClassName(selected_type.value);
+      for(i=0; i<elements.length; i++){
+        id = selected_type.name.split("_");
+        if(elements[i].id == id[0]){
+          elements[i].hidden = false;
+        }
+      }
+    }
+  </script>
+
+{% endblock %}

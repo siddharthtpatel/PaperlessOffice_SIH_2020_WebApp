@@ -51,11 +51,10 @@
                 </select>
               </div>
               <div class="col-5" style="text-align:left">
-                </select>
-                  <select class="browser-default custom-select" name="1_name">
+                  <select class="browser-default custom-select" id="auth_1" name="1_name">
                     <option disabled selected>Select Authority</option>
                   {% for auth in authorities %}
-                      {% verbatim %}<option id="1" {% endverbatim %} class="role {{auth.role}}" hidden value="{{ auth.id }}_{{ auth.name }}">{{ auth.name }}</option>
+                      <option id="1" class="role {{auth.role}}" hidden value="{{ auth.id }}_{{ auth.name }}">{{ auth.name }}</option>
                   {% endfor %}
                 </select>
               </div>

@@ -28,7 +28,7 @@ def get_storage_documents(limit=None):
     return docs
 
 
-def get_applications(filter=None, limit=None):
+def get_applications(user_id=None, filter=None, limit=None):
     url = daftar.settings.DAFTAR_HOST + "/applications"
 
     if filter is not None:
@@ -44,8 +44,15 @@ def get_applications(filter=None, limit=None):
         return False
 
     docs = []
-    for doc in response.json():
-        docs.append(Application(doc))
+    if user_id is not None:
+        for doc in response.json():
+            application = Application(doc)
+            print(application.authorities)
+            if User().id in application.authorities:
+                docs.append(application)
+    else:
+        for doc in response.json():
+            docs.append(Application(doc))
 
     return docs
 
@@ -66,8 +73,6 @@ def get_authorities(filter=None, limit=None):
     for auth in response.json():
         auth_list.append(Authority(auth))
 
-    print("------")
-    print(auth_list)
     return auth_list
 
 
@@ -115,7 +120,8 @@ def add_forms(form):
     hed = {'Authorization': 'Bearer ' + User().token}
     response = requests.post(url, json=data, headers=hed)
     if response.status_code == requests.codes.ok:
-        return True
+        form = json.loads(response.text)
+        return form['id']
     else:
         return False
 
@@ -128,7 +134,7 @@ def add_workflows(form):
         stages.append(stage)
 
     data = {
-        "name": form.get('name'),
+        "name": form.get('workflowName'),
         "creatorId": User().id,
         "totalStages": form.get('totalStages'),
         "stages": stages
@@ -139,7 +145,7 @@ def add_workflows(form):
     hed = {'Authorization': 'Bearer ' + User().token}
     response = requests.post(url, json=data, headers=hed)
     if response.status_code == requests.codes.ok:
-        return True
+        return json.loads(response.text)
     else:
         return False
 

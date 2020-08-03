@@ -47,6 +47,10 @@
       column-count: 2;
     }
 
+    .side-nav .collapsible a {
+      font-size: 1rem;
+    }
+
   </style>
   {% block css %}
 
@@ -57,9 +61,7 @@
 
   <!-- Main Navigation -->
   <header>
-
-    <!-- Sidebar navigation -->
-    <div id="slide-out" class="side-nav fixed sn-bg-4">
+    <div id="slide-out" class="side-nav  fixed" style="font-size:30px;">
       <ul class="custom-scrollbar">
 
         <!-- Logo -->
@@ -130,36 +132,33 @@
                 </ul>
               </div>
             </li>
-            {% if not isUser %}
-            <li>
+            {% if user_type != 'user' %}
+              <li>
               <a class="collapsible-header waves-effect arrow-r">
-                <i class="fas fa-network-wired"></i>Workflows<i class="fas fa-angle-down rotate-icon"></i>
+                <i class="fas fa-network-wired"></i>Review Applications<i class="fas fa-angle-down rotate-icon"></i>
               </a>
               <div class="collapsible-body">
                 <ul>
                   <li>
-                    <a href="{% url 'new_workflow' %}" class="waves-effect">Create new workflow</a>
+                    <a href="{% url 'review_application' %}" class="waves-effect">Review Pending Applications</a>
                   </li>
                   <li>
-                    <a href="{% url 'workflow' %}" class="waves-effect">Workflows</a>
+                    <a href="{% url 'review_application' %}" class="waves-effect">Reviewed Applications</a>
                   </li>
                 </ul>
               </div>
             </li>
+            {% endif %}
+            {% if user_type == 'admin' %}
             <li>
-              <a class="collapsible-header waves-effect arrow-r">
-                <i class="fas fa-file-alt"></i>Forms<i class="fas fa-angle-down rotate-icon"></i>
+              <a href="{% url 'workflow' %}" class="collapsible-header waves-effect">
+                <i class="fas fa-file-alt"></i>Workflows
               </a>
-              <div class="collapsible-body">
-                <ul>
-                  <li>
-                    <a href="{% url 'new_form' %}" class="waves-effect">Create new form</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'form' %}" class="waves-effect">Forms</a>
-                  </li>
-                </ul>
-              </div>
+            </li>
+            <li>
+              <a href="{% url 'form' %}" class="collapsible-header waves-effect">
+                <i class="fas fa-file-alt"></i>Forms
+              </a>
             </li>
              <li>
               <a class="collapsible-header waves-effect arrow-r">
@@ -168,7 +167,7 @@
               <div class="collapsible-body">
                 <ul>
                   <li>
-                    <a href="{% url 'new_application_template' %}" class="waves-effect">Create a new Application Template.</a>
+                    <a href="{% url 'new_application_step1' %}" class="waves-effect">Create a new Application Template.</a>
                   </li>
                   <li>
                     <a href="{% url 'application_templates' %}" class="waves-effect">View Application Templates</a>
@@ -199,10 +198,15 @@
 
       <div class="d-flex change-mode">
 
-        {% if not isUser %}
+        {% if user_type == 'admin' %}
+        <div class="ml-auto mb-0 mr-3 change-mode-wrapper">
+          <button class="btn btn-outline-success btn-sm">Admin</button>
+        </div>
+        {% elif user_type == 'authority' %}
         <div class="ml-auto mb-0 mr-3 change-mode-wrapper">
           <button class="btn btn-outline-success btn-sm">Authority</button>
         </div>
+        {% else %}
         {% endif %}
 
         <!-- Navbar links -->
@@ -236,7 +240,6 @@
               <i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">{{first_name}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="#" id="dark-mode">Switch to Dark Mode</a>
               <a class="dropdown-item" href="{% url 'account' %}">My account</a>
               <a class="dropdown-item" href="/logout">Log Out</a>
             </div>

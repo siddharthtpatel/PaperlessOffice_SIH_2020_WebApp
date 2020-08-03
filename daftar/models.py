@@ -23,7 +23,8 @@ class User(object):
             self.dob = None
             self.public_key = None
             self.private_key = None
-            self.isUser = None
+            self.role = None
+            self.type = None
             self.token = None
             self.email = None
             self.costOfPaper = None
@@ -93,13 +94,23 @@ class Application(object):
         self.id = json['_id']['$oid']
         self.name = json['name']
         self.description = json['description']
+        self.creatorId = json['creatorId']
         self.creatorName = json['creatorName']
         self.status = int(json['status'])
         self.stage = int(json['stage'])
         self.stages = int(json['stages'])
         self.assignedName = json['assignedName']
+        self.assignedId = json['assignedId']
         self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
         self.progress = int(self.stage / self.stages * 100)
+
+        self.authorities = []
+        url = daftar.settings.DAFTAR_HOST + "/workflow/" + str(json['workflowId'])
+        hed = {'Authorization': 'Bearer ' + User().token}
+        response = requests.get(url, headers=hed)
+        workflow = js.loads(response.text)
+        for stage in workflow['stages']:
+            self.authorities.append(stage['authId'])
 
         if User().token == json['creatorId']:
             self.isCreator = True
