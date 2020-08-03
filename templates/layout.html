@@ -47,6 +47,10 @@
       column-count: 2;
     }
 
+    .side-nav .collapsible a {
+      font-size: 1rem;
+    }
+
   </style>
   {% block css %}
 
@@ -59,7 +63,7 @@
   <header>
 
     <!-- Sidebar navigation -->
-    <div id="slide-out" class="side-nav  fixed">
+    <div id="slide-out" class="side-nav  fixed" style="font-size:30px;">
       <ul class="custom-scrollbar">
 
         <!-- Logo -->
@@ -130,7 +134,24 @@
                 </ul>
               </div>
             </li>
-            {% if not isUser %}
+            {% if user_type == 'authority' %}
+              <li>
+              <a class="collapsible-header waves-effect arrow-r">
+                <i class="fas fa-network-wired"></i>Review Applications<i class="fas fa-angle-down rotate-icon"></i>
+              </a>
+              <div class="collapsible-body">
+                <ul>
+                  <li>
+                    <a href="{% url 'review_application' %}" class="waves-effect">Review Pending Applications</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'review_application' %}" class="waves-effect">Reviewed Applications</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            {% endif %}
+            {% if user_type == 'admin' %}
             <li>
               <a class="collapsible-header waves-effect arrow-r">
                 <i class="fas fa-network-wired"></i>Workflows<i class="fas fa-angle-down rotate-icon"></i>
@@ -199,10 +220,15 @@
 
       <div class="d-flex change-mode">
 
-        {% if not isUser %}
+        {% if user_type == 'admin' %}
+        <div class="ml-auto mb-0 mr-3 change-mode-wrapper">
+          <button class="btn btn-outline-success btn-sm">Admin</button>
+        </div>
+        {% elif user_type == 'authority' %}
         <div class="ml-auto mb-0 mr-3 change-mode-wrapper">
           <button class="btn btn-outline-success btn-sm">Authority</button>
         </div>
+        {% else %}
         {% endif %}
 
         <!-- Navbar links -->
@@ -236,7 +262,6 @@
               <i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">{{first_name}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="#" id="dark-mode">Switch to Dark Mode</a>
               <a class="dropdown-item" href="{% url 'account' %}">My account</a>
               <a class="dropdown-item" href="/logout">Log Out</a>
             </div>

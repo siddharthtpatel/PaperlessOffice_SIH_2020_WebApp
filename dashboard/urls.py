@@ -8,6 +8,7 @@ urlpatterns = [
     path('account', views.my_account, name='account'),
     path('save_changes', views.save_cost_changes, name='save_changes'),
     path('applications', views.application, name='application'),
+    path('review_application', views.review_application, name='review_application'),
     path('storage', views.storage, name='storage'),
     path('workflow', views.workflow, name="workflow"),
     path('new_workflow', views.new_workflow, name="new_workflow"),
