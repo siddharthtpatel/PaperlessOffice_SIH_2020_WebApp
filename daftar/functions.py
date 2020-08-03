@@ -28,7 +28,7 @@ def get_storage_documents(limit=None):
     return docs
 
 
-def get_applications(user_id = None ,filter=None, limit=None):
+def get_applications(user_id=None, filter=None, limit=None):
     url = daftar.settings.DAFTAR_HOST + "/applications"
 
     if filter is not None:
@@ -47,7 +47,8 @@ def get_applications(user_id = None ,filter=None, limit=None):
     if user_id is not None:
         for doc in response.json():
             application = Application(doc)
-            if application.assignedId == User().id:
+            print(application.authorities)
+            if User().id in application.authorities:
                 docs.append(application)
     else:
         for doc in response.json():
@@ -72,8 +73,6 @@ def get_authorities(filter=None, limit=None):
     for auth in response.json():
         auth_list.append(Authority(auth))
 
-    print("------")
-    print(auth_list)
     return auth_list
 
 
@@ -133,7 +132,7 @@ def add_workflows(form):
         id_name = form.get(f'{i}_name').split('_')
         stage = {'authId': id_name[0], 'authRole': form.get(f'{i}_role'), 'authName': id_name[1]}
         stages.append(stage)
-    
+
     data = {
         "name": form.get('workflowName'),
         "creatorId": User().id,
