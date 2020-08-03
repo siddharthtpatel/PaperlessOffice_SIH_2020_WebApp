@@ -351,6 +351,8 @@ def my_account(request):
     if verify_token(request):
 
         return render(request, 'account.html', {'title': 'Daftar | My Account',
+                                                'user_type': User().type,
+                                                'first_name': User().first_name,
                                                 'user': User()})
     else:
         return redirect('/')
@@ -388,39 +390,39 @@ def new_application_step1(request):
                 print('Error Loading Forms')
 
             return render(request, 'new_application_step1.html', {'title': 'Daftar | New Application Step 1',
-                                                                    'isUser': User().isUser,
-                                                                    'first_name': User().first_name,
-                                                                    'forms': forms})
+                                                                  'user_type': User().type,
+                                                                  'first_name': User().first_name,
+                                                                  'forms': forms})
         elif request.method == "POST":
             application_name = request.POST.get('name')
             if request.POST.get('form_id') is None:
                 form_id = add_forms(request.POST)
-                print (form_id)
+                print(form_id)
                 form_name = get_form(form_id).title
             else:
                 form_id = request.POST.get('form_id')
                 form_name = get_form(form_id).title
-            
+
             workflows = get_workflows()
             if workflows is False:
                 # TODO: Error handling
                 print('Error Loading Workflows')
-            
+
             auth_list = get_authorities()
             if auth_list is False:
-            # TODO: Error handling
+                # TODO: Error handling
                 print('Error Loading Documents')
                 return
 
             return render(request, 'new_application_step2.html', {'title': 'Daftar | New Application Step 2',
-                                                                 'isUser': User().isUser,
-                                                                 'first_name': User().first_name,
-                                                                 'workflows': workflows,
-                                                                 'application_name': application_name,
-                                                                 'form_id': form_id,
-                                                                 'form_name': form_name,
-                                                                 'authorities': auth_list
-                                                                 })
+                                                                  'user_type': User().type,
+                                                                  'first_name': User().first_name,
+                                                                  'workflows': workflows,
+                                                                  'application_name': application_name,
+                                                                  'form_id': form_id,
+                                                                  'form_name': form_name,
+                                                                  'authorities': auth_list
+                                                                  })
     else:
         return redirect('/')
 
@@ -450,6 +452,3 @@ def add_application(request):
                 return HttpResponseRedirect(reverse('new_application_step1'))
     else:
         return redirect('/')
-    
-
-

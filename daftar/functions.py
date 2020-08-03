@@ -47,7 +47,7 @@ def get_applications(user_id = None ,filter=None, limit=None):
     if user_id is not None:
         for doc in response.json():
             application = Application(doc)
-            if application.assignedId == user_id:
+            if application.assignedId == User().id:
                 docs.append(application)
     else:
         for doc in response.json():
