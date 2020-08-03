@@ -104,6 +104,14 @@ class Application(object):
         self.timestamp = datetime.datetime.fromtimestamp(float(json['timestamp']['$date']) / 1000)
         self.progress = int(self.stage / self.stages * 100)
 
+        self.authorities = []
+        url = daftar.settings.DAFTAR_HOST + "/workflow/" + str(json['workflowId'])
+        hed = {'Authorization': 'Bearer ' + User().token}
+        response = requests.get(url, headers=hed)
+        workflow = js.loads(response.text)
+        for stage in workflow['stages']:
+            self.authorities.append(stage['authId'])
+
         if User().token == json['creatorId']:
             self.isCreator = True
         else:

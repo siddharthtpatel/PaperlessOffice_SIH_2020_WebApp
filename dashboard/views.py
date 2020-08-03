@@ -374,9 +374,9 @@ def sign_application(request):
             response = sign_applications(request.POST)
             print(response)
             if response:
-                return HttpResponseRedirect(reverse('application'))
+                return HttpResponseRedirect(reverse('review_application'))
             else:
-                return HttpResponseRedirect(reverse('application'))
+                return HttpResponseRedirect(reverse('review_application'))
     else:
         return redirect('/')
 
