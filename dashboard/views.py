@@ -388,7 +388,7 @@ def new_application_step1(request):
                 print('Error Loading Forms')
 
             return render(request, 'new_application_step1.html', {'title': 'Daftar | New Application Step 1',
-                                                                    'isUser': User().isUser,
+                                                                    'user_type': User().type,
                                                                     'first_name': User().first_name,
                                                                     'forms': forms})
         elif request.method == "POST":
@@ -413,7 +413,7 @@ def new_application_step1(request):
                 return
 
             return render(request, 'new_application_step2.html', {'title': 'Daftar | New Application Step 2',
-                                                                 'isUser': User().isUser,
+                                                                 'user_type': User().type,
                                                                  'first_name': User().first_name,
                                                                  'workflows': workflows,
                                                                  'application_name': application_name,
