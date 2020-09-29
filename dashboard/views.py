@@ -109,6 +109,7 @@ def review_application(request):
         money_saved = cost_per_paper * len(all_applications)
         trees_saved = len(all_applications) / 8333
         trees_saved = round(trees_saved, 5)
+        money_saved = round(money_saved, 2)
 
         if all_applications is False:
             # TODO: Error handling
